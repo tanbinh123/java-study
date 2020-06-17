@@ -21,6 +21,23 @@ public class math {
 			}
 			
 			return pass;
+		}
+		
+		String sumyg = "";
+		String getSumyg(int a) {
 			
+			if(a >= 80) {
+					sumyg ="수";
+				}
+				else if(a >= 60){
+					sumyg ="우";
+				}
+				else if(a >= 50){
+					sumyg ="미";
+				}
+				else{
+					sumyg ="양";
+				}
+		return sumyg;
 		}
 }

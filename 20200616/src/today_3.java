@@ -11,27 +11,11 @@ public class today_3 {
 		int a = cs.nextInt();
 		
 		
-		String score = math.getScore(a);
+		//String score = math.getScore(a);
+		String sumyg = math.getSumyg(a);
 		
-
-		System.out.print("당신은 " + a + "점 이므로 " + score);
 		
-		/*
-		if(a >= 90) {
-			System.out.println("수");
-		}
-		else if(a >= 80){
-			System.out.println("우");
-		}
-		else if(a >= 70){
-			System.out.println("미");
-		}
-		else if(a >= 60){
-			System.out.println("양");
-		}
-		else{
-			System.out.println("가");
-		}*/
+		System.out.print("당신은 " + a + "점 이므로 " + /*score +" 이며 */"등급은 " + sumyg +" 입니다.");
 	}
 
 }
