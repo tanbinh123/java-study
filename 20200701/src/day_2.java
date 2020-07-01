@@ -4,6 +4,8 @@ public class day_2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
+		math m = new math();
+		
 		String t_list = "";
 		int score = 0, total = 0;
 		
@@ -12,6 +14,11 @@ public class day_2 {
 		
 		String[] title = new String[listnum+4];
 		String[] main = new String[listnum+4];
+		
+		title[0] = "¼º¸í";
+		title[title.length-3] = "ÃÑÁ¡";
+		title[title.length-2] = "Æò±Õ";
+		title[title.length-1] = "µî±Þ";
 		
 		System.out.print("ÀÌ¸§ ? :");
 		String name = sc.next();
@@ -29,26 +36,10 @@ public class day_2 {
 			total += score;
 			main[i] = Integer.toString(score);
 		}
-		title[0] = "¼º¸í";
-		title[title.length-3] = "ÃÑÁ¡";
-		title[title.length-2] = "Æò±Õ";
-		title[title.length-1] = "µî±Þ";
 		
-		main[main.length-3] = Integer.toString(total);
-		main[main.length-2] = Double.toString(total/(double)listnum);
-		
-		if(Double.parseDouble(main[main.length-2]) >= 90) {
-			main[main.length-1] = "¼ö";
-		}else if(Double.parseDouble(main[main.length-2]) >= 80) {
-			main[main.length-1] = "¿ì";
-		}else if(Double.parseDouble(main[main.length-2]) >= 70) {
-			main[main.length-1] = "¹Ì";
-		}else if(Double.parseDouble(main[main.length-2]) >= 60) {
-			main[main.length-1] = "¾ç";
-		}else{
-			main[main.length-1] = "°¡";
-		}
-		
+		main[main.length-3] = Integer.toString(total); //ÃÑÁ¡
+		main[main.length-2] = m.ava(total, listnum); //Æò±Õ
+		main[main.length-1] = m.rank(Double.parseDouble(main[main.length-2])); //µî±Þ
 		
 		for(int i = 0; i < title.length; i++) {
 			System.out.print(title[i]+"\t");	
@@ -57,7 +48,7 @@ public class day_2 {
 		
 		for(int i = 0; i < title.length; i++) {
 			System.out.print(main[i]+"\t");
-		}	
+		}
 
 }
 }
