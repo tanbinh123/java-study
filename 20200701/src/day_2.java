@@ -44,8 +44,7 @@ public class day_2 {
 		for(int i = 0; i < title.length; i++) { //상단 출력
 			System.out.print(title[i]+"\t");	
 		}
-		System.out.println("");
-		
+		System.out.print("=");
 		for(int i = 0; i < title.length; i++) { //하단 출력
 			System.out.print(main[i]+"\t");
 		}
