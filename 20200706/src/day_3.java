@@ -3,12 +3,21 @@ public class day_3 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		exclassvoid ex = new exclassvoid();
+		day_dto dto = new day_dto();
 		
-		String a = "È«±æµ¿";
-		ex.setName(a);
-		System.out.println(ex.getName());
-		System.out.println(ex.getTotal(50, 60));
+
+		String n = dto.getName();
+		System.out.println(n);
+		
+		dto.setName("È«±æµ¿");
+		n = dto.getName();
+		System.out.println(n);
+
+		
+		day_dto dto2 = new day_dto();
+		dto2.setName("ÀÌ¼ø½Å");
+		String n2 = dto2.getName();
+		System.out.println(n2);
 	}
 
 }
