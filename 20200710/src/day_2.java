@@ -33,7 +33,7 @@ public class day_2 {
 				for (int i = 0; i < dtoar.length; i++) {
 					if(serchname.indexOf(dtoar[i].getName()) != -1){
 						System.out.print(i+1+"¹ø \t");
-						dtoar[i].getPrintStudySum();
+						dtoar[i].getPrintStudySum();  
 					}
 				}
 			}
