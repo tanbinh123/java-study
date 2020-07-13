@@ -73,7 +73,7 @@ public class day_2 {
 						System.out.print(dtos[i].getArea()+"\t");
 						System.out.print(dtos[i].getAge()+"\n");
 					}
-					}
+					}System.out.println();
 				}
 		}while(q != 0);
 		
