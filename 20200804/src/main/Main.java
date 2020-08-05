@@ -13,9 +13,8 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		testdao dao = new testdao();	
 		
-		
 		ArrayList<testDB_dto> arr = null;
-		int gubun = 0, selectgubun = 0;
+		int gubun = 0, selectGubun = 0;
 		String blankString = "";
 		int blankValue = 0;
 		
@@ -41,35 +40,36 @@ public class Main {
 						"=================\n"
 						+"       조회 메뉴\n"
 						+"=================\n"
-						+"전체조회:1 \n"
-						+ "번호로조회:2 \n"
-						+ "이름으로조회:3 \n"
+						+"전체 조회:1 \n"
+						+ "번호로 조회:2 \n"
+						+ "이름으로 조회:3 \n"
 						+ "지역으로 조회:4 \n"
+						+ "나이로 조회:5 \n"
 						+ "종료:0 \n"
 						+ "=================\n"
 						+ "입력 : ");
-				selectgubun = sc.nextInt();
-				if(selectgubun == 1) {
-					arr = dao.selectDB(selectgubun, blankString, blankString, blankString, blankValue);
+				selectGubun = sc.nextInt();
+				if(selectGubun == 1) {
+					arr = dao.selectDB(selectGubun, blankString, blankString, blankString, blankValue);
 				}
-				else if (selectgubun == 2) {
+				else if (selectGubun == 2) {
 					System.out.print("번호로 검색 : ");
 					String no = sc.next();
-					arr = dao.selectDB(selectgubun, no, blankString, blankString, blankValue);
+					arr = dao.selectDB(selectGubun, no, blankString, blankString, blankValue);
 				}
-				else if (selectgubun == 3) {
+				else if (selectGubun == 3) {
 					System.out.print("이름으로 검색 : ");
 					String name = sc.next();
 					name= name.toUpperCase();
-					arr = dao.selectDB(selectgubun, blankString, name, blankString, blankValue);
+					arr = dao.selectDB(selectGubun, blankString, name, blankString, blankValue);
 				}
-				else if (selectgubun == 4) {
+				else if (selectGubun == 4) {
 					System.out.print("지역명으로 검색 : ");
 					String area = sc.next();
 					area= area.toUpperCase();
-					arr = dao.selectDB(selectgubun, blankString, blankString, area, blankValue);
+					arr = dao.selectDB(selectGubun, blankString, blankString, area, blankValue);
 				}
-				else if(selectgubun == 0) {
+				else if(selectGubun == 0) {
 					System.out.println("-----조회메뉴 종료-----");
 				}
 				if(arr.size() != 0) {
@@ -82,8 +82,11 @@ public class Main {
 				}
 				System.out.println("-----조회 완료-----");
 				}
+				if(arr.size() == 0) {
+					System.out.println("-----조회 결과 없음-----");
+				}
 				gubun = -1;
-			}while(selectgubun != 0);
+			}while(selectGubun != 0);
 				
 				
 			//등록
@@ -106,7 +109,7 @@ public class Main {
 				System.out.println("-----"+result + "행 업데이트됌-----");
 				}
 				else {
-					System.out.println("다시 입력해주세요.");
+					System.out.println("-----다시 입력해주세요.-----");
 				}
 				
 			//수정	
@@ -122,12 +125,16 @@ public class Main {
 				String name = sc.next();
 				System.out.print("지역 입력 : 서울[10], 대전[20], 부산[30] : ");
 				String area = sc.next();
+				if(area.equals("10")||area.equals("20")||area.equals("30")) {
 				System.out.print("나이 입력 : ");
 				int age = sc.nextInt();
 				int result = dao.updateDB(no, name, area, age, whereno);
 				System.out.println("-----수정 완료-----");
 				System.out.println("-----"+result + "행 업데이트됌-----");
-				
+				}
+				else {
+					System.out.println("-----다시 입력해주세요.-----");
+				}
 			//삭제	
 			}else if(gubun == 4) {
 				System.out.print("=================\n"
@@ -138,15 +145,13 @@ public class Main {
 				int result = dao.deleteDB(no, blankString, blankString, blankValue);
 				System.out.println("번호 : "+no + " 삭제 완료");
 				System.out.println("-----"+result + "행 업데이트됌-----");
-			}else if(gubun == 0) {
-				System.out.println("-----종료되었습니다-----");
 			}
 			}catch(Exception e) {
-				System.out.println("입력 오류");
+				System.out.println("-----입력 오류-----");
 				gubun = 0;
 			}
 		}while(gubun != 0);
-
+		System.out.println("-----종료되었습니다-----");
 
 }
 }

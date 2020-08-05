@@ -23,10 +23,11 @@ public class testdao {
 	String query = "";
 	public ArrayList<testDB_dto> selectDB(int selectgubun, String no, String name, String area,int age){
 		ArrayList<testDB_dto> arr = new ArrayList<>();
-			if (selectgubun == 1)query = "select no, name, area, age from t05_member";
-			else if(selectgubun == 2)query = "select no, name, area, age from t05_member where no = '"+no+"'";
-			else if(selectgubun == 3)query = "select no, name, area, age from t05_member where name like '%"+name+"%'";
-			else if(selectgubun == 4)query = "select no, name, area, age from t05_member where area like '%"+area+"%'";
+		query = "select a.no, a.name, b.area_name, a.age from t05_member a, a_area_info b where a.area = b.area_code";
+			if (selectgubun == 1) query = query;
+			else if(selectgubun == 2)query = query + " and a.no like '%"+no+"%'";
+			else if(selectgubun == 3)query = query + " and a.name like '%"+name+"%'";
+			else if(selectgubun == 4)query = query + "and b.area_name like '%"+area+"%'";
 		try{
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -35,7 +36,7 @@ public class testdao {
 				while(rs.next()) {
 					String s_no = rs.getString("no");//name
 					String s_name = rs.getString("name");//3
-					String s_area = rs.getString("area");//4
+					String s_area = rs.getString("area_name");//4
 					int s_age = rs.getInt("age");//4
 					
 					testDB_dto dto = new testDB_dto(s_no, s_name, s_area, s_age);
