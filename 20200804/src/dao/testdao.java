@@ -43,9 +43,9 @@ public class testdao {
 					arr.add(dto);
 				}
 		}catch(SQLException se){
-			System.out.println("selectDB() SQL query 오류" + query);
+			System.out.println("selectDB() SQL query error" + query);
 		}catch(Exception e){
-			System.out.println("selectDB() 오류");
+			System.out.println("selectDB() error");
 		}finally {
 			common.close(connection, ps, rs);
 		}
@@ -62,10 +62,10 @@ public class testdao {
 		ps = connection.prepareStatement(query);
 		result = ps.executeUpdate();
 	}catch(SQLException se) {
-		System.out.println(" insertDB() query 오류~ " + query);
+		System.out.println(" insertDB() query error~ " + query);
 		
 	}catch(Exception e) {
-		System.out.println(" insertDB() 오류  ~ : ");
+		System.out.println(" insertDB() error  ~ : ");
 	}finally {
 		common.close(connection, ps, rs);
 	}
@@ -81,34 +81,63 @@ public class testdao {
 		ps = connection.prepareStatement(query);
 		result = ps.executeUpdate();
 	}catch(SQLException se) {
-		System.out.println(" insertDB(dto) query 오류~ " + query);
-		
+		System.out.println(" insertDB(dto) query error~ " + query);
 	}catch(Exception e) {
-		System.out.println(" insertDB(dto) 오류  ~ : ");
+		System.out.println(" insertDB(dto) error  ~ : ");
 	}finally {
 		common.close(connection, ps, rs);
 	}
 	return result;
 	}
 	
+	//update 사전 조회
+	public testDB_dto updateDB(String no) {
+		testDB_dto dto = null;
+		String query = "select a.no, a.name, b.area_name, a.age from t05_member a, a_area_info b where a.area = b.area_code and no = '"+no+"'";
+	try {
+		connection = common.getConnection();
+		ps = connection.prepareStatement(query);
+		rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			String s_no = rs.getString("no");//name
+			String s_name = rs.getString("name");//3
+			String s_area = rs.getString("area_name");//4
+			int s_age = rs.getInt("age");//4
+			
+			dto = new testDB_dto(s_no, s_name, s_area, s_age);
+		}
+	}catch(SQLException se) {
+		System.out.println(" updateDB() query error~ " + query);
+		
+	}catch(Exception e) {
+		System.out.println(" updateDB() error  ~ : ");
+	}finally {
+		common.close(connection, ps, rs);
+	}
+	return dto;
+	}
+	
 	//update
-	public int updateDB(String no, String name, String area, int age, String whereno) {
+	public int updateDB(String name, String area, int age, String whereno) {
 		int result = 0;
-		String query = "update t05_member set no = "+no+", name = '"+ name +"', area = '" + area+"' where no ="+whereno;;
+		String query = "update t05_member set name = '"+ name +"', area = '" + area+"', age = '" + age+"' where no ="+whereno;;
 	try {
 		connection = common.getConnection();
 		ps = connection.prepareStatement(query);
 		result = ps.executeUpdate();
+		
 	}catch(SQLException se) {
-		System.out.println(" updateDB() query 오류~ " + query);
+		System.out.println(" updateDB() query error~ " + query);
 		
 	}catch(Exception e) {
-		System.out.println(" updateDB() 오류  ~ : ");
+		System.out.println(" updateDB() error  ~ : ");
 	}finally {
 		common.close(connection, ps, rs);
 	}
 	return result;
 	}
+	
 	
 	//delete
 	public int deleteDB(String no, String name, String area, int age) {
@@ -119,16 +148,15 @@ public class testdao {
 		ps = connection.prepareStatement(query);
 		result = ps.executeUpdate();
 	}catch(SQLException se) {
-		System.out.println(" deleteDB() query 오류~ " + query);
+		System.out.println(" deleteDB() query error~ " + query);
 		
 	}catch(Exception e) {
-		System.out.println(" deleteDB() 오류  ~ : ");
+		System.out.println(" deleteDB() error  ~ : ");
 	}finally {
 		common.close(connection, ps, rs);
 	}
 	return result;
 	}
-	
 	
 }
 
