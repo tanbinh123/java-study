@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import common.DBConnectionOracle;
 import dto.score_dto;
-import dto.testDB_dto;
 
 public class score_dao {
 
