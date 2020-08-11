@@ -42,7 +42,7 @@ public class member_dao {
 		ArrayList<member_dto> arr = new ArrayList<>();
 		if(showGubun == 1)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember ORDER BY id asc";
 		else if(showGubun == 2)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where id like '%"+serchId+"%' ORDER BY id asc";
-		else if(showGubun == 3)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where name like '%"+serchName+" ORDER BY id asc%'";
+		else if(showGubun == 3)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where name like '%"+serchName+"%' ORDER BY id asc";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);

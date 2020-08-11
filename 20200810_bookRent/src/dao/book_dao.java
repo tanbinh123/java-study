@@ -28,11 +28,12 @@ public class book_dao {
 	ResultSet rs = null;
 	
 	String query = "";
-	public ArrayList<book_dto> selectDB(int showGubun, String serchId, String serchName) {
+	public ArrayList<book_dto> selectDB(int showGubun, String serchName, String serchWriter, String serchNo) {
 		ArrayList<book_dto> arr = new ArrayList<>();
-		if(showGubun == 1)query = "select * from b05_book ORDER BY no asc";
-		else if(showGubun == 2)query = "select * from b05_book where id like '%"+serchId+"%' ORDER BY no asc";
-		else if(showGubun == 3)query = "select * from b05_book where name like '%"+serchName+" ORDER BY no asc%'";
+		if(showGubun == 1)query = "select no, name, publisher, writer, to_char(reg_date, 'yyyy-MM-dd'), rent_gubun from b05_book ORDER BY no asc";
+		else if(showGubun == 2)query = "select no, name, publisher, writer, to_char(reg_date, 'yyyy-MM-dd'), rent_gubun from b05_book where name like '%"+serchName+"%' ORDER BY no asc";
+		else if(showGubun == 3)query = "select no, name, publisher, writer, to_char(reg_date, 'yyyy-MM-dd'), rent_gubun from b05_book where writer like '%"+serchWriter+"%' ORDER BY no asc";
+		else if(showGubun == 4)query = "select no, name, publisher, writer, to_char(reg_date, 'yyyy-MM-dd'), rent_gubun from b05_book where no = '"+serchNo+"' ORDER BY no asc";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -63,7 +64,7 @@ public class book_dao {
 	
 	public String insertDBNo() {
 		String a = "";
-		query = "select max(id) from b05_bookmember";
+		query = "select max(no) from b05_book";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -75,9 +76,9 @@ public class book_dao {
 				
 			}
 		}catch(SQLException se){
-			System.out.println(" selectDB() query error~ " + query);
+			System.out.println(" insertDBNo() query error~ " + query);
 		}catch(Exception e) {
-			System.out.println(" selectDB() error  ~ : ");
+			System.out.println(" insertDBNo() error  ~ : ");
 		}finally {
 			common.close(connection, ps, rs);
 		}
@@ -85,9 +86,9 @@ public class book_dao {
 		return a;
 	}
 	
-	public int insertDB(String id, String name, String address , String tel, int age) {
+	public int insertDB(String no, String name, String publisher , String writer, String rent_gubun) {
 		int result = 0;
-		String query = "insert into b05_bookmember (id, name, address, tel, age, reg_date) values ('"+id+"','"+name+"','"+address+"','"+tel+"',"+age+",sysdate)";
+		String query = "insert into b05_book (no, name, publisher, writer, reg_date, rent_gubun) values ('"+no+"','"+name+"','"+publisher+"','"+writer+"',sysdate,'"+rent_gubun+"')";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -102,9 +103,9 @@ public class book_dao {
 		return result;
 		}
 	
-	public int updateDB(String id, String name, String address , String tel, int age) {
+	public int updateDB(String id, String name, String publisher , String writer) {
 		int result = 0;
-		String query = "update b05_bookmember set name = '"+name+"', address = '"+address+"', tel = '"+tel+"', age = "+age+" where id = '"+id+"'";
+		String query = "update b05_book set name = '"+name+"', publisher = '"+publisher+"', writer = '"+writer+"' where no = '"+id+"'";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -121,15 +122,15 @@ public class book_dao {
 	
 	public int deleteDB(String id) {
 		int result = 0;
-		String query = "delete from b05_bookmember where id = '"+id+"'";
+		String query = "delete from b05_book where no = '"+id+"'";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
 			result = ps.executeUpdate();
 		}catch(SQLException se){
-			System.out.println(" insertDB() query error~ " + query);
+			System.out.println(" deleteDB() query error~ " + query);
 		}catch(Exception e) {
-			System.out.println(" insertDB() error  ~ : ");
+			System.out.println(" deleteDB() error  ~ : ");
 		}finally {
 			common.close(connection, ps, rs);
 		}
