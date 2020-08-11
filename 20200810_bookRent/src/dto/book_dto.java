@@ -1,34 +1,41 @@
 package dto;
 
 public class book_dto {
-	String id, name, address, tel, reg_date;
-	int age;
-	public book_dto(String id, String name, String address, String tel, int age, String reg_date) {
+
+	String no, name, publisher, writer, reg_date, rent_gubun;
+
+	public book_dto(String no, String name, String publisher, String writer, String reg_date, String rent_gubun) {
 		super();
-		this.id = id;
+		this.no = no;
 		this.name = name;
-		this.address = address;
-		this.tel = tel;
+		this.publisher = publisher;
+		this.writer = writer;
 		this.reg_date = reg_date;
-		this.age = age;
+		this.rent_gubun = rent_gubun;
 	}
-	public String getId() {
-		return id;
+
+	public String getNo() {
+		return no;
 	}
+
 	public String getName() {
 		return name;
 	}
-	public String getAddress() {
-		return address;
+
+	public String getPublisher() {
+		return publisher;
 	}
-	public String getTel() {
-		return tel;
+
+	public String getWriter() {
+		return writer;
 	}
+
 	public String getReg_date() {
 		return reg_date;
 	}
-	public int getAge() {
-		return age;
+
+	public String getRent_gubun() {
+		return rent_gubun;
 	}
 	
 	

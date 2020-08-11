@@ -97,20 +97,20 @@ public class score_dao {
 		return result;
 		}
 		
-		public int deleteDB(String no) {
-			int result = 0;
-			String query = "delete from t05_score where no = '"+no+"'";
-			try {
-				connection = common.getConnection();
-				ps = connection.prepareStatement(query);
-				result = ps.executeUpdate();
-			}catch(SQLException se){
-				System.out.println(" insertDB() query error~ " + query);
-			}catch(Exception e) {
-				System.out.println(" insertDB() error  ~ : ");
-			}finally {
-				common.close(connection, ps, rs);
-			}
+	public int deleteDB(String no) {
+		int result = 0;
+		String query = "delete from t05_score where id = '"+no+"'";
+		try {
+			connection = common.getConnection();
+			ps = connection.prepareStatement(query);
+			result = ps.executeUpdate();
+		}catch(SQLException se){
+			System.out.println(" insertDB() query error~ " + query);
+		}catch(Exception e) {
+			System.out.println(" insertDB() error  ~ : ");
+		}finally {
+			common.close(connection, ps, rs);
+		}
 		
 		
 		

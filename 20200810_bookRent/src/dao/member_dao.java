@@ -8,19 +8,29 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import common.DBConnectionOracle;
-import dto.book_dto;
+import dto.member_dto;
 
-public class book_dao {
-
+public class member_dao {
+	
 	public String getNo(String no) {
 		DecimalFormat df = new DecimalFormat("0000");
 		String cutno = no.substring(1);
 		int pulsNo = Integer.parseInt(cutno)+1;
-		String result = "K"+df.format(pulsNo);
+		String result = "B"+df.format(pulsNo);
 		return result;
 	}
 	
-
+	public static String phone(String src) {
+	    if (src == null) {
+	      return "";
+	    }
+	    if (src.length() == 8) {
+	      return src.replaceFirst("^([0-9]{4})([0-9]{4})$", "$1-$2");
+	    } else if (src.length() == 12) {
+	      return src.replaceFirst("(^[0-9]{4})([0-9]{4})([0-9]{4})$", "$1-$2-$3");
+	    }
+	    return src.replaceFirst("(^02|[0-9]{3})([0-9]{3,4})([0-9]{4})$", "$1-$2-$3");
+	  }
 
 	DBConnectionOracle common = new DBConnectionOracle();
 	Connection connection = null;
@@ -28,25 +38,25 @@ public class book_dao {
 	ResultSet rs = null;
 	
 	String query = "";
-	public ArrayList<book_dto> selectDB(int showGubun, String serchId, String serchName) {
-		ArrayList<book_dto> arr = new ArrayList<>();
-		if(showGubun == 1)query = "select * from b05_book ORDER BY no asc";
-		else if(showGubun == 2)query = "select * from b05_book where id like '%"+serchId+"%' ORDER BY no asc";
-		else if(showGubun == 3)query = "select * from b05_book where name like '%"+serchName+" ORDER BY no asc%'";
+	public ArrayList<member_dto> selectDB(int showGubun, String serchId, String serchName) {
+		ArrayList<member_dto> arr = new ArrayList<>();
+		if(showGubun == 1)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember ORDER BY id asc";
+		else if(showGubun == 2)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where id like '%"+serchId+"%' ORDER BY id asc";
+		else if(showGubun == 3)query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where name like '%"+serchName+" ORDER BY id asc%'";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				String no = rs.getNString(1);
+				String id = rs.getNString(1);
 				String name = rs.getNString(2);
-				String publisher = rs.getNString(3);
-				String writer = rs.getNString(4);
-				String reg_date = rs.getNString(5);
-				String rent_gubun = rs.getNString(6);
+				String address = rs.getNString(3);
+				String tel = rs.getNString(4);
+				int age = rs.getInt(5);
+				String reg_date = rs.getNString(6);
 			
-				book_dto dto = new book_dto(no, name, publisher, writer, reg_date, rent_gubun);
+				member_dto dto = new member_dto(id,name,address,tel,age,reg_date);
 				arr.add(dto);
 				
 			}
