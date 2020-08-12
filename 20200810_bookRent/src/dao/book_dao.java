@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 import common.DBConnectionOracle;
 import dto.book_dto;
+import dto.member_dto;
 
 public class book_dao {
 
 	public String getNo(String no) {
-		DecimalFormat df = new DecimalFormat("0000");
+		DecimalFormat df = new DecimalFormat("000");
 		String cutno = no.substring(1);
 		int pulsNo = Integer.parseInt(cutno)+1;
 		String result = "K"+df.format(pulsNo);
@@ -62,6 +63,37 @@ public class book_dao {
 		return arr;
 	}
 	
+	
+	public ArrayList<book_dto> selectDBId(String serchNo) {
+		ArrayList<book_dto> arr = new ArrayList<>();
+		query = "select no, name, publisher, writer, to_char(reg_date, 'yyyy-MM-dd'), rent_gubun from b05_book where no = '"+serchNo+"' ORDER BY no asc";
+		try {
+			connection = common.getConnection();
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String no = rs.getNString(1);
+				String name = rs.getNString(2);
+				String publisher = rs.getNString(3);
+				String writer = rs.getNString(4);
+				String reg_date = rs.getNString(5);
+				String rent_gubun = rs.getNString(6);
+			
+				book_dto dto = new book_dto(no, name, publisher, writer, reg_date, rent_gubun);
+				arr.add(dto);
+				
+			}
+		}catch(SQLException se){
+			System.out.println(" selectDB() query error~ " + query);
+		}catch(Exception e) {
+			System.out.println(" selectDB() error  ~ : ");
+		}finally {
+			common.close(connection, ps, rs);
+		}
+		
+		return arr;
+	}
 	public String insertDBNo() {
 		String a = "";
 		query = "select max(no) from b05_book";

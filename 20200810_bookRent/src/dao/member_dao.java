@@ -71,6 +71,37 @@ public class member_dao {
 		return arr;
 	}
 	
+	public ArrayList<member_dto> selectDBId(String serchId) {
+		ArrayList<member_dto> arr = new ArrayList<>();
+		query = "select id, name, address, tel, age, to_char(reg_date, 'yyyy-MM-dd') from b05_bookmember where id = '"+serchId+"'ORDER BY id asc";
+		try {
+			connection = common.getConnection();
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String id = rs.getNString(1);
+				String name = rs.getNString(2);
+				String address = rs.getNString(3);
+				String tel = rs.getNString(4);
+				int age = rs.getInt(5);
+				String reg_date = rs.getNString(6);
+			
+				member_dto dto = new member_dto(id,name,address,tel,age,reg_date);
+				arr.add(dto);
+				
+			}
+		}catch(SQLException se){
+			System.out.println(" selectDB() query error~ " + query);
+		}catch(Exception e) {
+			System.out.println(" selectDB() error  ~ : ");
+		}finally {
+			common.close(connection, ps, rs);
+		}
+		
+		return arr;
+	}
+	
 	public String insertDBNo() {
 		String a = "";
 		query = "select max(id) from b05_bookmember";
