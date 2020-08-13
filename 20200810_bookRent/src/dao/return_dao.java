@@ -35,7 +35,7 @@ public class return_dao {
 	
 	public int updateReturnDate(String book_no) {
 		int result = 0;
-		String query = "insert into b05_rent (return_date) values (sysdate) where no = (select rent_date from (select rent_date from b05_rent order where book_no = '"+book_no+"'by asc) where ROWNUM = 1)";
+		String query = "UPDATE b05_rent SET return_date = sysdate where rent_date = (select max(rent_date) from b05_rent where book_no = '"+book_no+"')";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
