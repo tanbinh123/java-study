@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.book_dao;
-import dao.member_dao;
 import dao.info_dao;
+import dao.member_dao;
 import dao.rent_dao;
 import dao.return_dao;
 import dto.book_dto;
-import dto.member_dto;
 import dto.info_dto;
+import dto.member_dto;
 import dto.rent_dto;
 
 public class Main {
@@ -30,10 +30,10 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		int workGubun = 0, gubun = 0, showGubun = 0, age = 0;
 		String telValue = "", tel = "";
-
+		 
 		do {
 			try {
-				System.out.println("║===========================================║");
+				System.out.println("║===========================================║");//메인
 				System.out.println("║ _      _  _                               ║\r\n"
 						+ "║| |    (_)| |                              ║\r\n"
 						+ "║| |     _ | |__   _ __   __ _  _ __  _   _ ║\r\n"
@@ -51,7 +51,7 @@ public class Main {
 				System.out.print("입력 : ");
 				workGubun = sc.nextInt();
 
-				if (workGubun == 1) {
+				if (workGubun == 1) {//회원관리
 					System.out.println("║============================================║");
 					System.out.println("║___  ___                  _                 ║\r\n"
 							+ "║|  \\/  |                 | |                ║\r\n"
@@ -66,7 +66,7 @@ public class Main {
 					System.out.println("║============================================║");
 					System.out.print("입력 : ");
 					gubun = sc.nextInt();
-					if (gubun == 1) {
+					if (gubun == 1) {//회원관리/회원조회
 						System.out.println("║===========================================║");
 						System.out.println("" + "║           _   _  _                        ║\r\n"
 								+ "║          | | | |(_)                       ║\r\n"
@@ -80,9 +80,9 @@ public class Main {
 						System.out.println("║===========================================║");
 						System.out.print("입력 : ");
 						showGubun = sc.nextInt();
-						if (showGubun == 1) {
+						if (showGubun == 1) {//회원관리/회원조회/전체조회
 							memberArr = memberDao.selectDB(showGubun, "", "");
-						} else if (showGubun == 2) {
+						} else if (showGubun == 2) {//회원관리/회원조회/아이디로조회
 							System.out.println("║===========================================║");
 							System.out.println("║             아이디로 회원 조회                     ║");
 							System.out.println("║===========================================║");
@@ -90,7 +90,7 @@ public class Main {
 							String id = sc.next();
 							id = id.toUpperCase();
 							memberArr = memberDao.selectDB(showGubun, id, "");
-						} else if (showGubun == 3) {
+						} else if (showGubun == 3) {//회원관리/회원조회/이름으로조회
 							System.out.println("║===========================================║");
 							System.out.println("║             이름으로 회원 조회                     ║");
 							System.out.println("║===========================================║");
@@ -98,7 +98,7 @@ public class Main {
 							String name = sc.next();
 							memberArr = memberDao.selectDB(showGubun, "", name);
 						}
-						if (memberArr.size() != 0) {
+						if (memberArr.size() != 0) {//조회 결과
 
 							System.out.println("║=========================================================║");
 							System.out.println("" + "║          ______                    _  _                 ║\r\n"
@@ -120,7 +120,7 @@ public class Main {
 							}
 							System.out.println("║=========================================================║");
 						}
-					} else if (gubun == 2) {
+					} else if (gubun == 2) {//회원관리/회원등록
 						String id = "";
 						memberArr = memberDao.selectDB(1, "", "");
 						if (memberArr.size() == 0) {
@@ -169,7 +169,7 @@ public class Main {
 						int result = memberDao.insertDB(id, name, address, Tel, age);
 						System.out.println("║===============" + result + "행 등록되었습니다============║");
 
-					} else if (gubun == 3) {
+					} else if (gubun == 3) {//회원관리/회원수정
 						System.out.println("║===========================================║");
 						System.out.println("║                회원 정보 수정                      ║");
 						System.out.println("║===========================================║");
@@ -214,7 +214,7 @@ public class Main {
 						int result = memberDao.updateDB(id, name, address, tel, age);
 						System.out.println("║===============" + result + "행 수정되었습니다============║");
 
-					} else if (gubun == 4) {
+					} else if (gubun == 4) {//회원관리/회원삭제
 						System.out.println("║===========================================║");
 						System.out.println("║                 회원 삭제                           ║");
 						System.out.println("║===========================================║");
@@ -225,7 +225,7 @@ public class Main {
 						System.out.println("║===============" + result + "행 삭제되었습니다============║");
 					} else if (gubun == 0) {
 					}
-				} else if (workGubun == 2) {
+				} else if (workGubun == 2) {//도서관리
 					System.out.println("║===========================================║");
 					System.out.println("║       ______                _             ║\r\n"
 							+ "║       | ___ \\              | |            ║\r\n"
@@ -240,7 +240,7 @@ public class Main {
 					System.out.println("║===========================================║");
 					System.out.print("입력 : ");
 					gubun = sc.nextInt();
-					if (gubun == 1) {
+					if (gubun == 1) {//도서관리/도서조회
 						System.out.println("║===========================================║");
 						System.out.println("" + "║           _   _  _                        ║\r\n"
 								+ "║          | | | |(_)                       ║\r\n"
@@ -255,9 +255,9 @@ public class Main {
 						System.out.println("║===========================================║");
 						System.out.print("입력 : ");
 						showGubun = sc.nextInt();
-						if (showGubun == 1) {
+						if (showGubun == 1) {//도서관리/도서조회/전체조회
 							bookArr = bookDao.selectDB(showGubun, "", "", "");
-						} else if (showGubun == 2) {
+						} else if (showGubun == 2) {//도서관리/도서조회/책제목으로조회
 							System.out.println("║===========================================║");
 							System.out.println("║             책이름으로 회원 조회                  ║");
 							System.out.println("║===========================================║");
@@ -265,7 +265,7 @@ public class Main {
 							String no = sc.next();
 							no = no.toUpperCase();
 							bookArr = bookDao.selectDB(showGubun, no, "", "");
-						} else if (showGubun == 3) {
+						} else if (showGubun == 3) {//도서관리/도서조회/작가명으로조회
 							System.out.println("║===========================================║");
 							System.out.println("║            작가명으로 회원 조회                    ║");
 							System.out.println("║===========================================║");
@@ -274,7 +274,7 @@ public class Main {
 							bookArr = bookDao.selectDB(showGubun, "", name, "");
 						}
 
-						if (bookArr.size() != 0) {
+						if (bookArr.size() != 0) {//결과 화면
 							System.out.println("║=================================================║");
 							System.out.println("" + "║       ______                    _  _            ║\r\n"
 									+ "║       | ___ \\                  | || |           ║\r\n"
@@ -296,7 +296,7 @@ public class Main {
 							}
 							System.out.println("║=================================================║");
 						}
-					} else if (gubun == 2) {
+					} else if (gubun == 2) {//도서관리/도서등록
 						String no = "";
 						bookArr = bookDao.selectDB(1, "", "", "");
 						if (bookArr.size() == 0) {
@@ -318,7 +318,7 @@ public class Main {
 
 						int result = bookDao.insertDB(no, name, publisher, writer, rent_gubun);
 						System.out.println("║===============" + result + "행 등록되었습니다============║");
-					} else if (gubun == 3) {
+					} else if (gubun == 3) {//도서관리/도서수정
 						System.out.println("║===========================================║");
 						System.out.println("║                  도서 정보 수정                   ║");
 						System.out.println("║===========================================║");
@@ -334,9 +334,9 @@ public class Main {
 						String writer = sc.next();
 						int result = bookDao.updateDB(no, name, publisher, writer);
 						System.out.println("║===============" + result + "행 수정되었습니다============║");
-					} else if (gubun == 4) {
+					} else if (gubun == 4) {//도서관리/도서삭제
 						System.out.println("║===========================================║");
-						System.out.println("║                 회원 삭제                           ║");
+						System.out.println("║                 도서 삭제                           ║");
 						System.out.println("║===========================================║");
 						System.out.print("삭제 할 번호 검색 : ");
 						String id = sc.next();
@@ -344,7 +344,7 @@ public class Main {
 						int result = bookDao.deleteDB(id);
 						System.out.println("║===============" + result + "행 삭제되었습니다============║");
 					}
-				} else if (workGubun == 3) {
+				} else if (workGubun == 3) {//도서대여
 
 					int memberExist = 0;
 					String member_id = "";
@@ -412,7 +412,7 @@ public class Main {
 					System.out.println("║=================================================║");
 					System.out.println(memberArr.get(0).getName() + "님 ║ " + bookArr.get(0).getName() + " ║ " + result
 							+ "권 대여되었습니다.");
-				} else if (workGubun == 4) {
+				} else if (workGubun == 4) {//도서반납
 					int bookExist = 0;
 					do {
 						System.out.println("║===========================================║");
@@ -448,7 +448,7 @@ public class Main {
 						}
 					} while (bookExist != 0);
 
-				} else if (workGubun == 5) {
+				} else if (workGubun == 5) {//회원정보
 					int infoKeep = 0;
 					int memberRentHistory = 0;
 					do {
@@ -502,7 +502,7 @@ public class Main {
 						}
 					} while (infoKeep != 0);
 
-				} else if (workGubun == 6) {
+				} else if (workGubun == 6) {//도서정보
 					int infoKeep = 0;
 					int memberRentHistory = 0;
 					do {
