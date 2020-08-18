@@ -491,14 +491,14 @@ public class Main {
 									}
 									System.out.println("║=================================================║");
 								} else if (InfoArr.size() == 0) {
-									System.out.println("회원 아이디를 다시 입력해주세요");
+									System.out.println("회원 아이디를 다시 입력해주세요.");
 								}
 							} else if (memberRentHistory == 0) {
 								workGubun = 0;
 								infoKeep = 0;
 							}
 						} catch (Exception e) {
-							System.out.println("다시 입력해주세요");
+							System.out.println("다시 입력해주세요.");
 						}
 					} while (infoKeep != 0);
 
