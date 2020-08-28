@@ -75,22 +75,22 @@ public class CarInfo_dao {
 	String query = "";
 	public ArrayList<CarInfo_dto> selectDB(int showGubun, String searchMade, String searchModelName, String searchCarNumber) {
 		ArrayList<CarInfo_dto> arr = new ArrayList<>();
-		if(showGubun == 1)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, a.auto_yn, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
+		if(showGubun == 1)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
 									"ORDER BY no asc";
-		else if(showGubun == 2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, a.auto_yn, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
+		else if(showGubun == 2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
 									"and car_made like '%"+searchMade+"%' ORDER BY no asc";
-		else if(showGubun == 3)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, a.auto_yn, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
+		else if(showGubun == 3)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
 									"and model_name like '%"+searchModelName+"%' ORDER BY no asc";
-		else if(showGubun == 4)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, a.auto_yn, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
+		else if(showGubun == 4)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, a.option_yn, a.accident_yn, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), a.rent_gubun \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
