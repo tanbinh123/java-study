@@ -16,7 +16,9 @@ public class Main {
 		ArrayList<CarInfo_dto> CarInfoArr = new ArrayList<>();
 		CarInfo_dao CarInfoDao = new CarInfo_dao();
 		Scanner sc = new Scanner(System.in);
-		int gubun = -1;
+		int gubun = -1, showGubun = -1;
+		String showShutDown = "", backToMain = "";
+		String showGubun_pass = "";
 
 		do {
 			try {
@@ -32,94 +34,111 @@ public class Main {
 				gubun = sc.nextInt();
 
 				// 조회 화면
+
 				if (gubun == 1) {
-					System.out.println("=========================================");
-					System.out.println("\t\t조회 화면");
-					System.out.println("=========================================");
-					System.out.println("   전체 조회-------[1]    제조사별 조회------[2]");
-					System.out.println("   모델명으로 조회--[3]     차번호로 조회------[4]");
-					System.out.println("   메인 화면으로----[0]");
-					System.out.println("=========================================");
-					System.out.print("입력 : ");
-					int showGubun = sc.nextInt();
+					do {
+						System.out.println("=========================================");
+						System.out.println("\t\t조회 화면");
+						System.out.println("=========================================");
+						System.out.println("   제조사별 조회------[1]     모델명으로 조회--[2]");
+						System.out.println("   차번호로 조회------[3]     전체 조회------[9]");
+						System.out.println("   메인 화면으로----[0]");
+						System.out.println("=========================================");
+						System.out.print("입력 : ");
+						showGubun = sc.nextInt();
 
-					// 전체 조회
-					if (showGubun == 1) {
-						CarInfoArr = CarInfoDao.selectDB(1, "", "", "");
+						// 전체 조회
+						if (showGubun == 9) {
+							CarInfoArr = CarInfoDao.selectDB(1, "", "", "");
 
-						// 제조사별로 조회 + 예외처리
-					} else if (showGubun == 2) {
-						String searchMade, searchMade_pass = "";
-						do {
-							System.out.println("================================================");
-							System.out.println("\t\t제조사별로 조회");
-							System.out.println("================================================");
-							System.out.println("현대-------[10]   기아------[20]   르노삼성----[30]");
-							System.out.println("쌍용------[40]    쉐보레------[50]  빤츠-------[60]");
-							System.out.println("뱜떠블유----[70]   아우디-----[80]   테슬라------[90]");
-							System.out.println("================================================");
-							System.out.print("입력 : ");
-							searchMade = sc.next();
-							searchMade_pass = CarInfoDao.getCarMadeEx(searchMade);
-						} while (!searchMade_pass.equals("ture"));
-						CarInfoArr = CarInfoDao.selectDB(2, searchMade, "", "");
+							// 제조사별로 조회 + 예외처리
+						} else if (showGubun == 1) {
+							String searchMade, searchMade_pass = "";
+							do {
+								System.out.println("================================================");
+								System.out.println("\t\t제조사별로 조회");
+								System.out.println("================================================");
+								System.out.println("현대-------[10]   기아------[20]   르노삼성----[30]");
+								System.out.println("쌍용------[40]    쉐보레------[50]  빤츠-------[60]");
+								System.out.println("뱜떠블유----[70]   아우디-----[80]   테슬라------[90]");
+								System.out.println("================================================");
+								System.out.print("입력 : ");
+								searchMade = sc.next();
+								searchMade_pass = CarInfoDao.getCarMadeEx(searchMade);
+							} while (!searchMade_pass.equals("ture"));
+							CarInfoArr = CarInfoDao.selectDB(2, searchMade, "", "");
 
-						// 모델명으로 조회 + 예외처리
-					} else if (showGubun == 3) {
-						String searchModelName, searchModelName_pass = "";
-						do {
-							System.out.println("================================================");
-							System.out.println("\t\t모델명으로 조회");
-							System.out.println("================================================");
-							System.out.print("입력 : ");
-							searchModelName = sc.next();
-							searchModelName_pass = CarInfoDao.getStringLengthEx("모델명", searchModelName, 20);
-						} while (!searchModelName_pass.equals("ture"));
-						CarInfoArr = CarInfoDao.selectDB(3, "", searchModelName, "");
+							// 모델명으로 조회 + 예외처리
+						} else if (showGubun == 2) {
+							String searchModelName, searchModelName_pass = "";
+							do {
+								System.out.println("================================================");
+								System.out.println("\t\t모델명으로 조회");
+								System.out.println("================================================");
+								System.out.print("입력 : ");
+								searchModelName = sc.next();
+								searchModelName_pass = CarInfoDao.getStringLengthEx("모델명", searchModelName, 20);
+							} while (!searchModelName_pass.equals("ture"));
+							CarInfoArr = CarInfoDao.selectDB(3, "", searchModelName, "");
 
-						// 차번호로 조회 + 예외처리
-					} else if (showGubun == 4) {
-						String searchCarNumber, searchCarNumber_pass = "";
-						do {
-							System.out.println("================================================");
-							System.out.println("\t\t차번호로 조회");
-							System.out.println("================================================");
-							System.out.print("입력 : ");
-							searchCarNumber = sc.next();
-							searchCarNumber_pass = CarInfoDao.getStringLengthEx("차번호", searchCarNumber, 6);
-						} while (!searchCarNumber_pass.equals("ture"));
-						CarInfoArr = CarInfoDao.selectDB(4, "", "", searchCarNumber);
+							// 차번호로 조회 + 예외처리
+						} else if (showGubun == 3) {
+							String searchCarNumber, searchCarNumber_pass = "";
+							do {
+								System.out.println("================================================");
+								System.out.println("\t\t차번호로 조회");
+								System.out.println("================================================");
+								System.out.print("입력 : ");
+								searchCarNumber = sc.next();
+								searchCarNumber_pass = CarInfoDao.getStringLengthEx("차번호", searchCarNumber, 6);
+							} while (!searchCarNumber_pass.equals("ture"));
+							CarInfoArr = CarInfoDao.selectDB(4, "", "", searchCarNumber);
 
-						// 메인화면으로 돌아가기
-					} else if (showGubun == 0) {
-						gubun = -1;
-						continue;
-					}
-
-					// 조회 결과
-					if (CarInfoArr.size() != 0) {
-						System.out.println("================================================================================================================");
-						System.out.println("번호\t모델명\t\t차번호\t제조사\t제조년월\t기어\t옵션유무\t사고유무\t연료\t입고일\t\t대여가능");
-						System.out.println("================================================================================================================");
-						for (int i = 0; i < CarInfoArr.size(); i++) {
-							System.out.print(CarInfoArr.get(i).getNo() + "\t");
-							System.out.print(CarInfoArr.get(i).getModel_name() + "\t");
-							System.out.print(CarInfoArr.get(i).getCar_number() + "\t");
-							System.out.print(CarInfoArr.get(i).getCar_made() + "\t");
-							System.out.print(CarInfoArr.get(i).getCar_made_ym() + "\t");
-							System.out.print(CarInfoArr.get(i).getAuto_yn() + "\t");
-							System.out.print(CarInfoArr.get(i).getOption_yn() + "\t");
-							System.out.print(CarInfoArr.get(i).getAccident_yn() + "\t");
-							System.out.print(CarInfoArr.get(i).getFuel_type() + "\t");
-							System.out.print(CarInfoArr.get(i).getImport_date() + "\t");
-							System.out.print(CarInfoArr.get(i).getRent_gubun() + "\n");
+							// 메인화면으로 돌아가기
+						} else if (showGubun == 0) {
+							gubun = -1;
+							showGubun_pass = "true";
+							backToMain = "true";
+							continue;
 						}
-						System.out.println("================================================================================================================");
-					}
 
-					else if (CarInfoArr.size() == 0) {
-						System.out.println("-----------조회 결과가 없습니다.-----------");
-					}
+						// 조회 결과
+						if (CarInfoArr.size() != 0) {
+							System.out.println("================================================================================================================");
+							System.out.println("번호\t모델명\t\t차번호\t제조사\t제조년월\t기어\t옵션유무\t사고유무\t연료\t입고일\t\t대여가능여부");
+							System.out.println("================================================================================================================");
+							for (int i = 0; i < CarInfoArr.size(); i++) {
+								System.out.print(CarInfoArr.get(i).getNo() + "\t");
+								System.out.print(CarInfoArr.get(i).getModel_name() + "\t");
+								System.out.print(CarInfoArr.get(i).getCar_number() + "\t");
+								System.out.print(CarInfoArr.get(i).getCar_made() + "\t");
+								System.out.print(CarInfoArr.get(i).getCar_made_ym() + "\t");
+								System.out.print(CarInfoArr.get(i).getAuto_yn() + "\t");
+								System.out.print(CarInfoArr.get(i).getOption_yn() + "\t");
+								System.out.print(CarInfoArr.get(i).getAccident_yn() + "\t");
+								System.out.print(CarInfoArr.get(i).getFuel_type() + "\t");
+								System.out.print(CarInfoArr.get(i).getImport_date() + "\t");
+								System.out.print(CarInfoArr.get(i).getRent_gubun() + "\n");
+							}
+							System.out.println("================================================================================================================");
+						}
+
+						else if (CarInfoArr.size() == 0) {
+							System.out.println("-----------조회 결과가 없습니다.-----------");
+						}
+						
+						// 진행 여부
+						System.out.println("조회를 계속하려면 아무거나 입력해주세요.  ---- 메인메뉴로 가기[0]");
+						showShutDown = sc.next();
+						if (showShutDown.equals("0")) {
+							showGubun_pass = "true";
+							backToMain = "true";
+							showGubun = 0;
+						}else {
+							showGubun_pass = "false";
+						}
+
+					} while (!showGubun_pass.equals("true"));
 
 					// 입력 화면
 				} else if (gubun == 2) {
@@ -271,20 +290,22 @@ public class Main {
 					deleteNo = deleteNo.toUpperCase();
 					int deleteResult = CarInfoDao.deleteDB(deleteNo);
 					System.out.println("║===============" + deleteResult + "행 삭제되었습니다============║");
-					
-					
+
 					// 종료
 				} else if (gubun == 0) {
 					break;
 				}
 
 				// 진행 여부
-				System.out.println("계속하려면 아무키나 누르세요  ---- 종료[0]");
+				if(!showGubun_pass.equals("true") && !backToMain.equals("true")) {
+				System.out.println("계속하려면 아무거나 입력해주세요.  ---- 종료[0]");
 				String shutdown = sc.next();
 				if (shutdown.equals("0")) {
 					gubun = 0;
+				}else {
+				
 				}
-
+				}
 			} catch (Exception e) {
 				System.out.println("입력 오류입니다.");
 				gubun = 0;
