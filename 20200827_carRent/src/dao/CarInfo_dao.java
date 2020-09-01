@@ -73,7 +73,7 @@ public class CarInfo_dao {
 	
 	//select
 	String query = "";
-	public ArrayList<CarInfo_dto> selectDB(int showGubun, String searchMade, String searchModelName, String searchCarNumber) {
+	public ArrayList<CarInfo_dto> selectDB(int showGubun, String search) {
 		ArrayList<CarInfo_dto> arr = new ArrayList<>();
 		if(showGubun == 1)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end\r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
@@ -84,17 +84,22 @@ public class CarInfo_dao {
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
-									"and car_made like '%"+searchMade+"%' ORDER BY no asc";
+									"and car_made like '%"+search+"%' ORDER BY no asc";
 		else if(showGubun == 3)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
-									"and model_name like '%"+searchModelName+"%' ORDER BY no asc";
+									"and model_name like '%"+search+"%' ORDER BY no asc";
 		else if(showGubun == 4)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
-									"and car_number like '%"+searchCarNumber+"%' ORDER BY no asc";
+									"and car_number like '%"+search+"%' ORDER BY no asc";
+		else if(showGubun == 5)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
+									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
+									"where a.fuel_type = b.fuel_type\r\n" + 
+									"and a.car_made = c.made_code\r\n" + 
+									"and no like '%"+search+"%' ORDER BY no asc";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);
@@ -173,6 +178,26 @@ public class CarInfo_dao {
 		return result;
 		}
 	
+	//update
+		public int updateDB(String no, String model_name, String car_number, String car_made, String car_made_ym,
+				String auto_yn, String option_yn, String accident_yn, String fuel_type, String import_date
+				) {
+			int result = 0;
+			String query = "update c05_car set model_name ='"+model_name+"', car_number = '"+car_number+"', car_made = '"+car_made+"', car_made_ym = '"+car_made_ym+"', auto_yn = '"+auto_yn+"', option_yn = '"+option_yn+"', accident_yn = '"+accident_yn+"', fuel_type = '"+fuel_type+"', import_date = '"+import_date+"'where no = '"+no+"'";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" updateDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" updateDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+			return result;
+			}
+	
 	//deletDB
 	public int deleteDB(String no) {
 		int result = 0;
@@ -190,6 +215,7 @@ public class CarInfo_dao {
 		}
 		return result;
 	}
+
 }
 
 	
