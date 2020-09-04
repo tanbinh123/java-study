@@ -532,29 +532,63 @@ public class Main {
 					}while(!update_pass.equals("true"));
 					//렌트
 				} else if (gubun == 5) {
-					String carNo_pass = "";
+					String carNo, memberNo;
+					String carNo_pass = "", memberNo_pass = "";
 					
 					// 번호 순서대로 자동으로 추가
 					CarRentArr = CarRentDao.selectDB(1, "");
 					if (CarRentArr.size() == 0) {
 						no = "R001";
 					} else {
-						no = CarRentDao.insertDBNo();
+						no = CarRentDao.selectDBNo();
 						no = CarRentDao.getNo(no);
 					}
-					
-					System.out.println("멤버 번호 입력");
-					String carNo;
-					String memberNo = sc.next();
-					memberNo = memberNo.toUpperCase();
 					do {
-						System.out.println("차량 번호 입력");
+						System.out.println("================================================");
+						System.out.println("\t\t멤버 번호 입력");
+						System.out.println("================================================");
+						System.out.print("입력 : ");
+						memberNo = sc.next();
+						memberNo = memberNo.toUpperCase();
+						memberNo_pass = commonDao.getStringLengthEx("멤버 번호", memberNo, 4);
+					}while(!memberNo_pass.equals("ture"));
+					
+					do {
+						System.out.println("================================================");
+						System.out.println("\t\t차량 번호 입력");
+						System.out.println("================================================");
+						System.out.print("입력 : ");
 						carNo = sc.next();
 						carNo = carNo.toUpperCase();
+						//글자
 						carNo_pass = commonDao.getStringLengthEx("차량 번호", carNo, 4);
+						
+						//차량 유무 검증
+						try {
+							CarRentArr = CarRentDao.selectDB(2, carNo);
+								if(CarRentArr.get(0).getCar_no().equals(carNo)) {
+									carNo_pass = "ture";
+								}
+						}catch(Exception e) {
+							carNo_pass = "false";
+							System.out.println("차량 번호를 확인하고 다시 입력해주세요.");
+						}
+						
+						//대여가능여부
+						CarInfoArr = CarInfoDao.selectDB(5, carNo);
+						if(CarInfoArr.get(0).getRent_gubun().equals("가능")) {
+							carNo_pass = "ture";
+						}else if(CarInfoArr.get(0).getRent_gubun().equals("불가능")){
+							System.out.println("이미 대여 중인 차량입니다. 다른 차량을 이용해주세요.");
+							carNo_pass = "false";
+						}
 					}while(!carNo_pass.equals("ture"));
 					
-					System.out.println("렌트일 입력");
+					System.out.println("================================================");
+					System.out.println("\t\t차량 대여일 입력");
+					System.out.println("ex)19990101");
+					System.out.println("================================================");
+					System.out.print("입력 : ");
 					String rentDate = sc.next();
 				
 					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate);

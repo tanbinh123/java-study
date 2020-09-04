@@ -34,26 +34,12 @@ public class CarRent_dao {
 			if(showGubun == 1)query = "select a.rent_no,a.member_no,a.car_no,to_char(a.rent_date, 'yyyy-MM-dd'),to_char(a.return_day, 'yyyy-MM-dd'),to_char(a.return_date, 'yyyy-MM-dd')\r\n" + 
 										"from c05_carrent a, c05_car b\r\n" + 
 										"where a.car_no = b.no ORDER BY no asc";
-			else if(showGubun == 2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end\r\n" + 
-										"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
-										"where a.fuel_type = b.fuel_type\r\n" + 
-										"and a.car_made = c.made_code\r\n" + 
-										"and car_made like '%"+search+"%' ORDER BY no asc";
-			else if(showGubun == 3)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
-										"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
-										"where a.fuel_type = b.fuel_type\r\n" + 
-										"and a.car_made = c.made_code\r\n" + 
-										"and model_name like '%"+search+"%' ORDER BY no asc";
-			else if(showGubun == 4)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
-										"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
-										"where a.fuel_type = b.fuel_type\r\n" + 
-										"and a.car_made = c.made_code\r\n" + 
-										"and car_number like '%"+search+"%' ORDER BY no asc";
-			else if(showGubun == 5)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
-										"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
-										"where a.fuel_type = b.fuel_type\r\n" + 
-										"and a.car_made = c.made_code\r\n" + 
-										"and no = '"+search+"' ORDER BY no asc";
+			else if(showGubun ==2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
+									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
+									"where a.fuel_type = b.fuel_type\r\n" + 
+									"and a.car_made = c.made_code\r\n" + 
+									"and no = '"+search+"' ORDER BY no asc";
+		
 			try {
 				connection = common.getConnection();
 				ps = connection.prepareStatement(query);
@@ -83,8 +69,9 @@ public class CarRent_dao {
 			return arr;
 		}
 		
+		
 		//no에서 가장 큰 번호만 조회
-		public String insertDBNo() {
+		public String selectDBNo() {
 			String result = "";
 			query = "select max(rent_no) from c05_carrent";
 			try {

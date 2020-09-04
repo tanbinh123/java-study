@@ -34,7 +34,7 @@ public class DBConnectionOracle {
 	public void close(Connection con, PreparedStatement ps) {
 		try {
 			if(ps != null) 		ps.close();
-			if(con != null)		con.close();mqsl
+			if(con != null)		con.close();
 		} catch(Exception e) {
 			System.out.println("=========== 종료 error ===========");	
 		}
