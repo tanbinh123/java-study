@@ -3,10 +3,11 @@ package main;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
 import dao.CarInfo_dao;
+import dao.CarRent_dao;
+import dao.common_dao;
 import dto.CarInfo_dto;
+import dto.CarRent_dto;
 
 public class Main {
 
@@ -14,7 +15,10 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		ArrayList<CarInfo_dto> CarInfoArr = new ArrayList<>();
+		ArrayList<CarRent_dto> CarRentArr = new ArrayList<>();
 		CarInfo_dao CarInfoDao = new CarInfo_dao();
+		CarRent_dao CarRentDao = new CarRent_dao();
+		common_dao commonDao = new common_dao();
 		Scanner sc = new Scanner(System.in);
 		int gubun = -1, showGubun = -1;
 		String ShutDown = "", backToMain = "";
@@ -35,6 +39,7 @@ public class Main {
 				System.out.println("=====================================");
 				System.out.println("   조회-------[1]        등록------[2]");
 				System.out.println("   수정-------[3]        삭제------[4]");
+				System.out.println("   렌트-------[5]        반납------[6]");
 				System.out.println("   종료-------[0]");
 				System.out.println("=====================================");
 				System.out.print("입력 : ");
@@ -71,7 +76,7 @@ public class Main {
 								System.out.println("================================================");
 								System.out.print("입력 : ");
 								searchMade = sc.next();
-								searchMade_pass = CarInfoDao.getCarMadeEx(searchMade);
+								searchMade_pass = commonDao.getCarMadeEx(searchMade);
 							} while (!searchMade_pass.equals("ture"));
 							CarInfoArr = CarInfoDao.selectDB(2, searchMade);
 
@@ -84,7 +89,7 @@ public class Main {
 								System.out.println("================================================");
 								System.out.print("입력 : ");
 								searchModelName = sc.next();
-								searchModelName_pass = CarInfoDao.getStringLengthEx("모델명", searchModelName, 20);
+								searchModelName_pass = commonDao.getStringLengthEx("모델명", searchModelName, 20);
 							} while (!searchModelName_pass.equals("ture"));
 							CarInfoArr = CarInfoDao.selectDB(3, searchModelName);
 
@@ -97,7 +102,7 @@ public class Main {
 								System.out.println("================================================");
 								System.out.print("입력 : ");
 								searchCarNumber = sc.next();
-								searchCarNumber_pass = CarInfoDao.getStringLengthEx("차번호", searchCarNumber, 6);
+								searchCarNumber_pass = commonDao.getStringLengthEx("차번호", searchCarNumber, 6);
 							} while (!searchCarNumber_pass.equals("ture"));
 							CarInfoArr = CarInfoDao.selectDB(4, searchCarNumber);
 
@@ -135,7 +140,7 @@ public class Main {
 						}
 
 						// 진행 여부
-						System.out.println("조회를 계속하려면 아무거나 입력해주세요.  ---- or 메인메뉴로 가기[0]");
+						System.out.println("조회를 계속하려면 아무거나 입력해주세요.  ---- 조회 계속하기[1] 메인메뉴로 가기[0]");
 						ShutDown = sc.next();
 						if (ShutDown.equals("0")) {
 							showGubun_pass = "true";
@@ -166,7 +171,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						model_name = sc.next();
-						model_name_pass = CarInfoDao.getStringLengthEx("모델명", model_name, 20);
+						model_name_pass = commonDao.getStringLengthEx("모델명", model_name, 20);
 					} while (!model_name_pass.equals("ture"));
 
 					// 차번호 입력 + 예외처리
@@ -176,7 +181,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						car_number = sc.next();
-						car_number_pass = CarInfoDao.getStringLengthEx("차번호", car_number, 15);
+						car_number_pass = commonDao.getStringLengthEx("차번호", car_number, 15);
 					} while (!car_number_pass.equals("ture"));
 
 					// 제조사 입력 + 예외처리
@@ -190,7 +195,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						car_made = sc.next();
-						car_made_pass = CarInfoDao.getCarMadeEx(car_made);
+						car_made_pass = commonDao.getCarMadeEx(car_made);
 					} while (!car_made_pass.equals("ture"));
 
 					// 차량 제조년월 입력 + 예외처리
@@ -201,7 +206,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						car_made_ym = sc.next();
-						car_made_ym_pass = CarInfoDao.getStringLengthEx("차량 제조년월", car_made_ym, 6);
+						car_made_ym_pass = commonDao.getStringLengthEx("차량 제조년월", car_made_ym, 6);
 					} while (!car_made_ym_pass.equals("ture"));
 
 					// 차량 기어 입력 + 예외처리
@@ -212,7 +217,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						auto_yn = sc.next();
-						auto_yn = CarInfoDao.getYNResult(auto_yn);
+						auto_yn = commonDao.getYNResult(auto_yn);
 						if (auto_yn.equals("y") || auto_yn.equals("n"))
 							auto_yn_pass = "ture";
 						else
@@ -227,7 +232,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						option_yn = sc.next();
-						option_yn = CarInfoDao.getYNResult(option_yn);
+						option_yn = commonDao.getYNResult(option_yn);
 						if (option_yn.equals("y") || option_yn.equals("n"))
 							option_yn_pass = "ture";
 						else
@@ -242,7 +247,7 @@ public class Main {
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						accident_yn = sc.next();
-						accident_yn = CarInfoDao.getYNResult(accident_yn);
+						accident_yn = commonDao.getYNResult(accident_yn);
 						if (accident_yn.equals("y") || accident_yn.equals("n"))
 							accident_yn_pass = "ture";
 						else
@@ -312,7 +317,7 @@ public class Main {
 							do {
 								System.out.println("수정하시겠습니까? (Y/N)");// y면 진행 n면 메인화면
 								updateYn = sc.next();
-								updateYn = CarInfoDao.getYNResult(updateYn);
+								updateYn = commonDao.getYNResult(updateYn);
 								if (updateYn.equals("y") || updateYn.equals("n"))
 									updateYn_pass = "ture";
 								else
@@ -326,7 +331,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									model_name = sc.next();
-									model_name_pass = CarInfoDao.getStringLengthEx("모델명", model_name, 20);
+									model_name_pass = commonDao.getStringLengthEx("모델명", model_name, 20);
 								} while (!model_name_pass.equals("ture"));
 
 								// 차번호 입력 + 예외처리
@@ -336,7 +341,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									car_number = sc.next();
-									car_number_pass = CarInfoDao.getStringLengthEx("차번호", car_number, 15);
+									car_number_pass = commonDao.getStringLengthEx("차번호", car_number, 15);
 								} while (!car_number_pass.equals("ture"));
 
 								// 제조사 입력 + 예외처리
@@ -350,7 +355,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									car_made = sc.next();
-									car_made_pass = CarInfoDao.getCarMadeEx(car_made);
+									car_made_pass = commonDao.getCarMadeEx(car_made);
 								} while (!car_made_pass.equals("ture"));
 
 								// 차량 제조년월 입력 + 예외처리
@@ -361,7 +366,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									car_made_ym = sc.next();
-									car_made_ym_pass = CarInfoDao.getStringLengthEx("차량 제조년월", car_made_ym, 6);
+									car_made_ym_pass = commonDao.getStringLengthEx("차량 제조년월", car_made_ym, 6);
 								} while (!car_made_ym_pass.equals("ture"));
 
 								// 차량 기어 입력 + 예외처리
@@ -372,7 +377,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									auto_yn = sc.next();
-									auto_yn = CarInfoDao.getYNResult(auto_yn);
+									auto_yn = commonDao.getYNResult(auto_yn);
 									if (auto_yn.equals("y") || auto_yn.equals("n"))
 										auto_yn_pass = "ture";
 									else
@@ -387,7 +392,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									option_yn = sc.next();
-									option_yn = CarInfoDao.getYNResult(option_yn);
+									option_yn = commonDao.getYNResult(option_yn);
 									if (option_yn.equals("y") || option_yn.equals("n"))
 										option_yn_pass = "ture";
 									else
@@ -402,7 +407,7 @@ public class Main {
 									System.out.println("================================================");
 									System.out.print("입력 : ");
 									accident_yn = sc.next();
-									accident_yn = CarInfoDao.getYNResult(accident_yn);
+									accident_yn = commonDao.getYNResult(accident_yn);
 									if (accident_yn.equals("y") || accident_yn.equals("n"))
 										accident_yn_pass = "ture";
 									else
@@ -481,13 +486,13 @@ public class Main {
 								update_pass = "true";
 								backToMain = "true";
 								continue;
-							} else if (CarInfoArr.size() == 0) {
-								System.out.println("-----------조회 결과가 없습니다.-----------");
-							}
+							} 
 
+						}else if (CarInfoArr.size() == 0) {
+							System.out.println("-----------조회 결과가 없습니다.-----------");
 						}
 						// 진행 여부
-						System.out.println("수정를 계속하려면 아무거나 입력해주세요.  ---- or 메인메뉴로 가기[0]");
+						System.out.println("수정를 계속하려면 아무거나 입력해주세요.  ---- 수정 계속하기[1] 메인메뉴로 가기[0]");
 						ShutDown = sc.next();
 						if (ShutDown.equals("0")) {
 							update_pass = "true";
@@ -500,15 +505,63 @@ public class Main {
 
 					// 삭제
 				} else if (gubun == 4) {
-					System.out.println("================================================");
-					System.out.println("\t\t삭제할 등록 번호 입력");
-					System.out.println("================================================");
-					System.out.print("입력 : ");
-					String deleteNo = sc.next();
-					deleteNo = deleteNo.toUpperCase();
-					int deleteResult = CarInfoDao.deleteDB(deleteNo);
-					System.out.println("║===============" + deleteResult + "행 삭제되었습니다============║");
-
+					do {
+						System.out.println("================================================");
+						System.out.println("\t\t삭제할 등록 번호 입력");
+						System.out.println("================================================");
+						System.out.print("입력 : ");
+						String deleteNo = sc.next();
+						deleteNo = deleteNo.toUpperCase();
+						int deleteResult = CarInfoDao.deleteDB(deleteNo);
+						if(deleteResult >= 1) {
+							System.out.println("║===============" + deleteResult + "행 삭제되었습니다============║");
+						}else {
+							System.out.println("-----------삭제 결과가 없습니다.번호를 다시 확인해주세요.-----------");
+						}
+						
+						// 진행 여부
+						System.out.println("삭제를 계속하려면 아무거나 입력해주세요.  ---- or 삭제 계속하기[1] 메인메뉴로 가기[0]");
+						ShutDown = sc.next();
+						if (ShutDown.equals("0")) {
+							update_pass = "true";
+							backToMain = "true";
+							showGubun = 0;
+						} else {
+							update_pass = "false";
+						}
+					}while(!update_pass.equals("true"));
+					//렌트
+				} else if (gubun == 5) {
+					String carNo_pass = "";
+					
+					// 번호 순서대로 자동으로 추가
+					CarRentArr = CarRentDao.selectDB(1, "");
+					if (CarRentArr.size() == 0) {
+						no = "R001";
+					} else {
+						no = CarRentDao.insertDBNo();
+						no = CarRentDao.getNo(no);
+					}
+					
+					System.out.println("멤버 번호 입력");
+					String carNo;
+					String memberNo = sc.next();
+					memberNo = memberNo.toUpperCase();
+					do {
+						System.out.println("차량 번호 입력");
+						carNo = sc.next();
+						carNo = carNo.toUpperCase();
+						carNo_pass = commonDao.getStringLengthEx("차량 번호", carNo, 4);
+					}while(!carNo_pass.equals("ture"));
+					
+					System.out.println("렌트일 입력");
+					String rentDate = sc.next();
+				
+					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate);
+					CarRentDao.updateDB(carNo);
+					System.out.println(rentResult+"행 추가");
+					//반납
+				} else if (gubun == 6) {
 					// 종료
 				} else if (gubun == 0) {
 					break;
@@ -516,7 +569,7 @@ public class Main {
 
 				// 진행 여부
 				if (!showGubun_pass.equals("true") && !backToMain.equals("true") || !update_pass.equals("true") && !backToMain.equals("true")) {
-					System.out.println("계속하려면 아무거나 입력해주세요.  ---- or 종료[0]");
+					System.out.println("계속하려면 아무거나 입력해주세요.  ---- 계속하기[1] 종료[0]");
 					String shutdown = sc.next();
 					if (shutdown.equals("0")) {
 						gubun = 0;
