@@ -55,7 +55,7 @@ public class CarInfo_dao {
 									"from c05_car a, car_common_fuel b, car_common_made c\r\n" + 
 									"where a.fuel_type = b.fuel_type\r\n" + 
 									"and a.car_made = c.made_code\r\n" + 
-									"and no = '"+search+"' ORDER BY no asc";
+									"and a.no = '"+search+"' ORDER BY no asc";
 		try {
 			connection = common.getConnection();
 			ps = connection.prepareStatement(query);

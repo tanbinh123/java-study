@@ -486,9 +486,9 @@ public class Main {
 								update_pass = "true";
 								backToMain = "true";
 								continue;
-							} 
+							}
 
-						}else if (CarInfoArr.size() == 0) {
+						} else if (CarInfoArr.size() == 0) {
 							System.out.println("-----------조회 결과가 없습니다.-----------");
 						}
 						// 진행 여부
@@ -513,12 +513,12 @@ public class Main {
 						String deleteNo = sc.next();
 						deleteNo = deleteNo.toUpperCase();
 						int deleteResult = CarInfoDao.deleteDB(deleteNo);
-						if(deleteResult >= 1) {
+						if (deleteResult >= 1) {
 							System.out.println("║===============" + deleteResult + "행 삭제되었습니다============║");
-						}else {
+						} else {
 							System.out.println("-----------삭제 결과가 없습니다.번호를 다시 확인해주세요.-----------");
 						}
-						
+
 						// 진행 여부
 						System.out.println("삭제를 계속하려면 아무거나 입력해주세요.  ---- or 삭제 계속하기[1] 메인메뉴로 가기[0]");
 						ShutDown = sc.next();
@@ -529,12 +529,13 @@ public class Main {
 						} else {
 							update_pass = "false";
 						}
-					}while(!update_pass.equals("true"));
-					//렌트
+					} while (!update_pass.equals("true"));
+					// 렌트
 				} else if (gubun == 5) {
 					String carNo, memberNo;
 					String carNo_pass = "", memberNo_pass = "";
-					
+					int countResult = 0;
+
 					// 번호 순서대로 자동으로 추가
 					CarRentArr = CarRentDao.selectDB(1, "");
 					if (CarRentArr.size() == 0) {
@@ -551,8 +552,8 @@ public class Main {
 						memberNo = sc.next();
 						memberNo = memberNo.toUpperCase();
 						memberNo_pass = commonDao.getStringLengthEx("멤버 번호", memberNo, 4);
-					}while(!memberNo_pass.equals("ture"));
-					
+					} while (!memberNo_pass.equals("ture"));
+
 					do {
 						System.out.println("================================================");
 						System.out.println("\t\t차량 번호 입력");
@@ -560,42 +561,90 @@ public class Main {
 						System.out.print("입력 : ");
 						carNo = sc.next();
 						carNo = carNo.toUpperCase();
-						//글자
+						// 글자 수 예외처리
 						carNo_pass = commonDao.getStringLengthEx("차량 번호", carNo, 4);
-						
-						//차량 유무 검증
+						// 차량 유무 검증
 						try {
-							CarRentArr = CarRentDao.selectDB(2, carNo);
-								if(CarRentArr.get(0).getCar_no().equals(carNo)) {
+							countResult = CarRentDao.selectCountDB(carNo); // 카운터 1이상이면 차량 있음
+							if (countResult >= 1) {
+								CarInfoArr = CarInfoDao.selectDB(5, carNo); // rent_gubun y,n 조회
+								if (CarInfoArr.get(0).getRent_gubun().equals("가능")) {// y일때
 									carNo_pass = "ture";
+								} else if (CarInfoArr.get(0).getRent_gubun().equals("불가능")) {// n일때
+									System.out.println("이미 대여 중인 차량입니다. 다른 차량을 이용해주세요.");
+									carNo_pass = "false";
 								}
-						}catch(Exception e) {
-							carNo_pass = "false";
+							} else if (countResult == 0) {// 카운터 0일때
+								System.out.println("차량 번호를 확인하고 다시 입력해주세요.");
+								carNo_pass = "false";
+							}
+						} catch (Exception e) {
 							System.out.println("차량 번호를 확인하고 다시 입력해주세요.");
-						}
-						
-						//대여가능여부
-						CarInfoArr = CarInfoDao.selectDB(5, carNo);
-						if(CarInfoArr.get(0).getRent_gubun().equals("가능")) {
-							carNo_pass = "ture";
-						}else if(CarInfoArr.get(0).getRent_gubun().equals("불가능")){
-							System.out.println("이미 대여 중인 차량입니다. 다른 차량을 이용해주세요.");
 							carNo_pass = "false";
 						}
-					}while(!carNo_pass.equals("ture"));
-					
+					} while (!carNo_pass.equals("ture"));
+
 					System.out.println("================================================");
 					System.out.println("\t\t차량 대여일 입력");
 					System.out.println("ex)19990101");
 					System.out.println("================================================");
 					System.out.print("입력 : ");
 					String rentDate = sc.next();
-				
-					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate);
-					CarRentDao.updateDB(carNo);
-					System.out.println(rentResult+"행 추가");
-					//반납
+
+					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate); // rent table 데이터 입력
+					
+					if (rentResult != 0) {
+						CarRentDao.updateDB(carNo,1); // 차량 테이블 rent_gubun 'n'으로 변경
+						System.out.println("║===============차량이 대여되었습니다.===========║");
+					}
+						
+					// 반납
 				} else if (gubun == 6) {
+					String returnNo = "", returnNo_pass = "";
+					int countResult = 0;
+					do {
+						System.out.println("================================================");
+						System.out.println("\t\t반납할 차량 번호 입력");
+						System.out.println("================================================");
+						System.out.print("입력 : ");
+						returnNo = sc.next();
+						returnNo = returnNo.toUpperCase();
+						// 글자 수 예외처리
+						returnNo_pass = commonDao.getStringLengthEx("차량 번호", returnNo, 4);
+						// 차량 유무 검증
+						try {
+							countResult = CarRentDao.selectCountDB2(returnNo); // 카운터 1이상이면 차량 있음
+							if (countResult >= 1) {
+								CarInfoArr = CarInfoDao.selectDB(5, returnNo); // rent_gubun y,n 조회
+								if (CarInfoArr.get(0).getRent_gubun().equals("불가능")) {// n일때
+									returnNo_pass = "ture";
+								} else if (CarInfoArr.get(0).getRent_gubun().equals("가능")) {// y일때
+									System.out.println("이미 반납 완료된 차량입니다.");
+									returnNo_pass = "false";
+								}
+							} else if (countResult == 0) {// 카운터 0일때
+								System.out.println("차량 번호를 확인하고 다시 입력해주세요.");
+								returnNo_pass = "false";
+							}
+						} catch (Exception e) {
+							System.out.println("차량 번호를 확인하고 다시 입력해주세요e.");
+							returnNo_pass = "false";
+						}
+					} while (!returnNo_pass.equals("ture"));
+					
+					System.out.println("================================================");
+					System.out.println("\t\t차량 반납일 입력");
+					System.out.println("ex)19990101");
+					System.out.println("================================================");
+					System.out.print("입력 : ");
+					String returnDate = sc.next();
+					
+					int returnResult = CarRentDao.updateReturnDB(returnNo, returnDate); // rent table 데이터 업데이트
+					int returnDayResult = CarRentDao.updateGetReturnDay(returnNo); // rent day 구해서 업데이트
+					if (returnResult != 0 && returnDayResult != 0)
+						CarRentDao.updateDB(returnNo,2); // 차량 테이블 rent_gubun 'y'으로 변경
+						System.out.println("║===============차량이 반납되었습니다.===========║");
+					
 					// 종료
 				} else if (gubun == 0) {
 					break;

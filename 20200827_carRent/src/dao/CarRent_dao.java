@@ -31,7 +31,7 @@ public class CarRent_dao {
 		String query = "";
 		public ArrayList<CarRent_dto> selectDB(int showGubun, String search) {
 			ArrayList<CarRent_dto> arr = new ArrayList<>();
-			if(showGubun == 1)query = "select a.rent_no,a.member_no,a.car_no,to_char(a.rent_date, 'yyyy-MM-dd'),to_char(a.return_day, 'yyyy-MM-dd'),to_char(a.return_date, 'yyyy-MM-dd')\r\n" + 
+			if(showGubun == 1)query = "select a.rent_no,a.member_no,a.car_no,to_char(a.rent_date, 'yyyy-MM-dd'),return_day,to_char(a.return_date, 'yyyy-MM-dd')\r\n" + 
 										"from c05_carrent a, c05_car b\r\n" + 
 										"where a.car_no = b.no ORDER BY no asc";
 			else if(showGubun ==2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
@@ -95,7 +95,44 @@ public class CarRent_dao {
 			return result;
 		}
 		
-		//insert
+		//select count (car테이블에서 차량 유무 검증)
+				public int selectCountDB(String carNo) {
+					int result = 0;
+					String query = "select count(*) from c05_car where no = '"+carNo+"'";
+					try {
+						connection = common.getConnection();
+						ps = connection.prepareStatement(query);
+						result = ps.executeUpdate();
+					}catch(SQLException se){
+						System.out.println(" insertDB() query error~ " + query);
+					}catch(Exception e) {
+						System.out.println(" insertDB() error  ~ : ");
+					}finally {
+						common.close(connection, ps, rs);
+					}
+					return result;
+					}
+				
+		//select count (carrent테이블에서 차량 유무 검증)
+		public int selectCountDB2(String carNo) {
+			int result = 0;
+			String query = "select count(*) from c05_carrent where rent_date = (select max(rent_date) from c05_carrent where car_no = '"+carNo+"')";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" insertDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" insertDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+			return result;
+			}
+				
+				
+		//insert 대여
 		public int insertDB(String rent_no, String member_no, String car_no, String rent_date) {
 			int result = 0;
 			String query = "insert into c05_carrent (rent_no, member_no, car_no, rent_date) values ('"+rent_no+"','"+member_no+"','"+car_no+"','"+rent_date+"')";
@@ -113,21 +150,68 @@ public class CarRent_dao {
 			return result;
 			}
 		
-		//update
-				public int updateDB(String car_no) {
-					int result = 0;
-					String query = "update c05_car set rent_gubun = 'n' where no = '"+car_no+"'";
-					try {
-						connection = common.getConnection();
-						ps = connection.prepareStatement(query);
-						result = ps.executeUpdate();
-					}catch(SQLException se){
-						System.out.println(" updateDB() query error~ " + query);
-					}catch(Exception e) {
-						System.out.println(" updateDB() error  ~ : ");
-					}finally {
-						common.close(connection, ps, rs);
-					}
-					return result;
-					}
+		//update 반납
+		public int updateReturnDB(String returnNo, String returnDate) {
+			int result = 0;
+			String query = "update c05_carrent set return_date = '"+returnDate+"' where rent_date = (select max(rent_date) \r\n" + 
+					"                    from c05_carrent \r\n" + 
+					"                    where car_no = '"+returnNo+"')";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" updateDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" updateDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+				return result;
+			}
+		
+		//update 반납일수 구하기
+		public int updateGetReturnDay(String returnNo) {
+			int result = 0;
+			String query = "update c05_carrent set return_day = (select TO_DATE(TO_char(return_date, 'YYYYMMDD')) - TO_DATE(TO_char(rent_date, 'YYYYMMDD'))\r\n" + 
+					"                    from c05_carrent\r\n" + 
+					"                    where rent_date = (select max(rent_date) \r\n" + 
+					"                    from c05_carrent \r\n" + 
+					"                    where car_no = '"+returnNo+"'))\r\n" + 
+					"                    where rent_date = (select max(rent_date) \r\n" + 
+					"                    from c05_carrent \r\n" + 
+					"                    where car_no = '"+returnNo+"')";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" updateDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" updateDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+				return result;
+			}
+				
+		//update rent_gubun
+		public int updateDB(String car_no, int gubun) {
+			String query = "";
+			int result = 0;
+			if(gubun == 1)query = "update c05_car set rent_gubun = 'n' where no = '"+car_no+"'";
+			if(gubun == 2)query = "update c05_car set rent_gubun = 'y' where no = '"+car_no+"'";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" updateDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" updateDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+				return result;
+			}
 }
