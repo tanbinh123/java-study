@@ -6,8 +6,10 @@ import java.util.Scanner;
 import dao.CarInfo_dao;
 import dao.CarRent_dao;
 import dao.common_dao;
+import dao.member_dao;
 import dto.CarInfo_dto;
 import dto.CarRent_dto;
+import dto.member_dto;
 
 public class Main {
 
@@ -16,11 +18,13 @@ public class Main {
 
 		ArrayList<CarInfo_dto> CarInfoArr = new ArrayList<>();
 		ArrayList<CarRent_dto> CarRentArr = new ArrayList<>();
+		ArrayList<member_dto> memberArr = new ArrayList<>();
 		CarInfo_dao CarInfoDao = new CarInfo_dao();
 		CarRent_dao CarRentDao = new CarRent_dao();
 		common_dao commonDao = new common_dao();
+		member_dao memberDao = new member_dao();
 		Scanner sc = new Scanner(System.in);
-		int gubun = -1, showGubun = -1;
+		int gubun = -1, showGubun = -1, mgubun = -1;
 		String ShutDown = "", backToMain = "";
 		String showGubun_pass = "", update_pass = "";
 		// 입력 로직 변수
@@ -30,6 +34,9 @@ public class Main {
 		// 입력 로직 do_whlie문 변수
 		String model_name_pass = "", car_number_pass = "", car_made_pass = "", car_made_ym_pass = "", auto_yn_pass = "", option_yn_pass = "", accident_yn_pass = "", fuel_type_pass = "";
 		String updateYn_pass = "";
+		
+		int workGubun = 0, age = 0;
+		String telValue = "", tel = "";
 
 		do {
 			try {
@@ -39,7 +46,8 @@ public class Main {
 				System.out.println("=====================================");
 				System.out.println("   조회-------[1]        등록------[2]");
 				System.out.println("   수정-------[3]        삭제------[4]");
-				System.out.println("   렌트-------[5]        반납------[6]");
+				System.out.println("   대여-------[5]        반납------[6]");
+				System.out.println("   회원관리----[7]        대여내역---[8]");
 				System.out.println("   종료-------[0]");
 				System.out.println("=====================================");
 				System.out.print("입력 : ");
@@ -480,7 +488,7 @@ public class Main {
 								}
 								System.out.println("================================================================================================================");
 
-								System.out.println("║===============" + updateResult + "행 수정되었습니다============║");
+								System.out.println("===============" + updateResult + "행 수정되었습니다============");
 
 							} else if (updateYn.equals("n")) {
 								update_pass = "true";
@@ -514,7 +522,7 @@ public class Main {
 						deleteNo = deleteNo.toUpperCase();
 						int deleteResult = CarInfoDao.deleteDB(deleteNo);
 						if (deleteResult >= 1) {
-							System.out.println("║===============" + deleteResult + "행 삭제되었습니다============║");
+							System.out.println("===============" + deleteResult + "행 삭제되었습니다============");
 						} else {
 							System.out.println("-----------삭제 결과가 없습니다.번호를 다시 확인해주세요.-----------");
 						}
@@ -551,7 +559,13 @@ public class Main {
 						System.out.print("입력 : ");
 						memberNo = sc.next();
 						memberNo = memberNo.toUpperCase();
-						memberNo_pass = commonDao.getStringLengthEx("멤버 번호", memberNo, 4);
+						memberNo_pass = commonDao.getStringLengthEx("멤버 번호", memberNo, 5);
+						memberArr = memberDao.selectDBId(memberNo);
+						System.out.println(memberArr.get(0).getName()+"님 맞으십니까?(y/n)");
+						String checkMember = sc.next();
+						checkMember = commonDao.getYNResult(checkMember);
+						if(checkMember.equals("y"))memberNo_pass = "ture";
+						else memberNo_pass = "false";
 					} while (!memberNo_pass.equals("ture"));
 
 					do {
@@ -569,7 +583,12 @@ public class Main {
 							if (countResult >= 1) {
 								CarInfoArr = CarInfoDao.selectDB(5, carNo); // rent_gubun y,n 조회
 								if (CarInfoArr.get(0).getRent_gubun().equals("가능")) {// y일때
-									carNo_pass = "ture";
+									//차량 정보 확인
+									System.out.println("대여차량 : "+CarInfoArr.get(0).getModel_name() + " 맞으십니까?(y/n)");
+									String checkCar = sc.next();
+									checkCar = commonDao.getYNResult(checkCar);
+									if(checkCar.equals("y"))carNo_pass = "ture";
+									else carNo_pass = "false";
 								} else if (CarInfoArr.get(0).getRent_gubun().equals("불가능")) {// n일때
 									System.out.println("이미 대여 중인 차량입니다. 다른 차량을 이용해주세요.");
 									carNo_pass = "false";
@@ -590,12 +609,20 @@ public class Main {
 					System.out.println("================================================");
 					System.out.print("입력 : ");
 					String rentDate = sc.next();
-
-					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate); // rent table 데이터 입력
+					
+					System.out.println("================================================");
+					System.out.println("\t\t차량 예상 반납일 입력");
+					System.out.println("ex)19990101");
+					System.out.println("================================================");
+					System.out.print("입력 : ");
+					String returnExpectDate = sc.next();
+					
+					
+					int rentResult = CarRentDao.insertDB(no, memberNo, carNo, rentDate, returnExpectDate); // rent table 데이터 입력
 					
 					if (rentResult != 0) {
 						CarRentDao.updateDB(carNo,1); // 차량 테이블 rent_gubun 'n'으로 변경
-						System.out.println("║===============차량이 대여되었습니다.===========║");
+						System.out.println("===============차량이 대여되었습니다.===========");
 					}
 						
 					// 반납
@@ -643,8 +670,184 @@ public class Main {
 					int returnDayResult = CarRentDao.updateGetReturnDay(returnNo); // rent day 구해서 업데이트
 					if (returnResult != 0 && returnDayResult != 0)
 						CarRentDao.updateDB(returnNo,2); // 차량 테이블 rent_gubun 'y'으로 변경
-						System.out.println("║===============차량이 반납되었습니다.===========║");
+						System.out.println("===============차량이 반납되었습니다.===========");
+				}else if(gubun == 7) {
+					System.out.println("║============================================║");
+					System.out.println("║___  ___                  _                 ║\r\n"
+							+ "║|  \\/  |                 | |                ║\r\n"
+							+ "║| .  . |  ___  _ __ ___  | |__    ___  _ __ ║\r\n"
+							+ "║| |\\/| | / _ \\| '_ ` _ \\ | '_ \\  / _ \\| '__|║\r\n"
+							+ "║| |  | ||  __/| | | | | || |_) ||  __/| |   ║\r\n"
+							+ "║\\_|  |_/ \\___||_| |_| |_||_.__/  \\___||_|   ║");
+					System.out.println("║============================================║");
+					System.out.println("║회원 조회--------[1]     회원 등록--------[2] ║");
+					System.out.println("║회원 수정--------[3]     회원 삭제--------[4] ║");
+					System.out.println("║이전 화면--------[0]                         ║");
+					System.out.println("║============================================║");
+					System.out.print("입력 : ");
+					mgubun = sc.nextInt();
+					if (mgubun == 1) {//회원관리/회원조회
+						System.out.println("║===========================================║");
+						System.out.println("" + "║           _   _  _                        ║\r\n"
+								+ "║          | | | |(_)                       ║\r\n"
+								+ "║          | | | | _   ___ __      __       ║\r\n"
+								+ "║          | | | || | / _ \\\\ \\ /\\ / /       ║\r\n"
+								+ "║          \\ \\_/ /| ||  __/ \\ V  V /        ║\r\n"
+								+ "║           \\___/ |_| \\___|  \\_/\\_/         ║");
+						System.out.println("║===========================================║");
+						System.out.println("║전체 조회--------[1]    아이디로 조회-----[2]║");
+						System.out.println("║이름으로 조회-----[3]    이전 화면--------[0]║");
+						System.out.println("║===========================================║");
+						System.out.print("입력 : ");
+						showGubun = sc.nextInt();
+						if (showGubun == 1) {//회원관리/회원조회/전체조회
+							memberArr = memberDao.selectDB(showGubun, "", "");
+						} else if (showGubun == 2) {//회원관리/회원조회/아이디로조회
+							System.out.println("║===========================================║");
+							System.out.println("║             아이디로 회원 조회                     ║");
+							System.out.println("║===========================================║");
+							System.out.print("조회할 아이디 입력 : ");
+							String id = sc.next();
+							id = id.toUpperCase();
+							memberArr = memberDao.selectDB(showGubun, id, "");
+						} else if (showGubun == 3) {//회원관리/회원조회/이름으로조회
+							System.out.println("║===========================================║");
+							System.out.println("║             이름으로 회원 조회                     ║");
+							System.out.println("║===========================================║");
+							System.out.print("조회할 이름 입력 : ");
+							String name = sc.next();
+							memberArr = memberDao.selectDB(showGubun, "", name);
+						}
+						if (memberArr.size() != 0) {//조회 결과
+
+							System.out.println("║=========================================================║");
+							System.out.println("" + "║          ______                    _  _                 ║\r\n"
+									+ "║          | ___ \\                  | || |                ║\r\n"
+									+ "║          | |_/ /  ___  ___  _   _ | || |_               ║\r\n"
+									+ "║          |    /  / _ \\/ __|| | | || || __|              ║\r\n"
+									+ "║          | |\\ \\ |  __/\\__ \\| |_| || || |_               ║\r\n"
+									+ "║          \\_| \\_| \\___||___/ \\__,_||_| \\__|              ║");
+							System.out.println("║=========================================================║");
+							System.out.println("║아이디\t이름\t주소\t전화 번호\t나이\t가입일\t  ║");
+							System.out.println("║=========================================================║");
+							for (int i = 0; i < memberArr.size(); i++) {
+								System.out.print("║" + memberArr.get(i).getId() + "\t");
+								System.out.print(memberArr.get(i).getName() + "\t");
+								System.out.print(memberArr.get(i).getAddress() + "\t");
+								System.out.print(memberArr.get(i).getTel() + "\t");
+								System.out.print(memberArr.get(i).getAge() + "\t");
+								System.out.print(memberArr.get(i).getReg_date() + "║\n");
+							}
+							System.out.println("║=========================================================║");
+						}
+					} else if (mgubun == 2) {//회원관리/회원등록
+						String id = "";
+						memberArr = memberDao.selectDB(1, "", "");
+						if (memberArr.size() == 0) {
+							id = "B0001";
+						} else {
+							id = memberDao.insertDBNo();
+							id = memberDao.getNo(id);
+						}
+						System.out.println("║===========================================║");
+						System.out.println("║                  회원 등록                          ║");
+						System.out.println("║===========================================║");
+						System.out.print("이름 입력 : ");
+						String name = sc.next();
+						System.out.print("주소 입력 : ");
+						String address = sc.next();
+
+						do {
+							System.out.print("전화번호 입력 : ");
+							tel = sc.next();
+							for (int i = 0; i < tel.length(); i++) {
+								char c = tel.charAt(i);
+								if (c < 48 || c > 57) {
+									System.out.println("전화 번호를 다시 입력해주세요");
+									telValue = "false";
+									tel = "";
+								} else if (c > 48 || c < 57) {
+									telValue = "ture";
+								}
+							}
+							if (tel.length() > 13) {
+								System.out.println("전화번호는 13자리까지만 입력해주세요");
+								telValue = "false";
+								tel = "";
+							}
+						} while (!telValue.equals("ture"));
+						String Tel = memberDao.phone(tel);
+
+						do {
+							System.out.print("나이 입력 : ");
+							age = sc.nextInt();
+							if (age > 200) {
+								System.out.println("나이를 다시 입력해주세요");
+							}
+						} while (age > 200);
+
+						int result = memberDao.insertDB(id, name, address, Tel, age);
+						System.out.println("║===============" + result + "행 등록되었습니다============║");
+
+					} else if (mgubun == 3) {//회원관리/회원수정
+						System.out.println("║===========================================║");
+						System.out.println("║                회원 정보 수정                      ║");
+						System.out.println("║===========================================║");
+						System.out.print("수정할 아이디 검색 : ");
+						String id = sc.next();
+						id = id.toUpperCase();
+						memberArr = memberDao.selectDB(2, id, "");
+						System.out.print("기존 이름 : " + memberArr.get(0).getName() + "\n수정 할 이름 : ");
+						String name = sc.next();
+						System.out.print("기존 주소 : " + memberArr.get(0).getAddress() + "\n수정 할 주소 : ");
+						String address = sc.next();
+
+						do {
+							System.out.print("기존 전화번호 : " + memberArr.get(0).getTel() + "\n수정 할 전화번호 : ");
+							tel = sc.next();
+							for (int i = 0; i < tel.length(); i++) {
+								char c = tel.charAt(i);
+								if (c < 48 || c > 57) {
+									System.out.println("전화 번호를 다시 입력해주세요");
+									telValue = "false";
+									tel = "";
+								} else if (c > 48 || c < 57) {
+									telValue = "ture";
+								}
+							}
+							if (tel.length() > 13) {
+								System.out.println("전화번호는 13자리까지만 입력해주세요");
+								telValue = "false";
+								tel = "";
+							}
+						} while (!telValue.equals("ture"));
+						String Tel = memberDao.phone(tel);
+
+						do {
+							System.out.print("기존 나이 : " + memberArr.get(0).getAge() + "\n수정 할 나이 : ");
+							age = sc.nextInt();
+							if (age > 200) {
+								System.out.println("나이를 다시 입력해주세요");
+							}
+						} while (age > 200);
+
+						int result = memberDao.updateDB(id, name, address, tel, age);
+						System.out.println("║===============" + result + "행 수정되었습니다============║");
+
+					} else if (mgubun == 4) {//회원관리/회원삭제
+						System.out.println("║===========================================║");
+						System.out.println("║                 회원 삭제                           ║");
+						System.out.println("║===========================================║");
+						System.out.print("삭제 할 아이디 검색 : ");
+						String id = sc.next();
+						id = id.toUpperCase();
+						int result = memberDao.deleteDB(id);
+						System.out.println("║===============" + result + "행 삭제되었습니다============║");
+					}else if (mgubun == 0) {
+						continue;
+				}else if(gubun == 8) {
 					
+				}
 					// 종료
 				} else if (gubun == 0) {
 					break;

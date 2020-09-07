@@ -31,7 +31,7 @@ public class CarRent_dao {
 		String query = "";
 		public ArrayList<CarRent_dto> selectDB(int showGubun, String search) {
 			ArrayList<CarRent_dto> arr = new ArrayList<>();
-			if(showGubun == 1)query = "select a.rent_no,a.member_no,a.car_no,to_char(a.rent_date, 'yyyy-MM-dd'),return_day,to_char(a.return_date, 'yyyy-MM-dd')\r\n" + 
+			if(showGubun == 1)query = "select a.rent_no,a.member_no,a.car_no,to_char(a.rent_date, 'yyyy-MM-dd'),return_day,to_char(a.return_date, 'yyyy-MM-dd'),to_char(a.expect_date, 'yyyy-MM-dd')\r\n" + 
 										"from c05_carrent a, c05_car b\r\n" + 
 										"where a.car_no = b.no ORDER BY no asc";
 			else if(showGubun ==2)query = "select a.no, a.model_name, a.car_number, c.made_name, a.car_made_ym, case a.auto_yn when 'y' then '자동' else '수동' end, case a.option_yn when 'y' then '유' else '무' end, case a.accident_yn when 'y' then '유' else '무' end, b.fuel_name, to_char(a.import_date, 'yyyy-MM-dd'), case a.rent_gubun when 'y' then '가능' else '불가능' end \r\n" + 
@@ -52,9 +52,9 @@ public class CarRent_dao {
 					String rent_day = rs.getNString(4);
 					String return_day = rs.getNString(5);
 					String return_date = rs.getNString(6);
-
+					String returnExpectDate = rs.getNString(7);
 				
-					CarRent_dto dto = new CarRent_dto(rent_no, member_no, car_no, rent_day, return_day, return_date);
+					CarRent_dto dto = new CarRent_dto(rent_no, member_no, car_no, rent_day, return_day, return_date,returnExpectDate);
 					arr.add(dto);
 					
 				}
@@ -133,9 +133,9 @@ public class CarRent_dao {
 				
 				
 		//insert 대여
-		public int insertDB(String rent_no, String member_no, String car_no, String rent_date) {
+		public int insertDB(String rent_no, String member_no, String car_no, String rent_date, String returnExpectDate) {
 			int result = 0;
-			String query = "insert into c05_carrent (rent_no, member_no, car_no, rent_date) values ('"+rent_no+"','"+member_no+"','"+car_no+"','"+rent_date+"')";
+			String query = "insert into c05_carrent (rent_no, member_no, car_no, rent_date, Expect_Date) values ('"+rent_no+"','"+member_no+"','"+car_no+"','"+rent_date+"','"+returnExpectDate+"')";
 			try {
 				connection = common.getConnection();
 				ps = connection.prepareStatement(query);
