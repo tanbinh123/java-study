@@ -10,6 +10,7 @@ import dao.member_dao;
 import dto.CarInfo_dto;
 import dto.CarRent_dto;
 import dto.member_dto;
+import dto.rentList_dto;
 
 public class Main {
 
@@ -19,6 +20,7 @@ public class Main {
 		ArrayList<CarInfo_dto> CarInfoArr = new ArrayList<>();
 		ArrayList<CarRent_dto> CarRentArr = new ArrayList<>();
 		ArrayList<member_dto> memberArr = new ArrayList<>();
+		ArrayList<rentList_dto> rentListArr = new ArrayList<>();
 		CarInfo_dao CarInfoDao = new CarInfo_dao();
 		CarRent_dao CarRentDao = new CarRent_dao();
 		common_dao commonDao = new common_dao();
@@ -845,11 +847,49 @@ public class Main {
 						System.out.println("║===============" + result + "행 삭제되었습니다============║");
 					}else if (mgubun == 0) {
 						continue;
-				}else if(gubun == 8) {
-					
+					}
+					//대여내역
+					}else if(gubun == 8) {
+					System.out.println("=====================================");
+					System.out.println("\t\t대여내역 조회");
+					System.out.println("=====================================");
+					System.out.println("   회원으로 조회[1]        차량으로 조회[2]");
+					System.out.println("=====================================");
+					System.out.print("입력 : ");
+					int rentList = sc.nextInt();
+						if(rentList == 1) {
+							System.out.println("================================================");
+							System.out.println("\t\t회원 번호 입력");
+							System.out.println("================================================");
+							System.out.print("입력 : ");
+							String memberId = sc.next();
+							memberId = memberId.toUpperCase();
+							rentListArr = CarRentDao.selectRentList(1, memberId);
+						}else if(rentList  == 2) {
+							System.out.println("================================================");
+							System.out.println("\t\t차량 번호 입력");
+							System.out.println("================================================");
+							System.out.print("입력 : ");
+							String carNo = sc.next();
+							carNo = carNo.toUpperCase();
+							rentListArr = CarRentDao.selectRentList(2, carNo);
+						}
+					if(rentListArr.size() != 0) {
+						System.out.println("========================================================================");
+						System.out.println("회원아이디\t회원명\t차량번호\t차량명\t대여일\t\t반납일\t\t대여기간");
+						System.out.println("========================================================================");
+						System.out.print(rentListArr.get(0).getMemberid()+"\t");
+						System.out.print(rentListArr.get(0).getMemberName()+"\t");
+						System.out.print(rentListArr.get(0).getCarId()+"\t");
+						System.out.print(rentListArr.get(0).getCarName()+"\t");
+						System.out.print(rentListArr.get(0).getRentDate()+"\t");
+						System.out.print(rentListArr.get(0).getReturnDate()+"\t");
+						System.out.print(rentListArr.get(0).getReturnDay()+"\n");
+						System.out.println("========================================================================");
+					}
 				}
 					// 종료
-				} else if (gubun == 0) {
+				else if (gubun == 0) {
 					break;
 				}
 

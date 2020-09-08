@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import common.DBConnectionOracle;
 import dto.CarRent_dto;
+import dto.rentList_dto;
 
 public class CarRent_dao {
 
@@ -214,4 +215,65 @@ public class CarRent_dao {
 			}
 				return result;
 			}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//select 대여내역
+				public ArrayList<rentList_dto> selectRentList(int showGubun, String search) {
+					ArrayList<rentList_dto> arr = new ArrayList<>();
+					if(showGubun == 1)query = "select m.id, m.name, c.no, c.model_name, to_char(r.rent_date, 'yyyy-MM-dd'),to_char(r.return_date, 'yyyy-MM-dd'),r.return_day\r\n" + 
+												"from b05_bookmember m, c05_car c, c05_carrent r\r\n" + 
+												"where m.id = r.member_no\r\n" + 
+												"and c.no = r.car_no\r\n" + 
+												"and m.id = '"+search+"' ORDER BY r.rent_date desc";
+					else if(showGubun ==2)query = "select m.id, m.name, c.no, c.model_name, to_char(r.rent_date, 'yyyy-MM-dd'),to_char(r.return_date, 'yyyy-MM-dd'),r.return_day\r\n" + 
+												"from b05_bookmember m, c05_car c, c05_carrent r\r\n" + 
+												"where m.id = r.member_no\r\n" + 
+												"and c.no = r.car_no\r\n" + 
+												"and c.no = '"+search+"' ORDER BY r.rent_date desc";
+				
+					try {
+						connection = common.getConnection();
+						ps = connection.prepareStatement(query);
+						rs = ps.executeQuery();
+						
+						while(rs.next()) {
+							String memberid = rs.getNString(1);
+							String memberName = rs.getNString(2);
+							String carId = rs.getNString(3);
+							String carName = rs.getNString(4);
+							String rentDate = rs.getNString(5);
+							String returnDate = rs.getNString(6);
+							String returnDay = rs.getNString(7);
+						
+							rentList_dto dto = new rentList_dto(memberid, memberName, carId, carName, rentDate, returnDate, returnDay);
+							arr.add(dto);
+							
+						}
+					}catch(SQLException se){
+						System.out.println(" selectDB() query error~ " + query);
+					}catch(Exception e) {
+						System.out.println(" selectDB() error  ~ : ");
+					}finally {
+						common.close(connection, ps, rs);
+					}
+					
+					return arr;
+				}
 }
+
+
