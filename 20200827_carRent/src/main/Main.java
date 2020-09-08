@@ -544,7 +544,7 @@ public class Main {
 				} else if (gubun == 5) {
 					String carNo, memberNo;
 					String carNo_pass = "", memberNo_pass = "";
-					int countResult = 0;
+					int countResult = 0, countMemberResult = 0;
 
 					// 번호 순서대로 자동으로 추가
 					CarRentArr = CarRentDao.selectDB(1, "");
@@ -556,18 +556,31 @@ public class Main {
 					}
 					do {
 						System.out.println("================================================");
-						System.out.println("\t\t멤버 번호 입력");
+						System.out.println("\t\t회원 번호 입력");
 						System.out.println("================================================");
 						System.out.print("입력 : ");
 						memberNo = sc.next();
 						memberNo = memberNo.toUpperCase();
+						//글자 수 예외처리
 						memberNo_pass = commonDao.getStringLengthEx("멤버 번호", memberNo, 5);
-						memberArr = memberDao.selectDBId(memberNo);
-						System.out.println(memberArr.get(0).getName()+"님 맞으십니까?(y/n)");
-						String checkMember = sc.next();
-						checkMember = commonDao.getYNResult(checkMember);
-						if(checkMember.equals("y"))memberNo_pass = "ture";
-						else memberNo_pass = "false";
+						//회원유무 검증
+						try {
+							countMemberResult = CarRentDao.selectCountMemberDB(memberNo);
+							if(countMemberResult >= 1) {
+								memberArr = memberDao.selectDBId(memberNo);
+								System.out.println(memberArr.get(0).getName()+"님 맞으십니까?(y/n)");
+								String checkMember = sc.next();
+								checkMember = commonDao.getYNResult(checkMember);
+								if(checkMember.equals("y"))memberNo_pass = "ture";
+								else memberNo_pass = "false";
+							}else if(countMemberResult == 0) {
+								memberNo_pass = "false";
+								System.out.println("회원 번호를 다시 확인해주세요.");
+							}
+						}catch(Exception e) {
+							memberNo_pass = "false";
+							System.out.println("회원 번호를 다시 확인해주세요.");
+						}
 					} while (!memberNo_pass.equals("ture"));
 
 					do {
@@ -624,6 +637,11 @@ public class Main {
 					
 					if (rentResult != 0) {
 						CarRentDao.updateDB(carNo,1); // 차량 테이블 rent_gubun 'n'으로 변경
+						System.out.println("================================================");
+						System.out.println("번호\t멤버번호\t차번호\t대여일\t\t반납예정일");
+						System.out.println("================================================");
+						System.out.println(no+"\t"+memberNo+"\t"+carNo+"\t"+rentDate+"\t"+returnExpectDate);
+						System.out.println("================================================");
 						System.out.println("===============차량이 대여되었습니다.===========");
 					}
 						
@@ -675,13 +693,6 @@ public class Main {
 						System.out.println("===============차량이 반납되었습니다.===========");
 				}else if(gubun == 7) {
 					System.out.println("║============================================║");
-					System.out.println("║___  ___                  _                 ║\r\n"
-							+ "║|  \\/  |                 | |                ║\r\n"
-							+ "║| .  . |  ___  _ __ ___  | |__    ___  _ __ ║\r\n"
-							+ "║| |\\/| | / _ \\| '_ ` _ \\ | '_ \\  / _ \\| '__|║\r\n"
-							+ "║| |  | ||  __/| | | | | || |_) ||  __/| |   ║\r\n"
-							+ "║\\_|  |_/ \\___||_| |_| |_||_.__/  \\___||_|   ║");
-					System.out.println("║============================================║");
 					System.out.println("║회원 조회--------[1]     회원 등록--------[2] ║");
 					System.out.println("║회원 수정--------[3]     회원 삭제--------[4] ║");
 					System.out.println("║이전 화면--------[0]                         ║");
@@ -690,20 +701,15 @@ public class Main {
 					mgubun = sc.nextInt();
 					if (mgubun == 1) {//회원관리/회원조회
 						System.out.println("║===========================================║");
-						System.out.println("" + "║           _   _  _                        ║\r\n"
-								+ "║          | | | |(_)                       ║\r\n"
-								+ "║          | | | | _   ___ __      __       ║\r\n"
-								+ "║          | | | || | / _ \\\\ \\ /\\ / /       ║\r\n"
-								+ "║          \\ \\_/ /| ||  __/ \\ V  V /        ║\r\n"
-								+ "║           \\___/ |_| \\___|  \\_/\\_/         ║");
+						System.out.println("║                    회원 조회                     ║");
 						System.out.println("║===========================================║");
-						System.out.println("║전체 조회--------[1]    아이디로 조회-----[2]║");
-						System.out.println("║이름으로 조회-----[3]    이전 화면--------[0]║");
+						System.out.println("║이름으로 조회-----[1]    아이디로 조회-----[2]║");
+						System.out.println("║전체 조회--------[9]    이전 화면--------[0]║");
 						System.out.println("║===========================================║");
 						System.out.print("입력 : ");
 						showGubun = sc.nextInt();
-						if (showGubun == 1) {//회원관리/회원조회/전체조회
-							memberArr = memberDao.selectDB(showGubun, "", "");
+						if (showGubun == 9) {//회원관리/회원조회/전체조회
+							memberArr = memberDao.selectDB(1, "", "");
 						} else if (showGubun == 2) {//회원관리/회원조회/아이디로조회
 							System.out.println("║===========================================║");
 							System.out.println("║             아이디로 회원 조회                     ║");
@@ -711,24 +717,16 @@ public class Main {
 							System.out.print("조회할 아이디 입력 : ");
 							String id = sc.next();
 							id = id.toUpperCase();
-							memberArr = memberDao.selectDB(showGubun, id, "");
-						} else if (showGubun == 3) {//회원관리/회원조회/이름으로조회
+							memberArr = memberDao.selectDB(2, id, "");
+						} else if (showGubun == 1) {//회원관리/회원조회/이름으로조회
 							System.out.println("║===========================================║");
 							System.out.println("║             이름으로 회원 조회                     ║");
 							System.out.println("║===========================================║");
 							System.out.print("조회할 이름 입력 : ");
 							String name = sc.next();
-							memberArr = memberDao.selectDB(showGubun, "", name);
+							memberArr = memberDao.selectDB(3, "", name);
 						}
 						if (memberArr.size() != 0) {//조회 결과
-
-							System.out.println("║=========================================================║");
-							System.out.println("" + "║          ______                    _  _                 ║\r\n"
-									+ "║          | ___ \\                  | || |                ║\r\n"
-									+ "║          | |_/ /  ___  ___  _   _ | || |_               ║\r\n"
-									+ "║          |    /  / _ \\/ __|| | | || || __|              ║\r\n"
-									+ "║          | |\\ \\ |  __/\\__ \\| |_| || || |_               ║\r\n"
-									+ "║          \\_| \\_| \\___||___/ \\__,_||_| \\__|              ║");
 							System.out.println("║=========================================================║");
 							System.out.println("║아이디\t이름\t주소\t전화 번호\t나이\t가입일\t  ║");
 							System.out.println("║=========================================================║");
@@ -854,6 +852,7 @@ public class Main {
 					System.out.println("\t\t대여내역 조회");
 					System.out.println("=====================================");
 					System.out.println("   회원으로 조회[1]        차량으로 조회[2]");
+					System.out.println("   전체 조회---[9]");
 					System.out.println("=====================================");
 					System.out.print("입력 : ");
 					int rentList = sc.nextInt();
@@ -873,19 +872,25 @@ public class Main {
 							String carNo = sc.next();
 							carNo = carNo.toUpperCase();
 							rentListArr = CarRentDao.selectRentList(2, carNo);
+						}else if(rentList ==9) {
+							rentListArr = CarRentDao.selectRentList(9, "");
 						}
 					if(rentListArr.size() != 0) {
 						System.out.println("========================================================================");
 						System.out.println("회원아이디\t회원명\t차량번호\t차량명\t대여일\t\t반납일\t\t대여기간");
 						System.out.println("========================================================================");
-						System.out.print(rentListArr.get(0).getMemberid()+"\t");
-						System.out.print(rentListArr.get(0).getMemberName()+"\t");
-						System.out.print(rentListArr.get(0).getCarId()+"\t");
-						System.out.print(rentListArr.get(0).getCarName()+"\t");
-						System.out.print(rentListArr.get(0).getRentDate()+"\t");
-						System.out.print(rentListArr.get(0).getReturnDate()+"\t");
-						System.out.print(rentListArr.get(0).getReturnDay()+"\n");
+						for (int i = 0; i < rentListArr.size(); i++) {
+							System.out.print(rentListArr.get(i).getMemberid()+"\t");
+							System.out.print(rentListArr.get(i).getMemberName()+"\t");
+							System.out.print(rentListArr.get(i).getCarId()+"\t");
+							System.out.print(rentListArr.get(i).getCarName()+"\t");
+							System.out.print(rentListArr.get(i).getRentDate()+"\t");
+							System.out.print(rentListArr.get(i).getReturnDate()+"\t");
+							System.out.print(rentListArr.get(i).getReturnDay()+" 일\n");
+						}
 						System.out.println("========================================================================");
+					}else if(rentListArr.size() == 0) {
+						System.out.println("조회결과가 없습니다.");
 					}
 				}
 					// 종료

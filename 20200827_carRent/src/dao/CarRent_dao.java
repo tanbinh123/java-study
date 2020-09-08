@@ -113,6 +113,23 @@ public class CarRent_dao {
 					}
 					return result;
 					}
+		//select count (member테이블에서 차량 유무 검증)
+		public int selectCountMemberDB(String carNo) {
+			int result = 0;
+			String query = "select count(*) from b05_bookmember where id = '"+carNo+"'";
+			try {
+				connection = common.getConnection();
+				ps = connection.prepareStatement(query);
+				result = ps.executeUpdate();
+			}catch(SQLException se){
+				System.out.println(" insertDB() query error~ " + query);
+			}catch(Exception e) {
+				System.out.println(" insertDB() error  ~ : ");
+			}finally {
+				common.close(connection, ps, rs);
+			}
+			return result;
+			}
 				
 		//select count (carrent테이블에서 차량 유무 검증)
 		public int selectCountDB2(String carNo) {
@@ -245,6 +262,10 @@ public class CarRent_dao {
 												"where m.id = r.member_no\r\n" + 
 												"and c.no = r.car_no\r\n" + 
 												"and c.no = '"+search+"' ORDER BY r.rent_date desc";
+					else if(showGubun ==9)query = "select m.id, m.name, c.no, c.model_name, to_char(r.rent_date, 'yyyy-MM-dd'),to_char(r.return_date, 'yyyy-MM-dd'),r.return_day\r\n" + 
+													"from b05_bookmember m, c05_car c, c05_carrent r\r\n" + 
+													"where m.id = r.member_no\r\n" + 
+													"and c.no = r.car_no";
 				
 					try {
 						connection = common.getConnection();
