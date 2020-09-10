@@ -852,7 +852,7 @@ public class Main {
 					System.out.println("\t\t대여내역 조회");
 					System.out.println("=====================================");
 					System.out.println("   회원으로 조회[1]        차량으로 조회[2]");
-					System.out.println("   전체 조회---[9]");
+					System.out.println("   전체 조회---[9]       이전으로[0]");
 					System.out.println("=====================================");
 					System.out.print("입력 : ");
 					int rentList = sc.nextInt();
@@ -874,6 +874,8 @@ public class Main {
 							rentListArr = CarRentDao.selectRentList(2, carNo);
 						}else if(rentList ==9) {
 							rentListArr = CarRentDao.selectRentList(9, "");
+						}else if(rentList ==0) {
+							continue;
 						}
 					if(rentListArr.size() != 0) {
 						System.out.println("========================================================================");
