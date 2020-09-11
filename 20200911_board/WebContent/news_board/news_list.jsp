@@ -21,7 +21,7 @@
 		<form name="news" method="post" action="">	
 			<div class="search_wrap">
 				<div class="record_group">
-					<p>총게시글 : <span>211</span>건</p>
+					<p>총게시글 : <span>3</span>건</p>
 				</div>
 				<div class="search_group">
 					<select name="t_select" class="select">
@@ -80,7 +80,7 @@
 			</tbody>
 		</table>
 		<div class="paging">
-			<a href="board_write.html" class="write">글쓰기</a>
+			<a href="news_write.jsp" class="write">글쓰기</a>
 		</div>
 	</div>
  </body>
