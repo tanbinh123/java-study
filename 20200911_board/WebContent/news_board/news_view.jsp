@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dao.news_dao"%>
+<%@page import="dto.news_dto"%>
+<%@page import="java.util.ArrayList"%>
+<% 
+String no = request.getParameter("t_no");
+request.setCharacterEncoding("utf-8");
+news_dao newsDao = new news_dao();
+ArrayList<news_dto> newsArr = new ArrayList<>(); 
+newsArr = newsDao.getNewsList("view","t_no");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -36,11 +46,11 @@
 						<tr>
 							<th>게시판 제목</th>
 							<td class="th_left" >
-								Title~~~
+								<%=newsArr.get(0).getTitle(); %>
 							</td>
 							<th>조회수</th>
 							<td class="th_left" >
-								212
+								1
 							</td>
 						</tr>
 						<tr>
@@ -63,7 +73,7 @@
 				</table>
 			</div>
 			<div class="btn_wrap">
-				<input type="button" onClick="" value="목록" class="btn_list">
+				<input type="button" onClick="history.back()" value="목록" class="btn_list">
 				<input type="button" onClick="" value="수정GET" class="btn_list">
 				<input type="button" onClick="" value="수정POST" class="btn_list">
 				<input type="button" onClick="" value="삭제" class="btn_list">
