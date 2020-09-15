@@ -1,9 +1,10 @@
 package dto;
 
 public class news_dto {
-	String no, title, content, reg_name, reg_date, hit;
+	String no, title, content, reg_name, reg_date;
+	int hit;
 
-	public news_dto(String no, String title, String content, String reg_name, String reg_date, String hit) {
+	public news_dto(String no, String title, String content, String reg_name, String reg_date, int hit) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -33,7 +34,7 @@ public class news_dto {
 		return reg_date;
 	}
 
-	public String getHit() {
+	public int getHit() {
 		return hit;
 	}
 	
