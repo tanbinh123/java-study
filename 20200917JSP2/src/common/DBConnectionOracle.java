@@ -16,9 +16,9 @@ public class DBConnectionOracle {
 		Connection con = null;
 		
 		try { 
-			String DB_URL = "jdbc:oracle:thin:@jsl70104:1521:ORCL";
-	        String DB_USER = "jsl43"; 
-	        String DB_PASSWORD= "1234";
+			String DB_URL = "jdbc:oracle:thin:@175.203.39.213:1521:orcl";
+	        String DB_USER = "scott"; 
+	        String DB_PASSWORD= "tiger";
 
 			con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);	
 			if(con == null) System.out.println(" oracle db 연결실패===========");

@@ -142,5 +142,39 @@ public class Event_dao {
 			common.close(connection, ps, rs);
 		}				
 	}
+	
+	public int eventUpdate(Event_dto dto) {
+		int result =0;
+		String query ="update h05_event set title = '"+dto.getTitle()+"',content = '"+dto.getContent()+"',s_date = '"+dto.getS_date()+"' ,e_date = '"+dto.getE_date()+"',reg_name = '"+dto.getReg_name()+"',reg_date = '"+dto.getReg_date()+"' where no = '"+dto.getNo()+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			result     = ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("eventUpdate() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("eventUpdate() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+		return result;
+	}
+	
+	public int deleteEvent(String no) {
+		int result =0;
+		String query ="DELETE FROM h05_event WHERE no = '"+no+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			result     = ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("deleteEvent() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("deleteEvent() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+		return result;
+	}
 
 }

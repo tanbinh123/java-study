@@ -73,8 +73,8 @@
 			</div>
 			<div class="btn_wrap">
 				<input type="button" onClick="location.href='event_list.jsp'" value="목록" class="btn_list">
-				<input type="button" onClick="location.href='/EventUpdateForm?t_eventNo=${dto.getNo()}'" value="수정" class="btn_list">
-				<input type="button" onClick="location.href='/EventDelete?t_eventNo=${dto.getNo()}'" value="삭제" class="btn_list">
+				<input type="button" onClick="location.href='event_updateForm.jsp?t_event_no=<%=dto.getNo()%>'" value="수정" class="btn_list">
+				<input type="button" onClick="location.href='event_delete.jsp?t_event_no=<%=dto.getNo()%>'" value="삭제" class="btn_list">
 			</div>
 		</div>
 	</div>
