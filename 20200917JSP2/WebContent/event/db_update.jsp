@@ -27,7 +27,8 @@
 <% } else {%>
 	alert(" 수정 실패~ 관리자에게 문의 하세요 ");
 <% } %>
-	location.href="event_list.jsp";
+	//location.href="event_list.jsp";
+	<%response.sendRedirect("event_list.jsp");%>
 </script>
 </head>
 <body>
