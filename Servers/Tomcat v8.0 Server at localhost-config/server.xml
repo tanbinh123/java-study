@@ -132,7 +132,7 @@
       <Context docBase="20200917JSP2" path="/20200917JSP2" reloadable="true" source="org.eclipse.jst.jee.server:20200917JSP2"/>
       <Context docBase="20200920_JSPBasic" path="/jb" reloadable="true" source="org.eclipse.jst.jee.server:20200920_JSPBasic"/>
       <Context docBase="20200922_JSP3" path="/" reloadable="true" source="org.eclipse.jst.jee.server:20200922_JSP3"/>
-      </Host>
+      <Context docBase="20200922_servletDataPjt" path="/20200922_servletDataPjt" reloadable="true" source="org.eclipse.jst.jee.server:20200922_servletDataPjt"/></Host>
     </Engine>
   </Service>
 </Server>
