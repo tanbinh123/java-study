@@ -1,0 +1,44 @@
+#menu ul li a {
+  font: bold 12px "돋음", Gulim;
+  color: #6e6e6e;
+  border-bottom: 1px dotted #848484;
+  display: inline-block;
+  width: 130px;
+  height: 25px;
+  /*background : yellow;*/
+  line-height: 25px;
+}
+.arrow {
+  vertical-align: middle;
+  width: 6px;
+}
+.home_icon {
+  width: 15px;
+}
+#content {
+  font: 10px "돋음", Gulim;
+  color: #848484;
+}
+#content .title a {
+  font: 10px "돋음", Gulim;
+  color: #6e6e6e;
+}
+
+#menu {
+  width: 130px;
+  height: 460px;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  float: left;
+  border: 0px solid #bcbcbc;
+  /*background :#E0F2F7;*/
+}
+#content {
+  width: 748px;
+  height: 460px;
+  padding: 20px;
+  margin-bottom: 20px;
+  float: right;
+  border: 0px solid #bcbcbc;
+  /*background :#A9E2F3;*/
+}

@@ -1,0 +1,39 @@
+.paging {
+  margin-top: 20px;
+  text-align: center;
+}
+.paging .btn_write {
+  background: #bdbdbd;
+  padding: 10px 16px;
+  color: #fff;
+}
+.bord_list {
+  padding-top: 20px;
+}
+.bord_table {
+  width: 100%;
+}
+.bord_table td {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: left;
+}
+.bord_table .t_title {
+  /*vertical-align:top;*/
+  width: 600px;
+  height: 15px;
+  font-size: 11px;
+  color: #848484;
+  border: 1px solid #ccc;
+}
+.board_textarea_H270 {
+  width: 590px;
+  height: 270px;
+  resize: none;
+  padding: 5px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+  color: #848484;
+}
