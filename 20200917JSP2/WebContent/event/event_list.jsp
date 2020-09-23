@@ -75,14 +75,9 @@ td {
 			<form name="board">
 				<div class="search_group">
 					<select class="select" name="t_select">
-						<option value="title"
-							<%if (select.equals("title"))
-							out.print("selected");%>>제목</option>
-						<option value="content"
-							<%if (select.equals("content"))
-							out.print("selected");%>>내용</option>
-					</select> <input type="text" class="search_word" name="t_search"
-						value="<%=search%>">
+						<option value="title"<%if (select.equals("title"))out.print("selected");%>>제목</option>
+						<option value="content"<%if (select.equals("content"))out.print("selected");%>>내용</option>
+					</select> <input type="text" class="search_word" name="t_search"value="<%=search%>">
 					<button onclick="search()" class="btn_search">
 						<i class="fa fa-search"></i><span class="sr-only">검색버튼</span>
 					</button>

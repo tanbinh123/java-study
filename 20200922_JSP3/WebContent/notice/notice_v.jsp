@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="dao.*,dto.*"%>
+<%
+String no = request.getParameter("t_no");
+%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -171,6 +177,7 @@
 </style>
 </head>
 <body>
+<input type="text" value="<%=no%>">
     <div id="container">
 		<ul class="top_right">
 			<li><a href="">JOIN</a></li>

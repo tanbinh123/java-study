@@ -44,6 +44,7 @@ public class Notice_dao {
 				int hit 		= rs.getInt(7);
 				Notice_dto dto = new Notice_dto(no, title, content, attach, reg_name, reg_date,hit);
 				arr.add(dto);
+				System.out.print(query);
 			}
 		}catch(SQLException se) {
 			System.out.println("getNoticeList() query 오류: "+query);
