@@ -1,5 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ page import="dao.*,dto.*,java.util.*"%>
+<%
+request.setCharacterEncoding("utf-8");
+Notice_dao dao = new Notice_dao();
+
+String title = request.getParameter("sel_box");
+String search = request.getParameter("sel_text");
+
+if (title == null) {
+	title = "title";
+	search = "";
+} else if (search == null) {
+	search = "";
+}
+ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
+%>
   <!DOCTYPE html>
   <html lang="ko">
     <head>
@@ -29,6 +45,21 @@ pageEncoding="UTF-8"%>
       <script type="text/javascript">
         <%@ include file="../js/common.js"%>
       </script>
+      <script type="text/javascript">
+	function search() {
+
+		searchForm.method = "get";
+		searchForm.action = "notice_r.jsp";
+		searchForm.submit();
+	}
+
+	function goView(no) {
+		view.t_no.value = no;
+		view.method = "post";
+		view.action = "notice_v.jsp";
+		view.submit();
+	}
+</script>
     </head>
     <body>
       <div id="container">
@@ -36,22 +67,25 @@ pageEncoding="UTF-8"%>
         <%@ include file="header.jsp"%> <%@ includefile="menu.jsp"%>
         <div id="content">
           <%@ include file="content_home_btn.jsp"%>
-          <p class="select_Box">
-            <select class="sel_box">
-              <option value="제목">제목</option>
-              <option value="제목">내용</option>
-            </select>
-            <input type="text" maxlength="20" class="sel_text" />
-            <input type="button" value="검&nbsp;&nbsp;색" class="sel_button" />
-          </p>
-
+        <form name="searchForm">
+				<p class="select_Box">
+					<select class="sel_box" name="sel_box">
+						<option value="title"
+							<%if (title.equals("title"))out.print("selected");%>>제목</option>
+						<option value="content"
+							<%if (title.equals("content"))out.print("selected");%>>내용</option>
+					</select> <input type="text" maxlength="20" class="sel_text"
+						value="<%=search%>" name="sel_text" /> <input type="button"
+						value="검&nbsp;&nbsp;색" class="sel_button" onclick="search()">
+				</p>
+			</form>
           <div class="bord_list">
             <table class="bord_table">
               <colgroup>
                 <col width="10%" />
                 <col width="*" />
                 <col width="10%" />
-                <col width="10%" />
+                <col width="15%" />
                 <col width="10%" />
               </colgroup>
               <thead>
@@ -63,17 +97,21 @@ pageEncoding="UTF-8"%>
                   <th>조회수</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>10</td>
-                  <td class="title">
-                    <a href="notice_v.jsp">구매절차에 대하여 알고 싶어요</a>
-                  </td>
-                  <td>관리자</td>
-                  <td>18-10-16</td>
-                  <td>187</td>
-                </tr>
-              </tbody>
+              <form name="view">
+						<tbody>
+							<%for(int i = 0 ; i < arr.size(); i++){%>
+							<tr>
+								<input type="hidden" name="t_no" />
+								<td><%=arr.get(i).getNo()%></td>
+								<td class="title"><a
+									href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle()%></a></td>
+								<td><%=arr.get(i).getReg_name()%></td>
+								<td><%=arr.get(i).getReg_date()%></td>
+								<td><%=arr.get(i).getHit()%></td>
+							</tr>
+							<%}%>
+						</tbody>
+					</form>
             </table>
             <div class="paging">
               <a href=""><i class="fa fa-angle-double-left"></i></a>
