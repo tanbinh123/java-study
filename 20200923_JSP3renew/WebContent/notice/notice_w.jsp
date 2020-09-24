@@ -59,10 +59,10 @@
 </head>
 <body>
 	<div id="container">
-		<%@ include file="header.jsp"%>
-		<%@ include file="menu.jsp"%>
+		<%@ include file="/rayout/header.jsp"%>
+		<%@ include file="/rayout/menu.jsp"%>
 		<div id="content">
-			<%@ include file="content_home_btn.jsp"%>
+			<%@ include file="/rayout/content_home_btn.jsp"%>
 			<form name="board">
 				<div class="bord_list">
 					<table class="bord_table">
@@ -102,7 +102,7 @@
 				</div>
 			</form>
 		</div>
-		<%@ include file="footer.jsp"%>
+		<%@ include file="/rayout/footer.jsp"%>
 	</div>
 </body>
 </html>

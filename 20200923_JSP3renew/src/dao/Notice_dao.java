@@ -44,7 +44,6 @@ public class Notice_dao {
 				int hit 		= rs.getInt(7);
 				Notice_dto dto = new Notice_dto(no, title, content, attach, reg_name, reg_date,hit);
 				arr.add(dto);
-				System.out.print(query);
 			}
 		}catch(SQLException se) {
 			System.out.println("getNoticeList() query 오류: "+query);
@@ -112,5 +111,56 @@ public class Notice_dao {
 			common.close(connection, ps, rs);
 		}				
 		return result;
+	}
+	
+	/*
+	 * 조회수 증가 
+	 */
+	
+	public void hitCount(String no) {
+		String query = "update h05_notice set hit = hit + 1 where no = '"+no+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("hitCount() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("hitCount() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+	}
+	
+	/*
+	 * dto로 조회
+	 */
+	public Notice_dto getNoticeView(String SearchNo) {
+		Notice_dto dto = null;
+		String query = " select no,title,content,attach,reg_name,to_char(reg_date,'YYYY-MM-DD'),hit \r\n" + 
+				" from h05_notice \r\n" + 
+				" where no = '"+SearchNo+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			rs         = ps.executeQuery();
+			if(rs.next()) {
+				String no 		= rs.getString(1);
+				String title 	= rs.getString(2);
+				String content 	= rs.getString(3);
+				String attach 	= rs.getString(4);
+				String reg_name = rs.getString(5);
+				String reg_date = rs.getString(6);
+				int hit 		= rs.getInt(7);
+				dto = new Notice_dto(no, title, content, attach, reg_name, reg_date,hit);
+			}
+		}catch(SQLException se) {
+			System.out.println("getNoticeView() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("getNoticeView() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}					
+		return dto;
 	}
 }

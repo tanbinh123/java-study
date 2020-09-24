@@ -53,8 +53,8 @@ ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
 		searchForm.submit();
 	}
 
-	function goView(no) {
-		view.t_no.value = no;
+	function goView(t_no) {
+		view.t_no.value = t_no;
 		view.method = "post";
 		view.action = "notice_v.jsp";
 		view.submit();
@@ -64,9 +64,9 @@ ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
     <body>
       <div id="container">
         <!--header-->
-        <%@ include file="header.jsp"%> <%@ includefile="menu.jsp"%>
+        <%@ include file="/rayout/header.jsp"%> <%@ includefile="/rayout/menu.jsp"%>
         <div id="content">
-          <%@ include file="content_home_btn.jsp"%>
+          <%@ include file="/rayout/content_home_btn.jsp"%>
         <form name="searchForm">
 				<p class="select_Box">
 					<select class="sel_box" name="sel_box">
@@ -98,13 +98,12 @@ ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
                 </tr>
               </thead>
               <form name="view">
+              <input type="hidden" name="t_no" />
 						<tbody>
 							<%for(int i = 0 ; i < arr.size(); i++){%>
 							<tr>
-								<input type="hidden" name="t_no" />
 								<td><%=arr.get(i).getNo()%></td>
-								<td class="title"><a
-									href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle()%></a></td>
+								<td class="title"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle()%></a></td>
 								<td><%=arr.get(i).getReg_name()%></td>
 								<td><%=arr.get(i).getReg_date()%></td>
 								<td><%=arr.get(i).getHit()%></td>
@@ -127,7 +126,7 @@ ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
             </div>
           </div>
         </div>
-        <%@ include file="footer.jsp"%>
+        <%@ include file="/rayout/footer.jsp"%>
       </div>
     </body>
   </html>

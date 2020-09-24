@@ -27,10 +27,10 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="container">
       <!--header-->
-      <%@ include file="notice/header.jsp"%>
+      <%@ include file="/rayout/header.jsp"%>
       <div id="index_content">main page</div>
       <!--footer-->
-      <%@ include file="notice/footer.jsp"%>
+      <%@ include file="/rayout/footer.jsp"%>
     </div>
   </body>
 </html>

@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ page import="dao.*,dto.*"%>
+<%
+Notice_dao dao = new Notice_dao();
+String no = request.getParameter("t_no");
+dao.hitCount(no);
+Notice_dto dto = dao.getNoticeView(no);
+%>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -21,30 +29,37 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
     <div id="container">
-		<%@ include file="header.jsp"%> <%@ includefile="menu.jsp"%>
+		<%@ include file="/rayout/header.jsp"%> <%@ includefile="/rayout/menu.jsp"%>
       <div id="content">
-		<%@ include file="content_home_btn.jsp"%>		
+		<%@ include file="/rayout/content_home_btn.jsp"%>		
 			
 	  <div class="bord_list">
 		<table class="bord_table">
 			<colgroup>
 				<col width="10%">
+				<col width="40%">
+				<col width="10%">
 				<col width="*">
-				<col width="20%">
 			</colgroup>
 			<tbody>
 				<tr>
 					<th>제 목</th>
-					<td>구매절차에 대하여 알고 싶어요</td>
-					<td><i class="fa fa-eye"> 조회수 : 56</td>
+					<td colspan="2"><%=dto.getTitle() %></td>
+					<td><i class="fa fa-eye"> 조회수 : <%=dto.getHit()%></td>
 				</tr>
 				<tr>
 					<th>내 용</th>
-					<td colspan="2">
+					<td colspan="3">
 						<textarea class="board_textarea_H270_noBorder" readonly>
-내부 객체는 JSP페이지 내에서 특정한 변수로 호출하고자 하는 변수와 메소드로 접근을 한다. JSP페이지에서 사용하게 되는 특정한 변수가 아무런 선언과 객체 생성없이 사용할 수 있는 이유는 JSP페이지가 서블릿으로 변환이 될 때 JSP 컨테이너가 자동적으로 제공을 하기 때문이다.						
+						<%=dto.getContent() %>						
 						</textarea>
 					</td>
+				</tr>
+				<tr>
+					<th>등록자</th>
+					<td><%=dto.getReg_name() %>	</td>
+					<th>등록일</th>
+					<td><%=dto.getReg_date() %>	</td>
 				</tr>
 			</tbody>
 		</table>
@@ -55,7 +70,7 @@ pageEncoding="UTF-8"%>
 	  </div>			
 			
 	</div>		
-	<%@ include file="footer.jsp"%>
+	<%@ include file="/rayout/footer.jsp"%>
     </div>
   </body>
 </html>
