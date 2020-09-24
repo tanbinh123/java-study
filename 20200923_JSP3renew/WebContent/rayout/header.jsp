@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
   <li><a href="">LOGIN</a></li>
   <li><a href="">HOME</a></li>
 </ul>
-<div id="header">
+<div id="header" OnClick="location.href='/index.jsp'" style="cursor: pointer">
   <ul class="header_menu">
     <li class="menu1">
       <a href="#">회사소개</a>

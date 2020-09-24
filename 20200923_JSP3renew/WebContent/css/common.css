@@ -47,7 +47,7 @@
 }
 
 #header {
-  background: url("../images/back_img_4.jpg");
+  background-image: url("../images/back_img_4.jpg");
   position: relative;
 }
 .header_menu {

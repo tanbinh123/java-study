@@ -153,7 +153,9 @@ public class Notice_dao {
 				String reg_date = rs.getString(6);
 				int hit 		= rs.getInt(7);
 				dto = new Notice_dto(no, title, content, attach, reg_name, reg_date,hit);
+				//System.out.println(query);
 			}
+			
 		}catch(SQLException se) {
 			System.out.println("getNoticeView() query 오류: "+query);
 		}catch(Exception ee) {
@@ -162,5 +164,45 @@ public class Notice_dao {
 			common.close(connection, ps, rs);
 		}					
 		return dto;
+	}
+	
+	/*
+	 * 업데이트
+	 */
+	public int noticeUpdate(Notice_dto dto) {
+		int result =0;
+		String query ="update h05_notice set title = '"+dto.getTitle()+"',content = '"+dto.getContent()+"',attach = '"+dto.getAttach()+"',reg_name = '"+dto.getReg_name()+"',reg_date = '"+dto.getReg_date()+"' where no = '"+dto.getNo()+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			result     = ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("noticeUpdate() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("noticeUpdate() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+		return result;
+	}
+	
+	/*
+	 * 삭제
+	 */
+	public int deleteNotice(String no) {
+		int result =0;
+		String query ="DELETE FROM h05_notice WHERE no = '"+no+"'";
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			result     = ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("deleteNotice() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("deleteNotice() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+		return result;
 	}
 }

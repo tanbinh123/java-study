@@ -26,13 +26,29 @@ Notice_dto dto = dao.getNoticeView(no);
 <script type="text/javascript">
 	<%@ include file="../js/common.js"%>
   </script>
+<script type="text/javascript">
+function goUpdate(){
+	updateForm.method = "post";
+	updateForm.action = "notice_u.jsp";
+	updateForm.submit();
+}
+function goDelete(){
+	let yn = confirm('삭제하시겠습니까?');
+	if(yn){
+	updateForm.method = "post";
+	updateForm.action = "db_delete.jsp";
+	updateForm.submit();
+	}
+}
+</script>
 </head>
 <body>
     <div id="container">
 		<%@ include file="/rayout/header.jsp"%> <%@ includefile="/rayout/menu.jsp"%>
       <div id="content">
 		<%@ include file="/rayout/content_home_btn.jsp"%>		
-			
+	<form name = "updateForm">
+	<input type = "hidden" name = "t_no" value="<%=no%>">
 	  <div class="bord_list">
 		<table class="bord_table">
 			<colgroup>
@@ -42,6 +58,7 @@ Notice_dto dto = dao.getNoticeView(no);
 				<col width="*">
 			</colgroup>
 			<tbody>
+			
 				<tr>
 					<th>제 목</th>
 					<td colspan="2"><%=dto.getTitle() %></td>
@@ -62,13 +79,15 @@ Notice_dto dto = dao.getNoticeView(no);
 					<td><%=dto.getReg_date() %>	</td>
 				</tr>
 			</tbody>
+				
 		</table>
 		<div class="paging">
 			<a href="notice_r.jsp" class="btn_write">목 록</a>
-			<a href="notice_u.jsp" class="btn_write">수 정</a>
+			<a href="javascript:goUpdate()" class="btn_write">수 정</a>
+			<a href="javascript:goDelete()" class="btn_write">삭 제</a>
 		</div>
 	  </div>			
-			
+		</form>	
 	</div>		
 	<%@ include file="/rayout/footer.jsp"%>
     </div>

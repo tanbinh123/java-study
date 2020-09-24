@@ -15,7 +15,7 @@ if (title == null) {
 	search = "";
 }
 ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
-%>
+%> 
   <!DOCTYPE html>
   <html lang="ko">
     <head>
