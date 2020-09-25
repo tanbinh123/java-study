@@ -27,10 +27,10 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="container">
       <!--header-->
-      <%@ include file="/rayout/header.jsp"%>
+      <%@ include file="component/rayout/header.jsp"%>
       <div id="index_content">꿈과 희망이 가득한 ~~~ JSL 인재 개발원</div>
       <!--footer-->
-      <%@ include file="/rayout/footer.jsp"%>
+      <%@ include file="component/rayout/footer.jsp"%>
     </div>
   </body>
 </html>
