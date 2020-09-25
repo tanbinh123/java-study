@@ -54,8 +54,8 @@ pageEncoding="UTF-8"%>
         <ul>
           <li><a href="/notice/notice_r.jsp">NOTICE</a></li>
           <li><a href="/news/news_r.jsp">NEWS</a></li>
-          <li><a href="">자유게시판</a></li>
-          <li><a href="">Q & A</a></li>
+          <li><a href="/free/free_r.jsp">자유게시판</a></li>
+          <li><a href="/qna/qna_r.jsp">Q & A</a></li>
         </ul>
       </div>
     </li>

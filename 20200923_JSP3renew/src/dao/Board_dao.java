@@ -23,10 +23,14 @@ public class Board_dao {
 	String boardGubun = "";
 	
 	public void SetBoardGubun(String gubun) {
-		if (gubun.equals("Notice")) {
-			boardGubun = "Notice";
-		}else if(gubun.equals("News")) {
-			boardGubun = "News";
+		if (gubun.equals("notice")) {
+			boardGubun = "notice";
+		}else if(gubun.equals("news")) {
+			boardGubun = "news";
+		}else if(gubun.equals("free")) {
+			boardGubun = "free";
+		}else if(gubun.equals("qna")) {
+			boardGubun = "qna";
 		}
 	}
 	
@@ -66,7 +70,26 @@ public class Board_dao {
 		
 		return arr;
 	}
-	
+
+	/*
+	 * 저장 수정 삭제 통합 
+	 */
+	public int BoardCUD(String Setquery) {
+		int result =0;
+		String query = Setquery;
+		try {
+			connection = common.getConnection();
+			ps         = connection.prepareStatement(query);
+			result     = ps.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("BoardSUD() query 오류: "+query);
+		}catch(Exception ee) {
+			System.out.println("BoardSUD() 오류");
+		}finally {
+			common.close(connection, ps, rs);
+		}				
+		return result;
+	}
 	
 	/*
 	 * 번호생성
@@ -155,85 +178,5 @@ public class Board_dao {
 		}					
 		return dto;
 	}
-	/*
-	 * 저장 수정 삭제 통합 
-	 */
-	public int BoardCUD(String Setquery) {
-		int result =0;
-		String query = Setquery;
-		try {
-			connection = common.getConnection();
-			ps         = connection.prepareStatement(query);
-			result     = ps.executeUpdate();
-		}catch(SQLException se) {
-			System.out.println("BoardSUD() query 오류: "+query);
-		}catch(Exception ee) {
-			System.out.println("BoardSUD() 오류");
-		}finally {
-			common.close(connection, ps, rs);
-		}				
-		return result;
-	}
-	/*
-	 * 저장
-	 */
-	public int BoardSave(Board_dto dto) {
-		int result =0;
-		String query ="insert into h05_"+boardGubun+" \r\n" + 
-				"(no,title,content,attach,reg_name,reg_date,hit) \r\n" + 
-				"values \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"','"+dto.getHit()+"')";
-		try {
-			connection = common.getConnection();
-			ps         = connection.prepareStatement(query);
-			result     = ps.executeUpdate();
-		}catch(SQLException se) {
-			System.out.println("eventSave() query 오류: "+query);
-		}catch(Exception ee) {
-			System.out.println("eventSave() 오류");
-		}finally {
-			common.close(connection, ps, rs);
-		}				
-		return result;
-	}
-	
-	/*
-	 * 업데이트
-	 */
-	public int BoardUpdate(Board_dto dto) {
-		int result =0;
-		String query ="update h05_"+boardGubun+" set title = '"+dto.getTitle()+"',content = '"+dto.getContent()+"',attach = '"+dto.getAttach()+"',reg_name = '"+dto.getReg_name()+"',reg_date = '"+dto.getReg_date()+"' where no = '"+dto.getNo()+"'";
-		try {
-			connection = common.getConnection();
-			ps         = connection.prepareStatement(query);
-			result     = ps.executeUpdate();
-		}catch(SQLException se) {
-			System.out.println("noticeUpdate() query 오류: "+query);
-		}catch(Exception ee) {
-			System.out.println("noticeUpdate() 오류");
-		}finally {
-			common.close(connection, ps, rs);
-		}				
-		return result;
-	}
-	
-	/*
-	 * 삭제
-	 */
-	public int deleteBoard(String no) {
-		int result =0;
-		String query ="DELETE FROM h05_"+boardGubun+" WHERE no = '"+no+"'";
-		try {
-			connection = common.getConnection();
-			ps         = connection.prepareStatement(query);
-			result     = ps.executeUpdate();
-		}catch(SQLException se) {
-			System.out.println("deleteNotice() query 오류: "+query);
-		}catch(Exception ee) {
-			System.out.println("deleteNotice() 오류");
-		}finally {
-			common.close(connection, ps, rs);
-		}				
-		return result;
-	}
+
 }

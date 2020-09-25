@@ -8,6 +8,6 @@ pageEncoding="UTF-8"%>
     <a href="/index.jsp">
       <img src="../images/home3.png" class="home_icon" />
     </a>
-    &nbsp;HOME | &nbsp;커뮤니티 | <%=nowpage %>
+    &nbsp;HOME | &nbsp;커뮤니티 | <%if(whoamiPage.equals("free")){out.print("자유게시판");}else{out.print(whoamiPage.toUpperCase());} %>
   </li>
 </ul>

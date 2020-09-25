@@ -11,10 +11,10 @@ pageEncoding="UTF-8"%>
       <a href="/news/news_r.jsp"><img class="arrow" src="../images/arrow.gif" /> NEWS</a>
     </li>
     <li>
-      <a href=""><img class="arrow" src="../images/arrow.gif" /> 자유게시판</a>
+      <a href="/free/free_r.jsp"><img class="arrow" src="../images/arrow.gif" /> 자유게시판</a>
     </li>
     <li>
-      <a href=""><img class="arrow" src="../images/arrow.gif" /> Q & A</a>
+      <a href="/qna/qna_r.jsp"><img class="arrow" src="../images/arrow.gif" /> Q & A</a>
     </li>
   </ul>
 </div>
