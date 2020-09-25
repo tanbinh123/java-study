@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*"%>
 <%
 	Board_dao dao = new Board_dao();
-dao.SetBoardGubun("Notice");
+dao.SetBoardGubun("News");
 String no = request.getParameter("t_no");
 dao.hitCount(no);
 Board_dto dto = dao.getBoardView(no);
@@ -32,15 +32,15 @@ Board_dto dto = dao.getBoardView(no);
   <!-- 현재 url에 특정 단어 포함 찾기 -->
 <script type="text/javascript">
 $(document).ready(function() {
-    if (window.location.href.indexOf("notice") > -1) {
-      <% String nowpage = "NOTICE"; %>
+    if (window.location.href.indexOf("news") > -1) {
+      <% String nowpage = "NEWS"; %>
     }
   });
 </script>
 <script type="text/javascript">
 function goUpdate(){
 	updateForm.method = "post";
-	updateForm.action = "notice_u.jsp";
+	updateForm.action = "news_u.jsp";
 	updateForm.submit();
 }
 function goDelete(){
@@ -61,7 +61,7 @@ function goDelete(){
 	<form name = "updateForm">
 	<input type = "hidden" name = "t_no" value="<%=no%>">
 	<input type="hidden" name="noGubun" value="delete">
-	<input type="hidden" name="boardGubun" value="Notice">
+	<input type="hidden" name="boardGubun" value="News">
 	  <div class="bord_list">
 		<table class="bord_table">
 			<colgroup>
@@ -93,7 +93,7 @@ function goDelete(){
 				
 		</table>
 		<div class="paging">
-			<a href="notice_r.jsp" class="btn_write">목 록</a>
+			<a href="news_r.jsp" class="btn_write">목 록</a>
 			<a href="javascript:goUpdate()" class="btn_write">수 정</a>
 			<a href="javascript:goDelete()" class="btn_write">삭 제</a>
 		</div>

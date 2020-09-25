@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
 Board_dao dao = new Board_dao();
-dao.SetBoardGubun("Notice");
+dao.SetBoardGubun("News");
 
 String sort = request.getParameter("t_sort");
 String title = request.getParameter("sel_box");
@@ -50,8 +50,8 @@ ArrayList<Board_dto> arr = dao.getBoardList(title, search, sort);
       <!-- 현재 url에 특정 단어 포함 찾기 -->
 <script type="text/javascript">
 $(document).ready(function() {
-    if (window.location.href.indexOf("notice") > -1) {
-      <% String nowpage = "NOTICE"; %>
+    if (window.location.href.indexOf("news") > -1) {
+      <% String nowpage = "NEWS"; %>
     }
   });
 </script>
@@ -66,14 +66,14 @@ $(document).ready(function() {
 	function search() {
 
 		searchForm.method = "get";
-		searchForm.action = "notice_r.jsp";
+		searchForm.action = "news_r.jsp";
 		searchForm.submit();
 	}
 
 	function goView(t_no) {
 		view.t_no.value = t_no;
 		view.method = "post";
-		view.action = "notice_v.jsp";
+		view.action = "news_v.jsp";
 		view.submit();
 	}
 </script>
@@ -95,7 +95,8 @@ $(document).ready(function() {
 						value="<%=search%>" name="sel_text" /> 
 						<input type="radio" name="t_sort" value="no" <%if (sort.equals("no"))out.print("checked");%>>번호순
 						<input type="radio" name="t_sort" value="reg_date" <%if (sort.equals("reg_date"))out.print("checked");%>>등록일순
-						<input type="button" value="검&nbsp;&nbsp;색" class="sel_button" onclick="search()">
+						<input type="button"
+						value="검&nbsp;&nbsp;색" class="sel_button" onclick="search()">
 				</p>
 			</form>
           <div class="bord_list">
@@ -141,7 +142,7 @@ $(document).ready(function() {
               <a href="">5</a>
               <a href=""><i class="fa fa-angle-right"></i></a>
               <a href=""><i class="fa fa-angle-double-right"></i></a>
-              <a href="notice_w.jsp" class="btn_write">글쓰기</a>
+              <a href="news_w.jsp" class="btn_write">글쓰기</a>
             </div>
           </div>
         </div>

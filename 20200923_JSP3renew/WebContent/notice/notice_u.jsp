@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*"%>
 <%
-request.setCharacterEncoding("utf-8");
-Notice_dao dao = new Notice_dao();
+	request.setCharacterEncoding("utf-8");
+Board_dao dao = new Board_dao();
+dao.SetBoardGubun("Notice");
 String no = request.getParameter("t_no");
-Notice_dto dto = dao.getNoticeView(no);
+Board_dto dto = dao.getBoardView(no);
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -24,11 +25,20 @@ Notice_dto dto = dao.getNoticeView(no);
 <link rel="stylesheet" href="../css/menu.css" />
 <link rel="stylesheet" href="../css/n_w.css" />
 <script type="text/javascript" src="../js/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--menu drop down-->
 <script type="text/javascript">
 	
 <%@ include file="../js/common.js"%>
 	
+</script>
+<!-- 현재 url에 특정 단어 포함 찾기 -->
+<script type="text/javascript">
+$(document).ready(function() {
+    if (window.location.href.indexOf("notice") > -1) {
+      <% String nowpage = "NOTICE"; %>
+    }
+  });
 </script>
 <script type="text/javascript">
 	function goSave() {
@@ -57,7 +67,7 @@ Notice_dto dto = dao.getNoticeView(no);
 		let yn = confirm('수정 하시겠습니까?');
 		if (yn) {
 			board.method = "post";
-			board.action = "db_update.jsp";
+			board.action = "/db_control/db_CUD.jsp";
 			board.submit();
 		}
 	}
@@ -72,6 +82,8 @@ Notice_dto dto = dao.getNoticeView(no);
 			<%@ include file="/rayout/content_home_btn.jsp"%>
 			<form name="board">
 			<input type = "hidden" name = "t_no" value="<%=no%>">
+			<input type="hidden" name="noGubun" value="update">
+			<input type="hidden" name="boardGubun" value="Notice">
 				<div class="bord_list">
 					<table class="bord_table">
 						<colgroup>
@@ -89,7 +101,7 @@ Notice_dto dto = dao.getNoticeView(no);
 							<tr>
 								<th>내 용</th>
 								<td colspan="3"><textarea name="t_content"
-										class="board_textarea_H270"><%=dto.getContent() %>	</textarea></td>
+										class="board_textarea_H270"><%=dto.getContent() %></textarea></td>
 							</tr>
 							<tr>
 								<th>첨부파일</th>

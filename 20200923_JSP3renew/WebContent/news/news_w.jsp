@@ -27,8 +27,8 @@
 <!-- 현재 url에 특정 단어 포함 찾기 -->
 <script type="text/javascript">
 $(document).ready(function() {
-    if (window.location.href.indexOf("notice") > -1) {
-      <% String nowpage = "NOTICE"; %>
+    if (window.location.href.indexOf("news") > -1) {
+      <% String nowpage = "NEWS"; %>
     }
   });
 </script>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 			<%@ include file="/rayout/content_home_btn.jsp"%>
 			<form name="board">
 			<input type="hidden" name="noGubun" value="save">
-			<input type="hidden" name="boardGubun" value="Notice">
+			<input type="hidden" name="boardGubun" value="News">
 				<div class="bord_list">
 					<table class="bord_table">
 						<colgroup>
@@ -107,7 +107,7 @@ $(document).ready(function() {
 						</tbody>
 					</table>
 					<div class="paging">
-						<a href="notice_r.jsp" class="btn_write">목 록</a> 
+						<a href="news_r.jsp" class="btn_write">목 록</a> 
 						<a href="javascript:goSave()" class="btn_write">등 록</a>
 					</div>
 				</div>

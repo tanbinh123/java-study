@@ -8,6 +8,6 @@ pageEncoding="UTF-8"%>
     <a href="/index.jsp">
       <img src="../images/home3.png" class="home_icon" />
     </a>
-    &nbsp;HOME | &nbsp;커뮤니티 | NOTICE
+    &nbsp;HOME | &nbsp;커뮤니티 | <%=nowpage %>
   </li>
 </ul>

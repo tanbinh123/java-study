@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="dao.*,dto.*"%>
+<%
+	request.setCharacterEncoding("utf-8");
+Board_dao dao = new Board_dao();
+dao.SetBoardGubun("News");
+String no = request.getParameter("t_no");
+Board_dto dto = dao.getBoardView(no);
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,8 +35,8 @@
 <!-- 현재 url에 특정 단어 포함 찾기 -->
 <script type="text/javascript">
 $(document).ready(function() {
-    if (window.location.href.indexOf("notice") > -1) {
-      <% String nowpage = "NOTICE"; %>
+    if (window.location.href.indexOf("news") > -1) {
+      <% String nowpage = "NEWS"; %>
     }
   });
 </script>
@@ -56,7 +64,7 @@ $(document).ready(function() {
 			return;
 		}
 
-		let yn = confirm('등록 하시겠습니까?');
+		let yn = confirm('수정 하시겠습니까?');
 		if (yn) {
 			board.method = "post";
 			board.action = "/db_control/db_CUD.jsp";
@@ -73,8 +81,9 @@ $(document).ready(function() {
 		<div id="content">
 			<%@ include file="/rayout/content_home_btn.jsp"%>
 			<form name="board">
-			<input type="hidden" name="noGubun" value="save">
-			<input type="hidden" name="boardGubun" value="Notice">
+			<input type = "hidden" name = "t_no" value="<%=no%>">
+			<input type="hidden" name="noGubun" value="update">
+			<input type="hidden" name="boardGubun" value="News">
 				<div class="bord_list">
 					<table class="bord_table">
 						<colgroup>
@@ -87,28 +96,28 @@ $(document).ready(function() {
 							<tr>
 								<th>제 목</th>
 								<td colspan="3"><input type="text" class="t_title"
-									maxlength="50" name="t_title" /></td>
+									maxlength="30" name="t_title" value="<%=dto.getTitle() %>"/></td>
 							</tr>
 							<tr>
 								<th>내 용</th>
 								<td colspan="3"><textarea name="t_content"
-										class="board_textarea_H270"></textarea></td>
+										class="board_textarea_H270"><%=dto.getContent() %></textarea></td>
 							</tr>
 							<tr>
 								<th>첨부파일</th>
-								<td colspan="3"><input type="file" name="t_attach" /></td>
+								<td colspan="3"><input type="file" name="t_attach" value="<%=dto.getAttach() %>"/></td>
 							</tr>
 							<tr>
 								<th>등록자</th>
-								<td><input type="text" name="t_reg_name" /></td>
+								<td><input type="text" name="t_reg_name" value="<%=dto.getReg_name() %>"/></td>
 								<th>등록일</th>
-								<td><input type="date" name="t_reg_date" /></td>
+								<td><input type="date" name="t_reg_date" value="<%=dto.getReg_date() %>"/></td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="paging">
-						<a href="notice_r.jsp" class="btn_write">목 록</a> 
-						<a href="javascript:goSave()" class="btn_write">등 록</a>
+						<a href="news_r.jsp" class="btn_write">목 록</a> <a
+							href="javascript:goSave()" class="btn_write">등 록</a>
 					</div>
 				</div>
 			</form>

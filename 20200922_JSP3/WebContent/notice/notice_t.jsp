@@ -3,8 +3,8 @@
 <%@ page import="dao.*,dto.*"%>
 
 <%
-request.setCharacterEncoding("utf-8");
-Notice_dao dao = new Notice_dao();
+	request.setCharacterEncoding("utf-8");
+Board_dao dao = new Board_dao();
 
 String no = dao.getNoticeNo();
 String title = request.getParameter("t_title");
@@ -16,9 +16,8 @@ String reg_date = request.getParameter("t_reg_date");
 if(attach == null){
 	attach = "notting";
 }
-Notice_dto dto = new Notice_dto(no, title, content, attach, reg_name, reg_date,0);
+Board_dto dto = new Board_dto(no, title, content, attach, reg_name, reg_date,0);
 int result = dao.noticeSave(dto);
-
 %>
 
 

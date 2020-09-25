@@ -8,7 +8,7 @@ pageEncoding="UTF-8"%>
       >
     </li>
     <li>
-      <a href=""><img class="arrow" src="../images/arrow.gif" /> NEWS</a>
+      <a href="/news/news_r.jsp"><img class="arrow" src="../images/arrow.gif" /> NEWS</a>
     </li>
     <li>
       <a href=""><img class="arrow" src="../images/arrow.gif" /> 자유게시판</a>

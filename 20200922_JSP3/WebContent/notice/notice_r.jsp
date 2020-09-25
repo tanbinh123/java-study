@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*,java.util.*"%>
 <%
-request.setCharacterEncoding("utf-8");
-Notice_dao dao = new Notice_dao();
+	request.setCharacterEncoding("utf-8");
+Board_dao dao = new Board_dao();
 
 String title = request.getParameter("sel_box");
 String search = request.getParameter("sel_text");
@@ -14,7 +14,7 @@ if (title == null) {
 } else if (search == null) {
 	search = "";
 }
-ArrayList<Notice_dto> arr = dao.getNoticeList(title,search);
+ArrayList<Board_dto> arr = dao.getNoticeList(title,search);
 %>
 <!DOCTYPE html>
 <html lang="ko">

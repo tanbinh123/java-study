@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
     <div id="container">
       <!--header-->
       <%@ include file="/rayout/header.jsp"%>
-      <div id="index_content">main page</div>
+      <div id="index_content">꿈과 희망이 가득한 ~~~ JSL 인재 개발원</div>
       <!--footer-->
       <%@ include file="/rayout/footer.jsp"%>
     </div>
