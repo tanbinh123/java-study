@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
     <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
     <!--menu drop down-->
     <script>
-      <%@ include file="js/common.js"%>
+      <%@ include file="js/common.js"%> 
     </script>
   </head>
   <body>
