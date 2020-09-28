@@ -4,7 +4,6 @@ pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
 Board_dao dao = new Board_dao();
-
 dao.SetBoardGubun(whoamiPage);
 
 String sort = request.getParameter("t_sort");

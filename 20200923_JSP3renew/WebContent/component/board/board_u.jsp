@@ -65,7 +65,6 @@ Board_dto dto = dao.getBoardView(no);
 		}
 	}
 </script>
-</script>
 </head>
 <body>
 	<div id="container">
