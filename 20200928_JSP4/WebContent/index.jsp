@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>	
 <title>ȫ�浿</title>
+<!-- 한글 깨진거 파일 새로받기 -->
 <script type="text/javascript">
 	$(function(){
 		$(".main_menu > li > a").hover(function(){
