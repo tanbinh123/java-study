@@ -2,8 +2,8 @@
 pageEncoding="UTF-8"%>
 <div id="b_top_menu">
     <ul class="top_menu">
-        <li><a href="../member/member_join.jsp">Contack</a></li>
-        <li><a href="../member/member_login.jsp">LogIn</a></li>
+        <li><a href="/component/member/member_join.jsp">Contack</a></li>
+        <li><a href="/component/member/member_login.jsp">LogIn</a></li>
         <li><a href="/index.jsp"><i class="fa fa-home"></i>Home</a></li>
     </ul>
 </div>	
