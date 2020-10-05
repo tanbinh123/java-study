@@ -66,7 +66,10 @@ function goDelete(){
 					</tr>	
 					<tr>
 						<th>Attach</th>
-						<td colspan="3"><%=dto.getAttach() %></td>
+						<td colspan="3">
+						<% if(dto.getAttach() != null){
+							out.print(dto.getAttach());
+							}%></td>
 					</tr>	
 					<tr>
 						<th>Writer</th>

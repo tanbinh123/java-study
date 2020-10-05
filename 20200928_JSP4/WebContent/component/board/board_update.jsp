@@ -80,7 +80,10 @@ Board_dto dto = dao.getBoardView(no);
 					</tr>	
 					<tr>
 						<th>Attach</th>
-						<td colspan="3">구매안내.hwp 삭제<input type="checkbox"><br>
+						<td colspan="3">
+						<%if(dto.getAttach() != null){ %>
+						<%=dto.getAttach()%> <input type="checkbox">삭제<br>
+						<%} %>
 							<input type="file" class="input600" name="t_attach">
 						</td>
 					</tr>	

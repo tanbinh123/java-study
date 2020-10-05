@@ -23,17 +23,7 @@ public class Board_dao {
 	String boardGubun = "";
 	
 	public void SetBoardGubun(String gubun) {
-		if (gubun.equals("notice")) {
-			boardGubun = "notice";
-		}else if(gubun.equals("news")) {
-			boardGubun = "news";
-		}else if(gubun.equals("freeboard")) {
-			boardGubun = "freeboard";
-		}else if(gubun.equals("qna")) {
-			boardGubun = "qna";
-		}else if(gubun.equals("etc")) {
-			boardGubun = "etc";
-		}
+		boardGubun = gubun;
 	}
 	
 	

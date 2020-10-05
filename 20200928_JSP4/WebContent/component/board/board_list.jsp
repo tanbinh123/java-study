@@ -82,7 +82,10 @@ function goView(t_no) {
 					<tr>
 						<td><%=arr.get(i).getNo()%></td>
 						<td class="t_center"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle() %></a></td>
-						<td><img src="/images/clip.png"></td>
+						<td>
+						<% if (arr.get(i).getAttach() != null){ %>
+						<img src="/images/clip.png"></td>
+						<%} %>
 						<td><%=arr.get(i).getReg_name() %></td>
 						<td><%=arr.get(i).getReg_date() %></td>
 						<td><%=arr.get(i).getHit() %></td>
