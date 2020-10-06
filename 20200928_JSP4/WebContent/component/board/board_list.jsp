@@ -28,7 +28,7 @@ ArrayList<Board_dto> arr = dao.getBoardList(title, search, sort);
 <%@include file="/js/main.js" %>
 </script>
 <script type="text/javascript">
-function goView(t_no) {
+function goView(t_no) { 
 	view.t_no.value = t_no;
 	view.method = "post";
 	view.action = "/component/<%=whoamiPage%>/<%=whoamiPage%>_view.jsp";
