@@ -1,7 +1,6 @@
-<%@page import="common.common"%>
+<%@page import="common.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<% common common = new common(); %>
 <html>
 <head>
 <link href="/css/sub_c.css" rel="stylesheet">
@@ -79,7 +78,7 @@ pageEncoding="UTF-8"%>
 						<th>Writer</th>
 						<td><input type="text" class="input100" name="t_reg_name"></td>
 						<th>RegDate</th>
-						<td><input type="date" class="input130" name="t_reg_date" value="<%=common.getToday()%>"></td>
+						<td><input type="date" class="input130" name="t_reg_date" value="<%=Common.getToday()%>"></td>
 					</tr>	
 				</tbody>
 			</table>
