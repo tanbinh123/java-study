@@ -20,6 +20,7 @@
 	String hobby_r = request.getParameter("t_hobby_r");
 	String hobby_s = request.getParameter("t_hobby_s");
 	String reg_date = Common.getToday();
+	
 %>
 
 <!DOCTYPE html>
