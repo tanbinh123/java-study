@@ -11,7 +11,7 @@
 	String name = request.getParameter("t_name");
 	String pw = request.getParameter("t_pw");
 	String area = request.getParameter("t_area");
-	String adress = request.getParameter("t_adress");
+	String address = request.getParameter("t_address");
 	String tel_1 = request.getParameter("t_tel_1");
 	String tel_2 = request.getParameter("t_tel_2");
 	String tel_3 = request.getParameter("t_tel_3");
@@ -21,6 +21,7 @@
 	String hobby_s = request.getParameter("t_hobby_s");
 	String reg_date = Common.getToday();
 	
+	int result = dao.MemberReg(id, name, pw, area, address, tel_1, tel_2, tel_3, mf, hobby_t, hobby_r, hobby_s, reg_date);
 %>
 
 <!DOCTYPE html>
@@ -28,6 +29,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 

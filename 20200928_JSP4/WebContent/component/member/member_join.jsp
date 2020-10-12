@@ -10,11 +10,10 @@ pageEncoding="UTF-8"%>
 </script> 
 <script type="text/javascript">
 function checkEmpty() {
-	
+	mem.method = "post";
+	mem.action = "/db_control/db_member.jsp";
+	mem.submit();
 }
-
-
-if(!checkEmpty(mem.t_id,"ID 입력 ! "))return;
 
 </script>
 </head>
@@ -35,7 +34,7 @@ if(!checkEmpty(mem.t_id,"ID 입력 ! "))return;
 			<p class="n_title">
 				MEMBER JOIN
 			</p>
-			<form action="mem">
+			<form name="mem">
 			<table class="boardForm">
 			  <colgroup>
 				<col width="200" />
@@ -51,11 +50,11 @@ if(!checkEmpty(mem.t_id,"ID 입력 ! "))return;
 				</tr>
 				<tr>
 				  <th><label for="nana">성 명</label></th>
-				  <td><input type="text" size="8" id="nana"></td>
+				  <td><input type="text" size="8" id="nana" name="t_name"></td>
 				</tr>
 				<tr>
 				  <th>비빌번호</th>
-				  <td><input type="text" size="13"></td>
+				  <td><input type="text" size="13" name="t_pw"></td>
 				</tr>
 				<tr>
 				  <th>비밀번호확인</th>
@@ -64,40 +63,40 @@ if(!checkEmpty(mem.t_id,"ID 입력 ! "))return;
 				<tr>
 				  <th>지역</th>
 				  <td>
-					<select>
-						<option value="">서울</option>
-						<option value="">대전</option>
-						<option value="">부산</option>
-						<option value="">대구</option>        
+					<select name="t_area">
+						<option value="1">서울</option>
+						<option value="2">대전</option>
+						<option value="3">부산</option>
+						<option value="4">대구</option>        
 					</select>	  
 				  </td>
 				</tr>	
 				
 				<tr>
 				  <th>주소</th>
-				  <td><input type="text" size="40"></td>
+				  <td><input type="text" size="40" name="t_address"></td>
 				</tr>
 				<tr>
 				  <th>연락처</th>
 				  <td>
-					<input type="text" size="2"> -
-					<input type="text" size="3"> -
-					<input type="text" size="3">
+					<input type="text" size="2" name="t_tel_1"> -
+					<input type="text" size="3" name="t_tel_2"> -
+					<input type="text" size="3" name="t_tel_3">
 				  </td>
 				</tr>
 				<tr>
 				  <th>남여구분</th>
 				  <td>
-					  <input type="radio" value="y" name="receive" class="middleCheck" /> 여&nbsp;&nbsp;        
-					  <input type="radio" value="y" name="receive" class="middleCheck" /> 남        
+					  <input type="radio" value="f" name="t_mf" class="middleCheck" /> 여&nbsp;&nbsp;        
+					  <input type="radio" value="m" name="t_mf" class="middleCheck" /> 남        
 				  </td>
 				</tr>
 				<tr>
 				  <th>취미</th>
 				  <td>
-					  <input type="checkbox" value="" name="chk1" class="middleCheck" /> 여행&nbsp;&nbsp; 
-					  <input type="checkbox" value="" name="chk2" class="middleCheck" /> 독서&nbsp;&nbsp; 
-					  <input type="checkbox" value="" name="chk3" class="middleCheck" /> 운동
+					  <input type="checkbox" value="1" name="t_hobby_t" class="middleCheck" /> 여행&nbsp;&nbsp; 
+					  <input type="checkbox" value="2" name="t_hobby_r" class="middleCheck" /> 독서&nbsp;&nbsp; 
+					  <input type="checkbox" value="3" name="t_hobby_s" class="middleCheck" /> 운동
 				  </td>
 				</tr>
 			  </tbody>
