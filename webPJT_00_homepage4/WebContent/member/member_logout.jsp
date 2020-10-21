@@ -1,27 +1,16 @@
-﻿<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="utf-8"%>
-<%@ include file="/common/common_session_info.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 	session.invalidate();
-%>
+%>    
+<!DOCTYPE html>
 <html>
-	<head>
-		<script>
-			alert("<%=sessionName%> 님 로그아웃되었습니다.");
-			location.href ="/index.jsp";
-		</script>
-	</head>
+<head>
+<script>
+	location.href ="/index.jsp";
+</script>
+</head>
+<body>
+
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

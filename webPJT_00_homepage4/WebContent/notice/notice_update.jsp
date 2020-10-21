@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="dao.*,dto.*" %>    
+<%@ page import="dao.*,dto.*" %>
+<%@ include file="/common/session_manager_check.jsp" %>    
 <%
 	Notice_dao dao = new Notice_dao();
 	String no = request.getParameter("t_no"); 
@@ -9,9 +10,12 @@
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script type="text/javascript">
 	function goUpdate(){
+		if(!checkEmpty(noti.t_title," 제목 입력! ")) return;
+		if(!checkEmpty(noti.t_content," 내용 입력! ")) return;
+		if(!checkEmpty(noti.t_reg_date," 수정일 입력! ")) return;
+		
 		noti.method="post";
-//		noti.action="db_notice.jsp";
-		noti.action="db_notice_update.jsp";
+		noti.action="db_notice.jsp";
 		noti.submit();
 	}
 </script>
@@ -38,7 +42,7 @@
 					<col width="10%">
 					<col width="40%">
 				</colgroup>
-				<form name="noti" enctype="multipart/form-data">
+				<form name="noti">
 					<input type="hidden" name="t_work_gubun" value="update">
 					<input type="hidden" name="t_no" value="<%=no%>">
 				<tbody>
@@ -54,17 +58,16 @@
 						<th>Attach</th>
 						<td colspan="3">
 						<%  if(dto.getAttach() != null){ %>
-							 <%=dto.getAttach()%> 
-							 삭제 <input type="checkbox" name="checkBox_del_attach" value="<%=dto.getAttach()%>">
-							 <br>
+							 <%=dto.getAttach()%> 삭제<input type="checkbox"><br>
 						<%	} %>	
 							<input type="file"  name="t_attach" class="input600">
-							<input type="hidden" name="ori_attach" value="<%=dto.getAttach()%>">
 						</td>
 					</tr>	
 					<tr>
 						<th>Writer</th>
-						<td><input type="text" name="t_reg_name" value="<%=dto.getReg_name()%>" class="input100"></td>
+						<td><%=session_name%>
+							<input type="hidden" name="t_reg_name" value="<%=session_name%>" class="input100">
+						</td>						
 						<th>RegDate</th>
 						<td><input type="date" name="t_reg_date" value="<%=dto.getReg_date()%>" class="input130"></td>
 					</tr>	

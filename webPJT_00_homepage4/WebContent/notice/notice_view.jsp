@@ -6,6 +6,7 @@
 	String no = request.getParameter("t_no");
 	dao.setHitCount(no);
 	Notice_dto dto = dao.getNoticeView(no);
+
 %>
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script>
@@ -17,14 +18,13 @@
 	function goDelete(){
 		if(confirm(" 증말 삭제 ? ")){
 			noti.method="post";
-			noti.action="db_notice_delete.jsp";
+			noti.action="db_notice.jsp";
 			noti.submit();		
 		}
 	}
 </script> 	
 		<form name="noti">
 			<input type="hidden" name="t_no" value="<%=no%>">
-			<input type="hidden" name="t_attach" value="<%=dto.getAttach()%>">			
 			<input type="hidden" name="t_work_gubun" value="delete">
 		</form>
 		<div id="b_left">
@@ -66,9 +66,8 @@
 						<th>Attach</th>
 						<td colspan="3">
 						<%  if(dto.getAttach() != null){ %>
-							<a href="/common/filedown.jsp?t_file=<%=dto.getAttach()%>&t_gubun=notice"><%=dto.getAttach()%>
+							<%=dto.getAttach()%>
 						<%  } %>	
-						
 						</td>
 					</tr>	
 					<tr>
@@ -80,8 +79,10 @@
 				</tbody>
 			</table>
 			<div class="buttonGroup">
+			<%  if(session_level.equals("top")){ %>
 				<a href="javascript:goDelete()" class="butt">Delete</a>
 				<a href="javascript:goUpdateForm()" class="butt">Update</a>
+			<%  } %>
 				<a href="notice_list.jsp" class="butt">List</a>
 			</div>	
 		</div>	

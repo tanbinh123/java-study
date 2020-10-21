@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common/common_session_info.jsp" %>    
+<%
+	String session_name = (String)session.getAttribute("session_name");
+//	out.print("name : "+session_name);
+%>    
 <html>
 <head>
 <link href="css/index_c.css" rel="stylesheet">
@@ -75,20 +78,16 @@
 			<div id="b_top_menu">
 				<ul class="top_menu">
 					<li><a href="" class="allclick"><i class="fas fa-bars"></i></a></li>
-<%
-			if(sessionName!=null){
-%>	
-					<li><a href="/member/member_logout.jsp">LogOut</a></li>
-					<li><a href=""><i class="fas fa-street-view"></i> <%=sessionName%></a></li>					
-<%
-			} else {
-%>		
-					<li><a href="/member/member_join.jsp">Contack</a></li>
+<%					if(session_name == null) { %>
+					<li><a href="/member/member_join.jsp">Contact</a></li>
 					<li><a href="/member/member_login.jsp">Login</a></li>
-<%
-			} 
-%>				
+<%					} else { %>
+					<li><a href="/member/member_logout.jsp">LogOut</a></li>
+<%					}  %>
 					<li><a href=""><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+<%					if(session_name != null) { %>
+					<li><a href=""><%=session_name%>님..</a></li>
+<%					}  %>					
 				</ul>
 			</div>	
 	</div>

@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="dao.*, dto.*" %>
+<%@ page import="dao.*, dto.*,common.*" %>
 <%
 	request.setCharacterEncoding("utf-8");
-	Notice_dao dao = new Notice_dao();
+	Qanda_dao dao = new Qanda_dao();
 	
-	String no 		= dao.getNoticeNo();
+	String no 		= dao.getQandaNo();
 	String title 	= request.getParameter("t_title"); 
 	String content 	= request.getParameter("t_content"); 
-	String attach 	= request.getParameter("t_attach"); 
-	String reg_name = request.getParameter("t_reg_name"); 
-	String reg_date = request.getParameter("t_reg_date"); 
+	String reg_id   = request.getParameter("t_reg_id"); 
+	String reg_date = Common.getToday(); 
 	
-	Notice_dto dto = new Notice_dto(no,title,content,attach,reg_name,reg_date,0);
-	int result = dao.saveNotice(dto);
+	Qanda_dto dto = new Qanda_dto(no,title,content,reg_id,reg_date);
+	int result = dao.saveQuestion(dto);
 	String msg="";
 	if(result == 1) msg =" 등록 되었습니다. ";
 	else msg=" 등록 실패~ ";
@@ -24,10 +23,15 @@
 <head>
 <script type="text/javascript">
 	alert("<%=msg%>");
-	location.href="notice_list.jsp";
+	location.href="qanda_list.jsp";
 </script>
 </head>
 <body>
 
 </body>
 </html>
+
+
+
+
+

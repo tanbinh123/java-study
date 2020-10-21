@@ -1,9 +1,12 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ include file="/common/common_session_info.jsp" %>
+
 <html>
 <head>
 <link href="/css/sub_c.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script type="text/javascript" src="/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
     //<![CDATA[
     $(function(){
@@ -23,9 +26,16 @@
 
 		<div id="b_top_menu">
 			<ul class="top_menu">
-				<li><a href="/member/member_join.jsp">Contack</a></li>
+<%				if(session_name.equals("")) { %>			
+				<li><a href="/member/member_join.jsp">Contact</a></li>
 				<li><a href="/member/member_login.jsp">LogIn</a></li>
+<%				} else { %>
+				<li><a href="/member/member_logout.jsp">LogOut</a></li>
+<%				} %>
 				<li><a href="/index.jsp"><i class="fa fa-home"></i>Home</a></li>
+<%				if(!session_name.equals("")) { %>
+				<li><a href=""><%=session_name%>님..</a></li>				
+<%				}  %>
 			</ul>
 		</div>	
 

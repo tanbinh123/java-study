@@ -5,7 +5,7 @@ import java.util.Date;
  
 public class Common {
 	// 오늘날짜
-	public String getToday(){
+	public static String getToday(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String today = sdf.format(date);

@@ -33,7 +33,7 @@ public class CommonUtil {
         }
         if(fileLength > 1024 * 1024 * size){
             File dF = new File(dir,ff);
-            boolean aa  = dF.delete();
+            dF.delete();
             yn= false;
         }
 		return yn;
@@ -140,14 +140,13 @@ public class CommonUtil {
 	}	
 	// 페이지 POST
 	public static String pageListPost(int current_page,int totalpage){
-		int pagenumber;    //화면에 보여질 페이지 인덱스수
+		int pagenumber = 2;    //화면에 보여질 페이지 인덱스수
+
 		int startpage;     //화면에 보여질 시작 페이지 번호
 		int endpage;       //화면에 보여질 마지막 페이지 번호
 		int curpage;       //이동하고자 하는 페이지 번호
 		
 		String strList=""; //리턴될 페이지 인덱스 리스트
-		
-		pagenumber = 3;   //한 화면의 페이지 인덱스수
 		
 		//시작 페이지 번호 구하기
 		startpage = ((current_page - 1)/ pagenumber) * pagenumber + 1;
@@ -179,7 +178,19 @@ public class CommonUtil {
 			curpage = endpage+1;
 			strList = strList + "<a href=javascript:goPage("+curpage+")><i class='fa fa-angle-double-right'></i></a>";
 		}
-		
+	
 		return strList;
 	}		
 }
+
+
+
+
+
+
+
+
+
+
+
+
