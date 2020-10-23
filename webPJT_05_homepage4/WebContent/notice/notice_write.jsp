@@ -27,7 +27,8 @@
 		}	
 		noti.method="post";
 //		noti.action="db_notice_save.jsp";
-		noti.action="db_notice.jsp";
+//		noti.action="db_notice.jsp";
+		noti.action="db_notice_save_file.jsp";
 		noti.submit();
 	}
 </script>	

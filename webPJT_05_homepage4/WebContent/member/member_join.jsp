@@ -3,6 +3,7 @@
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script type="text/javascript">
 	function goJoin(){
+		if(!checkEmpty(mem.t_id," ID 입력 하시오! ")) return;
 		if(!checkEmpty(mem.id_check_gubun," ID 중복 검사 하시오! ")) return;
 		if(mem.id_check_gubun.value != mem.t_id.value){
 			alert("변경된 ID 중복 검사 하시오~");
@@ -13,7 +14,7 @@
 
 		if(mem.t_pw.value != mem.t_pw_confirm.value){
 			alert("비밀번호 확인 오류~~");
-			mem.t_pw_confirm.focus();
+			mem.t_pw_confirm.focus(); 
 			return;
 		}	
 		mem.method="post";
@@ -94,7 +95,17 @@ $(document).ready(function(){
 				alert("통신실패~");
 			},
 			success:function(data){
-				alert("넘어온 값:"+data);
+				//alert("넘어온 값:===="+data+"====");
+				$(".id_check_span").html(data);
+				if($.trim(data) == "사용 가능"){
+					$(".id_check_span").css("color","blue");
+					mem.id_check_gubun.value = id;
+					mem.t_name.focus();
+				}else{
+					$(".id_check_span").css("color","red");
+					mem.id_check_gubun.value = "";
+					mem.t_id.focus();
+				}
 			}
 		});
 		
@@ -129,11 +140,11 @@ $(document).ready(function(){
 				  <th><label for="id">I D</label></th>
 				  <td>
 					<input name="t_id" type="text" size="10" id="id" title="id입력하세요">
-					<input type="button" onclick="checkId()" value="ID중복검사" class="checkB">
-				  	<input type="text" name="id_check_gubun">
+					<!--  <input type="button" onclick="checkId()" value="ID중복검사" class="checkB">-->
+				  	<input type="hidden" name="id_check_gubun">
 				  	
 				  	<input type="button" value="ID중복검사ajax" class="checkB" id="idCheck">
-				  	
+				  	<span class="id_check_span"></span>
 
 				  </td>
 				</tr>
