@@ -47,7 +47,7 @@
 			<p class="n_title">
 				NOTICE
 			</p>
-			<form name="noti">
+			<form name="noti" enctype="multipart/form-data">
 			<input type="hidden" name="t_work_gubun" value="insert">
 			<table class="boardForm">
 				<colgroup>

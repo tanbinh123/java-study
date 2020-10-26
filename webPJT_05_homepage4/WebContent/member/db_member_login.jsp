@@ -18,7 +18,7 @@
 		if(id.equals("manager")) {
 			session.setAttribute("session_level","top");
 		}
-		session.setMaxInactiveInterval(60*10);
+		session.setMaxInactiveInterval(60*60*10);
 	}
 //	out.print("============="+msg);
 %>

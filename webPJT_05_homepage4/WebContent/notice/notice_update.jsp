@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="dao.*,dto.*" %>
+<%@ page import="dao.*,dto.*,common.*" %>
 <%@ include file="/common/session_manager_check.jsp" %>    
 <%
 	Notice_dao dao = new Notice_dao();
@@ -15,7 +15,8 @@
 		if(!checkEmpty(noti.t_reg_date," 수정일 입력! ")) return;
 		
 		noti.method="post";
-		noti.action="db_notice.jsp";
+		//noti.action="db_notice.jsp";
+		noti.action="db_notice_update_file.jsp";
 		noti.submit();
 	}
 </script>
@@ -42,7 +43,7 @@
 					<col width="10%">
 					<col width="40%">
 				</colgroup>
-				<form name="noti">
+				<form name="noti" enctype="multipart/form-data">
 					<input type="hidden" name="t_work_gubun" value="update">
 					<input type="hidden" name="t_no" value="<%=no%>">
 				<tbody>
@@ -58,9 +59,10 @@
 						<th>Attach</th>
 						<td colspan="3">
 						<%  if(dto.getAttach() != null){ %>
-							 <%=dto.getAttach()%> 삭제<input type="checkbox"><br>
+							 <%=dto.getAttach()%> 삭제<input type="checkbox" name="t_del_attach" value="<%=dto.getAttach()%>"><br>
 						<%	} %>	
 							<input type="file"  name="t_attach" class="input600">
+							<input type="hidden" name="t_ori_attach" value="<%=CommonUtil.checkNull(dto.getAttach())%>">
 						</td>
 					</tr>	
 					<tr>
