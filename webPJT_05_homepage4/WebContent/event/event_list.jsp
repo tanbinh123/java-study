@@ -3,7 +3,7 @@
 <%@ page import="dao.*,dto.*,java.util.*,common.*"%>    
 <%
 	request.setCharacterEncoding("utf-8");
-	Qanda_dao dao = new Qanda_dao();
+	Event_dao dao = new Event_dao();
 	
 	String select = request.getParameter("t_select");
 	String search = request.getParameter("t_search");
@@ -12,7 +12,7 @@
 		search ="";
 	}
 	
-	ArrayList<Qanda_dto> arr = dao.getQandaList(select,search);
+	ArrayList<Event_dto> arr = dao.getEventList(select,search);
 	
 	//*************page 시작**************/
 	int	list_setup_count = 10;			// 한페이지에 출력될 List 수 
@@ -59,45 +59,45 @@
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script type="text/javascript">
 	function goSearch(){
-		qna.method="post";
-		qna.action="qanda_list.jsp";
-		qna.submit();
+		noti.method="post";
+		noti.action="event_list.jsp";
+		noti.submit();
 	}
 	function goView(num){
-		qnaView.t_no.value = num;
-		qnaView.method ="post";
-		qnaView.action ="qanda_view.jsp";
-		qnaView.submit();
+		notiView.t_no.value = num;
+		notiView.method ="post";
+		notiView.action ="event_view.jsp";
+		notiView.submit();
 	}
 	function goPage(pageNumber){
 		pageForm.r_page.value = pageNumber;
 		pageForm.method="post";
-		pageForm.action="qanda_list.jsp";
+		pageForm.action="event_list.jsp";
 		pageForm.submit();
 	}
 </script>
 		<form name="pageForm">
 			<input type="hidden" name="r_page">
 		</form>
-		<form name="qnaView">
+		<form name="notiView">
 			<input type="hidden" name="t_no">
 		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp">NOTICE</a></li>
+				<li><a href="/notice/notice_list.jsp"> NOTICE</a></li>
 				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span>Q & A</a></li>
+				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
 				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="/event/event_list.jsp">Etc</a></li>
+				<li><a href="/event/event_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span>Etc</a></li>
 			</ul>
 		</div>
 		
 		<div id="b_right">
 			<p class="n_title">
-				QUESTION & ANSWER
+				EVENT
 			</p>
-			<form name="qna">
+			<form name="noti">
 				<div> 
 					<p class="leftBox">총게시글 : <%=arr.size()%> 건</p>			
 					<p class="select_box">
@@ -112,9 +112,10 @@
 			</form>
 			<table class="boardList">
 				<colgroup>
-					<col width="10%">
-					<col width="50%">
-					<col width="10%">
+					<col width="8%">
+					<col width="36%">
+					<col width="14%">
+					<col width="14%">
 					<col width="10%">
 					<col width="14%">
 					<col width="6%">
@@ -123,7 +124,8 @@
 					<tr>
 						<th>No</th>
 						<th>Title</th>
-						<th>Answer</th>
+						<th>S_Date</th>
+						<th>E_Date</th>
 						<th>Reg Name</th>
 						<th>Reg Date</th>
 						<th>Hit</th>
@@ -136,14 +138,11 @@
 %>			
 					<tr>
 						<td><a href="javascript:goView('<%=arr.get(k).getNo()%>')"><%=arr.get(k).getNo()%></a></td>
-						<td class="t_center"><a href="javascript:goView('<%=arr.get(k).getNo()%>')"><%=arr.get(k).getTitle()%></a></td>
-						<td>
-						<%  if(arr.get(k).getAnswer() != null) { %>
-							답변완료
-						<%  } %>	
-						</td>
-						<td><%=arr.get(k).getQ_reg_name()%></td>
-						<td><%=arr.get(k).getQ_reg_date()%></td>
+						<td class="t_center"><a href="event_view.jsp?t_no=<%=arr.get(k).getNo()%>"><%=arr.get(k).getTitle()%></a></td>
+						<td><%=arr.get(k).getS_date()%></td>
+						<td><%=arr.get(k).getE_date()%></td>
+						<td><%=arr.get(k).getReg_name()%></td>
+						<td><%=arr.get(k).getReg_date()%></td>
 						<td><%=arr.get(k).getHit()%></td>
 					</tr>	
 <%
@@ -175,8 +174,8 @@
 <%
 				out.println(CommonUtil.pageListPost(current_page, total_page));			
  			
-				if(!session_id.equals("")){ %>				
-				<a href="qanda_write.jsp" class="write">질문하기</a>
+				if(session_level.equals("top")){ %>				
+				<a href="event_write.jsp" class="write">글쓰기</a>
 <%				} %>				
 				
 				

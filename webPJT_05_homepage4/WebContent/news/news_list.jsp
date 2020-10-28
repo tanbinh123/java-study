@@ -9,7 +9,7 @@
 				<li><a href="/news/news_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> News</a></li>
 				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
 				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/event/event_list.jsp">Etc</a></li>
 			</ul>
 		</div>
 		

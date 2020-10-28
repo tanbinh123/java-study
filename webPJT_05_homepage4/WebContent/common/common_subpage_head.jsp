@@ -20,6 +20,17 @@
     });     
     //]]>
 </script> 
+<style>
+#b_right .boardList{
+table-layout: fixed;
+white-space: nowrap;
+}
+#b_right .boardList td{
+display: table-cell;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+</style>
 </head>
 <body>
 	<div id="container">
@@ -113,7 +124,7 @@
 							<li><a href="/news/news_list.jsp">News</a></li>
 							<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
 							<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-							<li><a href="">Etc</a></li>
+							<li><a href="/event/event_list.jsp">Etc</a></li>
 						</ul>
 					</div>					
 				</li>
