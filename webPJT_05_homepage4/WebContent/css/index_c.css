@@ -121,7 +121,7 @@
         animation-name: lineani;
         animation-duration: 1s;
 		animation-delay: 1s;
-		animation-iteration-count: infinite(°è¼Ó¹Ýº¹);  ¶Ç´Â animation-iteration-count: 1;
+		animation-iteration-count: infinite(ï¿½ï¿½Ó¹Ýºï¿½);  ï¿½Ç´ï¿½ animation-iteration-count: 1;
 */			
 		}	
 		@keyframes lineani{
@@ -228,7 +228,7 @@
 			color:#A4A4A4;
 			width:80px;
 			text-align:center;
-			//height:24px;
+			height:24px;
 		}
 		.allclick{
 			position:relative;
@@ -284,7 +284,7 @@
 			color:#BDBDBD;
 		}
 		.noti_date{
-			width:68px;
+			width:64px;
 		}
 		
 /************* b_center_top **************/		

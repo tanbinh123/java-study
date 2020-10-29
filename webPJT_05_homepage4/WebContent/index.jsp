@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="dao.*,dto.*,java.util.*,common.*,java.text.*"%> 
 <%
+	request.setCharacterEncoding("utf-8");
+	Notice_dao dao = new Notice_dao();
 	String session_name = (String)session.getAttribute("session_name");
 //	out.print("name : "+session_name);
+
+	String select = "title";
+	String search = "";
+	
+	ArrayList<Notice_dto> arr = dao.getNoticeList(select,search);
 %>    
 <html>
 <head>
@@ -199,37 +207,42 @@
 		<hr><br>
 		<div id="b_left">
 			<p class="left_top">
-				<img src="images/left_top.jpg"><a href="notice/notice_list.html"><img src="images/left_right.jpg"></a>
+				<img src="images/left_top.jpg"><a href="notice/notice_list.jsp"><img src="images/left_right.jpg"></a>
 			</p>
 			<div class="left_middle">
-				<ul>
-					<li class="noti_title"><a href="">7.Convert between color formats</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">6.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">5.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">4.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">3.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">2.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
-				<ul>
-					<li class="noti_title"><a href="">1.회원운영정책 변경안내</a></li>
-					<li class="noti_date">20-07-14</li>
-				</ul>
+				<%
+					if(arr.size() > 8){
+					for (int i = 0; i < 8 ; i ++){%>
+						<ul>
+						<li class="noti_title"><a href="/notice/notice_view.jsp?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getTitle()%></a></li>
+						<% 	String date;
+						    DateFormat formatter;        
+						
+						    formatter = new SimpleDateFormat("yyyy-MM-dd");
+						    Date date1 = formatter.parse(arr.get(i).getReg_date());
+						    formatter = new SimpleDateFormat("yy-MM-dd");
+						    date = formatter.format(date1);
+						    %>
+					    <li class="noti_date"><%=date%></li>
+						</ul>
+				<%}%>
+				
+				<%}else{
+				for (int i = 0; i < arr.size() ; i ++){%>
+						<ul>
+						<li class="noti_title"><a href="/notice/notice_view.jsp?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getTitle()%></a></li>
+						<% 	String date;
+						    DateFormat formatter;        
+						
+						    formatter = new SimpleDateFormat("yyyy-MM-dd");
+						    Date date1 = formatter.parse(arr.get(i).getReg_date());
+						    formatter = new SimpleDateFormat("yy-MM-dd");
+						    date = formatter.format(date1);
+						    %>
+					    <li class="noti_date"><%=date%></li>
+						</ul>
+				<%}%>
+				<%}%>
 			</div>
 		
 		</div>

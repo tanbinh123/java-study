@@ -1,11 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ include file="/common/common_subpage_head.jsp"%>   
+<%@ page import="dao.*,dto.*" %>    
+<%
+	News_dao dao = new News_dao();
+	String no = request.getParameter("t_no");
+	dao.setHitCount(no);
+	News_dto dto = dao.getNewsView(no);
+
+%>
+<%@ include file="/common/common_subpage_head.jsp"%>
+<script>
+	function goUpdateForm(){
+		noti.method="post";
+		noti.action="news_update.jsp";
+		noti.submit();
+	}
+	function goDelete(){
+		if(confirm(" 증말 삭제 ? ")){
+			noti.method="post";
+			noti.action="db_news.jsp";
+			noti.submit();		
+		}
+	}
+</script> 	
+		<form name="noti">
+			<input type="hidden" name="t_no" value="<%=no%>">
+			<input type="hidden" name="t_work_gubun" value="delete">
+		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp">NOTICE</a></li>
-				<li><a href="/news/news_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> News</a></li>
+				<li><a href="/notice/notice_list.jsp"> NOTICE</a></li>
+				<li><a href="/news/news_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span>News</a></li>
 				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
 				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
 				<li><a href="">Etc</a></li>
@@ -16,6 +42,7 @@
 			<p class="n_title">
 				NEWS
 			</p>
+			
 			<table class="boardForm">
 				<colgroup>
 					<col width="15%">
@@ -26,32 +53,29 @@
 				<tbody>
 					<tr>
 						<th>Title</th>
-						<td colspan="2">구매 절차 과정 안내 드립니다.</td>
-						<td> <i class="far fa-eye"></i> 152</td>
+						<td colspan="2"><%=dto.getTitle()%></td>
+						<td> <i class="far fa-eye"></i> <%=dto.getHit()%></td>
 					</tr>	
 					<tr>
 						<th>Content</th>
 						<td colspan="3">
-							<textarea class="textArea_H250_noBorder" readonly>구매 절차 과정 안내 드립니다.구매 절차 과정 안내 드립니다.구매 절차 과정 안내 드립니다.</textarea>
+							<textarea class="textArea_H250_noBorder" readonly><%=dto.getContent()%></textarea>
 						</td>
-					</tr>	
-					<tr>
-						<th>Attach</th>
-						<td colspan="3">구매안내.hwp</td>
-					</tr>	
+					</tr>		
 					<tr>
 						<th>Writer</th>
-						<td>관리자</td>
+						<td><%=dto.getReg_name()%></td>
 						<th>RegDate</th>
-						<td>2020-09-01</td>
+						<td><%=dto.getReg_date()%></td>
 					</tr>	
-
 				</tbody>
 			</table>
 			<div class="buttonGroup">
-				<a href="" class="butt">Delete</a>
-				<a href="notice_update.html" class="butt">Update</a>
-				<a href="notice_list.html" class="butt">List</a>
+			<%  if(session_level.equals("top")){ %>
+				<a href="javascript:goDelete()" class="butt">Delete</a>
+				<a href="javascript:goUpdateForm()" class="butt">Update</a>
+			<%  } %>
+				<a href="news_list.jsp" class="butt">List</a>
 			</div>	
 		</div>	
 
@@ -59,4 +83,9 @@
 	</div>	
 </body>
 </html>
-    
+
+
+
+
+
+

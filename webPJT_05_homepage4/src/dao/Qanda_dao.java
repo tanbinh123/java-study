@@ -20,7 +20,7 @@ public class Qanda_dao {
 	// 답변 삭제
 	public int deleteAnswer(String no) {
 		int result =0;
-		String query ="update h00_qna \r\n" + 
+		String query ="update h05_qna \r\n" + 
 				"set answer ='', \r\n" + 
 				"    a_reg_id ='', \r\n" + 
 				"    a_reg_date ='' \r\n" + 
@@ -44,7 +44,7 @@ public class Qanda_dao {
 	public int saveAnswer(String no, String answer, String reg_id, 
 							String reg_date) {
 		int result =0;
-		String query ="update h00_qna \r\n" + 
+		String query ="update h05_qna \r\n" + 
 				"set answer ='"+answer+"', \r\n" + 
 				"    a_reg_id ='"+reg_id+"', \r\n" + 
 				"    a_reg_date ='"+reg_date+"' \r\n" + 
@@ -68,7 +68,7 @@ public class Qanda_dao {
 	// 질문 수정
 	public int updateQuestion(Qanda_dto dto) {
 		int result =0;
-		String query ="update h00_qna \r\n" + 
+		String query ="update h05_qna \r\n" + 
 				"set title ='"+dto.getTitle()+"', \r\n" + 
 				"    content ='"+dto.getContent()+"', \r\n" + 
 				"    q_reg_date ='"+dto.getQ_reg_date()+"' \r\n" + 
@@ -91,7 +91,7 @@ public class Qanda_dao {
 	public Qanda_dto getQuestionInfo(String no){
 		Qanda_dto dto = null; 
 		String query =" select a.no, a.title, a.content, a.q_reg_id, b.name, to_char(a.q_reg_date,'yyyy-MM-dd') \r\n" + 
-						" from h00_qna a, h00_member b \r\n" + 
+						" from h05_qna a, h05_member b \r\n" + 
 						" where a.q_reg_id = b.id \r\n" + 
 						" and a.no ='"+no+"' ";
 		try {
@@ -123,7 +123,7 @@ public class Qanda_dao {
 	// 질문 삭제
 	public int deleteQuestion(String no) {
 		int result =0;
-		String query=" delete from h00_qna " + 
+		String query=" delete from h05_qna " + 
 					 " where no='"+no+"' ";
 		try {
 			connection = common.getConnection();
@@ -144,7 +144,7 @@ public class Qanda_dao {
 		Qanda_dto dto = null; 
 		String query =" select a.no, a.title, a.content, a.q_reg_id, b.name, to_char(a.q_reg_date,'yyyy-MM-dd'), \r\n" + 
 						"       a.answer, a.a_reg_id, c.name,  to_char(a.a_reg_date,'yyyy-MM-dd'), a.hit" + 
-						" from h00_qna a, h00_member b, h00_member c \r\n" + 
+						" from h05_qna a, h05_member b, h05_member c \r\n" + 
 						" where a.q_reg_id = b.id \r\n" + 
 						" and a.a_reg_id = c.id(+) \r\n" + 
 						" and a.no ='"+no+"' ";
@@ -181,7 +181,7 @@ public class Qanda_dao {
 	
 	// 조회수 증가
 	public void setHitCount(String no) {
-		String query=" update h00_qna set hit = hit + 1\r\n" + 
+		String query=" update h05_qna set hit = hit + 1\r\n" + 
 					 " where no='"+no+"' ";
 		try {
 			connection = common.getConnection();
@@ -199,7 +199,7 @@ public class Qanda_dao {
 	// 등록
 	public int saveQuestion(Qanda_dto dto) {
 		int result =0;
-		String query =" insert into h00_qna \r\n" + 
+		String query =" insert into h05_qna \r\n" + 
 				" (no, title, content, q_reg_id, q_reg_date) \r\n" + 
 				" values \r\n" + 
 				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getQ_reg_id()+"','"+dto.getQ_reg_date()+"')";
@@ -222,7 +222,7 @@ public class Qanda_dao {
 	public ArrayList<Qanda_dto> getQandaList(String select,String search){
 		ArrayList<Qanda_dto> arr = new ArrayList<>();
 		String query =" select q.no, q.title, q.answer, m.name, to_char(q.q_reg_date,'yyyy-MM-dd'), q.hit \r\n" + 
-				" from h00_qna q, h00_member m \r\n" + 
+				" from h05_qna q, h05_member m \r\n" + 
 				" where q.q_reg_id = m.id "+
 				" and q."+select+" like '%"+search+"%' "+
 				" order by q.no desc";
@@ -252,7 +252,7 @@ public class Qanda_dao {
 	// 번호생성
 	public String getQandaNo() {
 		String maxNo="";
-		String query=" select max(no) from h00_qna ";
+		String query=" select max(no) from h05_qna ";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);

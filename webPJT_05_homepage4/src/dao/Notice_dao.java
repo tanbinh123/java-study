@@ -18,7 +18,7 @@ public class Notice_dao {
 	// 삭제
 	public int deleteNotice(String no) {
 		int result =0;
-		String query =" delete from h00_notice \r\n" + 
+		String query =" delete from h05_notice \r\n" + 
 					  " where no ='"+no+"'";
 		try {
 			connection = common.getConnection();
@@ -37,7 +37,7 @@ public class Notice_dao {
 	// 수정
 	public int updateNotice(Notice_dto dto) {
 		int result =0;
-		String query ="update h00_notice \r\n" + 
+		String query ="update h05_notice \r\n" + 
 				"set title='"+dto.getTitle()+"', \r\n" + 
 				"    content='"+dto.getContent()+"', \r\n" + 
 				"    attach ='"+dto.getAttach()+"', \r\n" + 
@@ -61,7 +61,7 @@ public class Notice_dao {
 	
 	// 조회수 증가
 	public void setHitCount(String no) {
-		String query=" update h00_notice set hit = hit + 1\r\n" + 
+		String query=" update h05_notice set hit = hit + 1\r\n" + 
 					 " where no='"+no+"' ";
 		try {
 			connection = common.getConnection();
@@ -80,7 +80,7 @@ public class Notice_dao {
 	public Notice_dto getNoticeView(String no){
 		Notice_dto dto = null; 
 		String query =" select no, title, content, attach , reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
-						" from h00_notice\r\n" + 
+						" from h05_notice\r\n" + 
 						" where no ='"+no+"'";
 		try {
 			connection = common.getConnection();
@@ -111,7 +111,7 @@ public class Notice_dao {
 	public ArrayList<Notice_dto> getNoticeList(String select,String search){
 		ArrayList<Notice_dto> arr = new ArrayList<Notice_dto>();
 		String query =" select no, title, attach, reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
-					  " from h00_notice\r\n" + 
+					  " from h05_notice\r\n" + 
 				      " where "+select+" like '%"+search+"%' "+
 					  " order by no desc";
 		try {
@@ -143,7 +143,7 @@ public class Notice_dao {
 	// 등록
 	public int saveNotice(Notice_dto dto) {
 		int result =0;
-		String query ="insert into h00_notice \r\n" + 
+		String query ="insert into h05_notice \r\n" + 
 				"(no,title,content,attach,reg_name,reg_date) \r\n" + 
 				"values \r\n" + 
 				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"')";
@@ -165,7 +165,7 @@ public class Notice_dao {
 	// 번호생성
 	public String getNoticeNo() {
 		String maxNo="";
-		String query=" select max(no) from h00_notice ";
+		String query=" select max(no) from h05_notice ";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);

@@ -14,8 +14,16 @@
 	
 	ArrayList<Event_dto> arr = dao.getEventList(select,search);
 	
+	int searchCount = arr.size();
+	String searchCountString = "0";
+	
+	if(request.getParameter("t_searchCount") != null){ 
+		searchCountString = request.getParameter("t_searchCount");
+		searchCount = Integer.parseInt(searchCountString);
+	}
+	
 	//*************page 시작**************/
-	int	list_setup_count = 10;			// 한페이지에 출력될 List 수 
+	int	list_setup_count = 3;			// 한페이지에 출력될 List 수 
 
 	String r_page = request.getParameter("r_page");
 	if(r_page==null) r_page= "";
@@ -30,8 +38,7 @@
 
 	// 조회된 건수 구하기  total_count : 설정
 	if(arr == null) total_count =0;
-	else total_count = arr.size(); 
-
+	else total_count = searchCount; 
 
 	// 페이지번호가 없으면 1페이지로 간주
 	if(r_page.equals("")) current_page = 1;
@@ -78,6 +85,9 @@
 </script>
 		<form name="pageForm">
 			<input type="hidden" name="r_page">
+			<input name="t_searchCount" type="hidden" value="<%=searchCount%>">
+			<input name="t_select" type="hidden" value="<%=select%>">
+			<input name="t_search" type="hidden" value="<%=search%>">
 		</form>
 		<form name="notiView">
 			<input type="hidden" name="t_no">

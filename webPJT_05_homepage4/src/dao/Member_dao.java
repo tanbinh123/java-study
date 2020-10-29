@@ -17,7 +17,7 @@ public class Member_dao {
 	// id 중복검사
 	public int idCheckCount(String id){
 		int count = 0;
-		String query=" select count(*) from h00_member \r\n" + 
+		String query=" select count(*) from h05_member \r\n" + 
 					 " where id ='"+id+"' ";
 		try {
 			connection = common.getConnection();
@@ -39,7 +39,7 @@ public class Member_dao {
 	// 로그인
 	public String getLoginName(String id, String pw){
 		String name= null;
-		String query=" select name from h00_member \r\n" + 
+		String query=" select name from h05_member \r\n" + 
 					 " where id ='"+id+"' \r\n" + 
 					 " and pw='"+pw+"'";
 		try {
@@ -65,7 +65,7 @@ public class Member_dao {
 	// 회원가입
 	public int saveMember(Member_dto dto) {
 		int result =0;
-		String query =" insert into h00_member \r\n" + 
+		String query =" insert into h05_member \r\n" + 
 				" (id,name,pw,area,address,tel_1,tel_2,tel_3,mf, \r\n" + 
 				" hobby_t,hobby_r,hobby_s,reg_date) \r\n" + 
 				"values \r\n" + 

@@ -5,8 +5,11 @@
 	request.setCharacterEncoding("utf-8");
 	Notice_dao dao = new Notice_dao();
 	
+	
+	
 	String select = request.getParameter("t_select");
 	String search = request.getParameter("t_search");
+	
 	if(select == null){
 		select = "title";
 		search ="";
@@ -14,13 +17,21 @@
 	
 	ArrayList<Notice_dto> arr = dao.getNoticeList(select,search);
 	
+	int searchCount = arr.size();
+	String searchCountString = "0";
+	
+	if(request.getParameter("t_searchCount") != null){ 
+		searchCountString = request.getParameter("t_searchCount");
+		searchCount = Integer.parseInt(searchCountString);
+	}
+	
 	//*************page 시작**************/
 	int	list_setup_count = 10;			// 한페이지에 출력될 List 수 
 
 	String r_page = request.getParameter("r_page");
 	if(r_page==null) r_page= "";
 	int			current_page;					// 현재페이지 번호
-	int			total_page;						// 총페이지 수
+	int			total_page ;						// 총페이지 수
 	int			total_count;					// 총레코드 수
 	int			for_count;						
 	int			p_no;
@@ -30,7 +41,7 @@
 
 	// 조회된 건수 구하기  total_count : 설정
 	if(arr == null) total_count =0;
-	else total_count = arr.size(); 
+	else total_count = searchCount; 
 
 
 	// 페이지번호가 없으면 1페이지로 간주
@@ -78,6 +89,9 @@
 </script>
 		<form name="pageForm">
 			<input type="hidden" name="r_page">
+			<input name="t_searchCount" type="hidden" value="<%=searchCount%>">
+			<input name="t_select" type="hidden" value="<%=select%>">
+			<input name="t_search" type="hidden" value="<%=search%>">
 		</form>
 		<form name="notiView">
 			<input type="hidden" name="t_no">
@@ -99,7 +113,7 @@
 			</p>
 			<form name="noti">
 				<div> 
-					<p class="leftBox">총게시글 : <%=arr.size()%> 건</p>			
+					<p class="leftBox">총게시글 : <%=searchCount%> 건</p>			
 					<p class="select_box">
 						<select name="t_select" class="sel_box">
 							<option value="title" <%if(select.equals("title")) out.print("selected");%>>Title</option>

@@ -8,40 +8,38 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import common.DBConnectionOracle;
-import dto.Event_dto;
+import dto.News_dto;
 
-public class Event_dao {
+public class News_dao {
 	DBConnectionOracle common= new DBConnectionOracle();
 	Connection connection = null;
 	PreparedStatement ps  = null;
 	ResultSet         rs  = null;
-	// ����
-	public int deleteEvent(String no) {
+	// 삭제
+	public int deleteNews(String no) {
 		int result =0;
-		String query =" delete from h05_Event \r\n" + 
+		String query =" delete from h05_News \r\n" + 
 					  " where no ='"+no+"'";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
 			result  = ps.executeUpdate();			
 		}catch(SQLException se) {
-			System.out.println("deleteEvent() query ?���?: "+query);
+			System.out.println("deleteNews() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("deleteEvent() ?���?");
+			System.out.println("deleteNews() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}		
 		return result;
 	}
 	
-	// ����
-	public int updateEvent(Event_dto dto) {
+	// 수정
+	public int updateNews(News_dto dto) {
 		int result =0;
-		String query ="update h05_Event \r\n" + 
+		String query ="update h05_News \r\n" + 
 				"set title='"+dto.getTitle()+"', \r\n" + 
 				"    content='"+dto.getContent()+"', \r\n" + 
-				"    s_date ='"+dto.getS_date()+"', \r\n" + 
-				"    e_date ='"+dto.getE_date()+"', \r\n" + 
 				"    reg_name ='"+dto.getReg_name()+"', \r\n" + 
 				"    reg_date ='"+dto.getReg_date()+"' \r\n" + 
 				"where no ='"+dto.getNo()+"'";
@@ -50,9 +48,9 @@ public class Event_dao {
 			ps  = connection.prepareStatement(query);
 			result  = ps.executeUpdate();			
 		}catch(SQLException se) {
-			System.out.println("updateEvent() query ?���?: "+query);
+			System.out.println("updateNews() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("updateEvent() ?���?");
+			System.out.println("updateNews() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}		
@@ -60,28 +58,28 @@ public class Event_dao {
 	}
 	
 	
-	// ��ȸ�� ����
+	// 조회수 증가
 	public void setHitCount(String no) {
-		String query=" update h05_Event set hit = hit + 1\r\n" + 
+		String query=" update h05_News set hit = hit + 1\r\n" + 
 					 " where no='"+no+"' ";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
 			ps.executeUpdate();		
 		}catch(SQLException se) {
-			System.out.println("setHitCount() query ?���?: "+query);
+			System.out.println("setHitCount() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("setHitCount() ?���?");
+			System.out.println("setHitCount() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}				
 	}	
 	
-	//��ȸ
-	public Event_dto getEventView(String no){
-		Event_dto dto = null; 
-		String query =" select no, title, content, to_char(s_date,'yyyy-MM-dd'),to_char(e_date,'yyyy-MM-dd') , reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
-						" from h05_Event\r\n" + 
+	//상세조회
+	public News_dto getNewsView(String no){
+		News_dto dto = null; 
+		String query =" select no, title, content , reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
+						" from h05_News\r\n" + 
 						" where no ='"+no+"'";
 		try {
 			connection = common.getConnection();
@@ -91,28 +89,27 @@ public class Event_dao {
 				String nn 		= rs.getString(1);
 				String title 	= rs.getString(2);
 				String content 	= rs.getString(3);
-				String s_date 	= rs.getString(4);
-				String e_date 	= rs.getString(5);
-				String reg_name = rs.getString(6);
-				String reg_date = rs.getString(7);
-				int hit 		= rs.getInt(8);
-				dto = new Event_dto(nn,title,content,s_date,e_date,reg_name,reg_date,hit);
+				String reg_name = rs.getString(4);
+				String reg_date = rs.getString(5);
+				int hit 		= rs.getInt(6);
+				dto = new News_dto(nn,title,content,
+												reg_name,reg_date,hit);
 			}
 		}catch(SQLException se) {
-			System.out.println("getEventView() query ����: "+query);
+			System.out.println("getNewsView() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("getEventView() ����");
+			System.out.println("getNewsView() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}				
 		return dto;
 	}
 	
-	//����Ʈ ��ȸ
-	public ArrayList<Event_dto> getEventList(String select,String search){
-		ArrayList<Event_dto> arr = new ArrayList<Event_dto>();
-		String query =" select no, title, content,to_char(s_date,'yyyy-MM-dd'),to_char(e_date,'yyyy-MM-dd') , reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
-					  " from h05_Event\r\n" + 
+	//목록조회
+	public ArrayList<News_dto> getNewsList(String select,String search){
+		ArrayList<News_dto> arr = new ArrayList<News_dto>();
+		String query =" select no, title, reg_name, to_char(reg_date,'yyyy-MM-dd'), hit\r\n" + 
+					  " from h05_News\r\n" + 
 				      " where "+select+" like '%"+search+"%' "+
 					  " order by no desc";
 		try {
@@ -122,20 +119,17 @@ public class Event_dao {
 			while(rs.next()) {
 				String no 		= rs.getString(1);
 				String title 	= rs.getString(2);
-				String content 	= rs.getString(3);
-				String s_date 	= rs.getString(4);
-				String e_date 	= rs.getString(5);
-				String reg_name = rs.getString(6);
-				String reg_date = rs.getString(7);
-				int hit 		= rs.getInt(8);
-				Event_dto dto = new Event_dto(no,title,"",s_date,e_date,
+				String reg_name = rs.getString(3);
+				String reg_date = rs.getString(4);
+				int hit 		= rs.getInt(5);
+				News_dto dto = new News_dto(no,title,"",
 												reg_name,reg_date,hit);
 				arr.add(dto);
 			}			
 		}catch(SQLException se) {
-			System.out.println("getEventList() query ����: "+query);
+			System.out.println("getNewsList() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("getEventList() ����");
+			System.out.println("getNewsList() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}		
@@ -143,21 +137,21 @@ public class Event_dao {
 		return arr;
 	}
 	
-	// ?���?
-	public int saveEvent(Event_dto dto) {
+	// 등록
+	public int saveNews(News_dto dto) {
 		int result =0;
-		String query ="insert into h05_Event \r\n" + 
-				"(no,title,content,s_date,e_date,reg_name,reg_date) \r\n" + 
+		String query ="insert into h05_News \r\n" + 
+				"(no,title,content,reg_name,reg_date) \r\n" + 
 				"values \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getS_date()+"','"+dto.getE_date()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"')";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"')";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
 			result  = ps.executeUpdate();			
 		}catch(SQLException se) {
-			System.out.println("saveEvent() query ?���?: "+query);
+			System.out.println("saveNews() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("saveEvent() ?���?");
+			System.out.println("saveNews() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}		
@@ -165,10 +159,10 @@ public class Event_dao {
 	}
 	
 	
-	// 번호?��?��
-	public String getEventNo() {
+	// 번호생성
+	public String getNewsNo() {
 		String maxNo="";
-		String query=" select max(no) from h05_Event ";
+		String query=" select max(no) from h05_News ";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
@@ -184,12 +178,12 @@ public class Event_dao {
 				i = i + 1;
 				DecimalFormat df = new DecimalFormat("000");
 				String newNo = df.format((double)i);
-				maxNo = "E"+newNo; // 
+				maxNo = "N"+newNo; // 
 			}
 		}catch(SQLException se) {
-			System.out.println("getEventNo() query ?���?: "+query);
+			System.out.println("getNewsNo() query 오류: "+query);
 		}catch(Exception ee) {
-			System.out.println("getEventNo() ?���?");
+			System.out.println("getNewsNo() 오류");
 		}finally {
 			common.close(connection, ps, rs);
 		}		
