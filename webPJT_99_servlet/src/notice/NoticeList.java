@@ -1,32 +1,29 @@
-package controller;
+package notice;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.News_dao;
-import dto.News_dto;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
+import dao.Notice_dao;
+import dto.Notice_dto;
 
 /**
- * Servlet implementation class News
+ * Servlet implementation class NoticeList
  */
-@WebServlet("/News")
-public class News extends HttpServlet {
+@WebServlet("/NoticeList")
+public class NoticeList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public News() {
+    public NoticeList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,25 +32,24 @@ public class News extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html;charset=UTF-8");
-		News_dao dao = new News_dao();
+		request.setCharacterEncoding("utf-8");
+		Notice_dao dao = new Notice_dao();
 		
-		ArrayList<News_dto> arr = dao.getNewsList("title","");
+		String select = request.getParameter("t_select");
+		String search = request.getParameter("t_search");
+		if(select == null) {
+			select = "title";
+			search = "";
+		}
 		
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String select = "title";
-		String search ="";
-		
-		
+		ArrayList<Notice_dto> dtos = dao.getNoticeList(select, search);
+		request.setAttribute("t_dtos", dtos);
 		request.setAttribute("t_select", select);
 		request.setAttribute("t_search", search);
-		request.setAttribute("t_arr", arr);
 		
+		RequestDispatcher rd = request.getRequestDispatcher("/notice/notice_list.jsp");
+		rd.forward(request, response);
 		
-		RequestDispatcher dispacher = request.getRequestDispatcher("/news/news_list.jsp");
-		dispacher.forward(request, response);
 		
 	}
 

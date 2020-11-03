@@ -1,32 +1,29 @@
-package controller;
+package notice;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.News_dao;
-import dto.News_dto;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
+import common.CommonUtil;
+import dao.Notice_dao;
+import dto.Notice_dto;
 
 /**
- * Servlet implementation class News
+ * Servlet implementation class DBNoticeSave
  */
-@WebServlet("/News")
-public class News extends HttpServlet {
+@WebServlet("/DBNoticeSave")
+public class DBNoticeSave extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public News() {
+    public DBNoticeSave() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,25 +32,23 @@ public class News extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html;charset=UTF-8");
-		News_dao dao = new News_dao();
+		request.setCharacterEncoding("utf-8");
+		Notice_dao dao = new Notice_dao();
 		
-		ArrayList<News_dto> arr = dao.getNewsList("title","");
+		String no = dao.getNoticeNo();
+		String title = request.getParameter("t_title");
+		String content = request.getParameter("t_content");
+		String reg_name = "관리자";
+		String reg_date = CommonUtil.getToday();
 		
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String select = "title";
-		String search ="";
-		
-		
-		request.setAttribute("t_select", select);
-		request.setAttribute("t_search", search);
-		request.setAttribute("t_arr", arr);
-		
-		
-		RequestDispatcher dispacher = request.getRequestDispatcher("/news/news_list.jsp");
-		dispacher.forward(request, response);
+		Notice_dto dto = new Notice_dto(no, title, content, "", reg_name, reg_date, 0);
+		int result = dao.saveNotice(dto);
+		if(result == 0) System.out.println("공지사항 등록 오류~~");
+		else System.out.println("공지사항 등록 성공 ~~"); 
+			
+		response.sendRedirect("/NoticeList");
+//		RequestDispatcher rd = request.getRequestDispatcher("");
+//		rd.forward(request, response);
 		
 	}
 

@@ -26,10 +26,17 @@
 	}*/
 	
 	ArrayList<News_dto> arr = (ArrayList<News_dto>)request.getAttribute("t_arr");
-
-		String select = "title";
-		String search ="";
-
+	String search = (String)request.getAttribute("t_search");
+	String select = (String)request.getAttribute("t_select");
+		
+		
+		int searchCount = arr.size();
+		String searchCountString = "0";
+		
+		if(request.getParameter("t_searchCount") != null){ 
+			searchCountString = request.getParameter("t_searchCount");
+			searchCount = Integer.parseInt(searchCountString);
+		}
 	
 	//*************page 시작**************/
 	int	list_setup_count = 10;			// 한페이지에 출력될 List 수 
