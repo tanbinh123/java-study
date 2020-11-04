@@ -1,3 +1,3 @@
 # java,JSP-study
 java,JSP-study   
-JAVA 및 JSP 공부 내역 입니다.
+JAVA 공부 중 입니다.
