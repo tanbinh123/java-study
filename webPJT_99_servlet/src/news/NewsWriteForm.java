@@ -1,4 +1,4 @@
-package notice;
+package news;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class NoticeWriteForm
+ * Servlet implementation class NewsWriteForm
  */
-@WebServlet("/NoticeWriteForm")
-public class NoticeWriteForm extends HttpServlet {
+@WebServlet("/NewsWriteForm")
+public class NewsWriteForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteForm() {
+    public NewsWriteForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,8 +28,10 @@ public class NoticeWriteForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher rd = 
-				request.getRequestDispatcher("/notice/notice_write.jsp");
+				request.getRequestDispatcher("/news/news_write.jsp");
 		rd.forward(request, response);
 	}
 

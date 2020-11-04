@@ -1,27 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<%@ page import="dto.*"%>
-<%
-	Notice_dto dto = (Notice_dto)request.getAttribute("t_dto");
-%>  
+  
 <%@ include file="/common_head.jsp" %>  
 		<!--  header end -->
 <script type="text/javascript">
-	function goUpdateForm(){
-		noti.method="post";
-		noti.action="/NoticeUpdateForm";
-		noti.submit();
-	}
-	function goDelete(){
-		if(confirm(" 정말 삭제? ")){
-			noti.method="post";
-			noti.action="/DBNoticeDelete";
-			noti.submit();
-		}	
-	}	
-</script>	
-	<form name="noti">
-		<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
-	</form>	
+
+</script>		
 		<!-- sub page start -->
 		<div class="notice">
 			<div class="sub-notice">
@@ -45,38 +28,31 @@
 							</colgroup>
 							
 							<tr>
-								<th>제목</th>
+								<th><label for="title">제목</label></th>
 								<td style="text-align:left">
-									<%=dto.getTitle()%>
+									[채용공고] 음악콘텐츠본부 홍보마케팅
 								</td>
-								<th>조회수</th>
-								<td><%=dto.getHit()%></td>
+								<th><label for="title">조회수</label></th>
+								<td>55</td>
 							</tr>
 							
 							<tr>
 								<th><label for="cont">내용</label></th>
-								<td colspan="3">
-								<textarea type="cont" name="cont" id="cont" class="contView" readonly><%=dto.getContent()%></textarea>
+								<td colspan="3"><textarea type="cont" name="cont" id="cont" class="contView" readonly>
+								음악콘텐츠본부 홍보마케팅 음악콘텐츠본부 홍보마케팅 음악콘텐츠본부 홍보마케팅
+								</textarea>
 							</tr>
 							
 							<tr>
-								<th>파일 첨부</th>
+								<th><label for="file">파일 첨부</label></th>
 								<td  colspan="3" style="text-align:left"></td>
-							</tr>
-							<tr>
-								<th>등록자</th>
-								<td style="text-align:left">
-									<%=dto.getReg_name()%>
-								</td>
-								<th>등록일</th>
-								<td><%=dto.getReg_date()%></td>
 							</tr>
 							
 							<tr>
 								<td colspan="4">
-									<input type="button" onclick="location.href='/NoticeList'" value="목록" class="btn">
-									<input type="button" onclick="goUpdateForm()" value="수정" class="btn" >
-									<input type="button" onclick="goDelete()" value="삭제" class="btn" >
+									<input type="button" onclick="" value="목록" class="btn">
+									<input type="button" onclick="" value="수정" class="btn" >
+									<input type="button" onclick="" value="삭제" class="btn" >
 								</td>
 							</tr>
 

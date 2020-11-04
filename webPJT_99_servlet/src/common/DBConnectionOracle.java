@@ -17,7 +17,6 @@ public class DBConnectionOracle {
 		Connection con = null;
 		
 		try {
-//			String DB_URL = "jdbc:oracle:thin:@115.93.111.4:1521:ORCL";
 			String DB_URL = "jdbc:oracle:thin:@jsl70104:1521:ORCL";
 //			String DB_USER = "scott";
 //			String DB_PASSWORD= "tiger";
@@ -54,4 +53,3 @@ public class DBConnectionOracle {
 		}
     }	
 }	
-

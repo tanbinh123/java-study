@@ -14,7 +14,6 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
 		<script src="/js/jquery-3.3.1.min.js"></script>
 		<script src="/js/common.js"></script>
-		
 	<body>
 		<!-- skip navigation -->
 		<dl id="access">

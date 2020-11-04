@@ -1,29 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="dto.*,java.util.*,common.*" %>   
+<%@ page import="dto.*,java.util.*" %>   
 <%
 	ArrayList<Notice_dto> dtos = 
 					(ArrayList<Notice_dto>)request.getAttribute("t_dtos");
 	String select = (String)request.getAttribute("t_select");
 	String search = (String)request.getAttribute("t_search");
-
-	// 페이지 관련 변수
-	int v_count 	= (int)request.getAttribute("v_count");
-	int for_count 	= (int)request.getAttribute("for_count");
-	int a_count 	= (int)request.getAttribute("a_count");
-	int current_page = (int)request.getAttribute("current_page");
-	int total_page 	= (int)request.getAttribute("total_page");
-	// 페이지 관련 변수
-	
-	int searchCount = dtos.size();
-	String searchCountString = "0";
-	
-	if(request.getParameter("t_searchCount") != null){ 
-		searchCountString = request.getParameter("t_searchCount");
-		searchCount = Integer.parseInt(searchCountString);
-	}
-	
-
 %>
     
 <%@ include file="/common_head.jsp" %>
@@ -39,18 +21,7 @@
 		view.action="/NoticeView";
 		view.submit();
 	}
-	function goPage(pageNumber){
-		notiForm.r_page.value = pageNumber;
-		notiForm.method="post";
-		notiForm.action="/NoticeList";
-		notiForm.submit();
-	}
 </script>
-		<form name="pageForm">
-			
-		<!-- 	<input name="t_select" type="hidden" value="<%=select%>">
-			<input name="t_search" type="hidden" value="<%=search%>"> -->
-		</form>
 		<form name="view">
 			<input type="hidden" name="t_no">
 		</form>
@@ -59,9 +30,9 @@
 		<div class="notice">
 			<div class="sub-notice">
 				<h2 class="color"><a href="/NoticeList"><i class="fas fa-check"></i> NOTICE</a></h2>	
-				<h2><a href="NewsList"> NEWS</a></h2>	
-				<h2><a href="QnaList"> QnA</a></h2>
-				<h2><a href="FaqList"> FAQ</a></h2>	
+				<h2><a href="/news/news_list.jsp"> NEWS</a></h2>	
+				<h2><a href="/qna/qna_list.jsp"> QnA</a></h2>
+				<h2><a href="/faq/faq_list.jsp"> FAQ</a></h2>	
 			</div>
 
 		<div class="search_wrap">
@@ -69,8 +40,6 @@
 				<p>* 총게시글 : <span><%=dtos.size()%></span>건</p>
 			</div>
 			<form name="notiForm">
-			<input type="hidden" name="r_page">
-			<input name="t_searchCount" type="hidden" value="<%=searchCount%>">
 			<div class="search_group">
 				<select name="t_select" class="select">
 					<option value="title" <%if(select.equals("title")) out.print("selected");%>>제목</option>
@@ -105,11 +74,7 @@
 						</tr>
 					</thead>
 					<tbody>
-<%	if ( dtos.size() > 0 ){
-		for(int k = 0 ; k < dtos.size() ; k++ )	{
-			if(v_count == for_count){ 
-%>	
-				
+<%					for(int k=0; k < dtos.size(); k++){ %>					
 						<tr>
 							<td><a href="/NoticeView?t_no=<%=dtos.get(k).getNo()%>"><%=dtos.get(k).getNo()%></a></td>
 							<td class="txt"><a href="javascript:goView('<%=dtos.get(k).getNo()%>')"><%=dtos.get(k).getTitle()%></a></td>
@@ -121,23 +86,13 @@
 							<td><%=dtos.get(k).getReg_date()%></td>
 							<td><%=dtos.get(k).getHit()%></td>
 						</tr>
-<%
-				v_count = v_count + 1;
-				for_count = for_count + 1;
-			}else { 
-				v_count = v_count + 1;
-			}
-			if(v_count == a_count)break; 
-		}
-	}
-%>						
+<%					} %>						
 					</tbody>
 				</table>
 			</div>
 			
 			<div class="page-number">
 				<div class="page-number">
-<!-- 				
 					<a href="#" class="icon"><i class="fas fa-arrow-circle-left fa-lg"></i></a>
 					<a href="#" class="on">1</a>
 					<a href="#">2</a>
@@ -150,10 +105,6 @@
 					<a href="#">9</a>
 					<a href="#" class="more">…</a>
 					<a href="#" class="icon"><i class="fas fa-arrow-circle-right fa-lg"></i></a>
--->
-<%
-					out.println(CommonUtil.pageListPost(current_page, total_page,5));	
-	%>
 					<a href="/NoticeWriteForm" class="btn-write">글쓰기</a>
 				</div>				
 			</div>

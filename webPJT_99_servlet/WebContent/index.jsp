@@ -3,7 +3,7 @@
   
 <!doctype html>
 <html lang="ko">
-	<title>노호진</title>
+	<title>홍길동</title>
 		<meta charset="utf-8">
 		<link href="/css/common.css" rel="stylesheet">
 		<link href="/css/el.css" rel="stylesheet">

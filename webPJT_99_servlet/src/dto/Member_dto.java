@@ -1,7 +1,8 @@
 package dto;
 
 public class Member_dto {
-	String id, name, pw, area, address, tel_1,tel_2, tel_3, mf, hobby_t, hobby_r, hobby_s, reg_date;
+	String id,name,pw,area,address,tel_1,tel_2,tel_3,mf,
+			hobby_t,hobby_r,hobby_s,reg_date;
 
 	public Member_dto(String id, String name, String pw, String area, String address, String tel_1, String tel_2,
 			String tel_3, String mf, String hobby_t, String hobby_r, String hobby_s, String reg_date) {
@@ -72,6 +73,5 @@ public class Member_dto {
 	public String getReg_date() {
 		return reg_date;
 	}
-
 	
 }

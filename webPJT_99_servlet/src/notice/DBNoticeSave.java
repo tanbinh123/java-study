@@ -35,21 +35,28 @@ public class DBNoticeSave extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		Notice_dao dao = new Notice_dao();
 		
-		String no = dao.getNoticeNo();
-		String title = request.getParameter("t_title");
-		String content = request.getParameter("t_content");
+		String no 		= dao.getNoticeNo();
+		String title 	= request.getParameter("t_title");
+		String content 	= request.getParameter("t_content");
 		String reg_name = "관리자";
 		String reg_date = CommonUtil.getToday();
-		
-		Notice_dto dto = new Notice_dto(no, title, content, "", reg_name, reg_date, 0);
+		Notice_dto dto = 
+				new Notice_dto(no,title,content,"",reg_name,reg_date,0);
 		int result = dao.saveNotice(dto);
-		if(result == 0) System.out.println("공지사항 등록 오류~~");
-		else System.out.println("공지사항 등록 성공 ~~"); 
-			
-		response.sendRedirect("/NoticeList");
-//		RequestDispatcher rd = request.getRequestDispatcher("");
-//		rd.forward(request, response);
-		
+
+		String msg ="";
+		if(result ==0) {
+			msg =" 등록 실패 ~ ";	
+		}else {
+			msg =" 등록 되었습니다. ";
+		}
+		request.setAttribute("t_msg", msg);
+		request.setAttribute("t_url", "/NoticeList");
+
+		RequestDispatcher rd =
+				request.getRequestDispatcher("/common_alert_page.jsp");
+		rd.forward(request, response);
+//		response.sendRedirect("/NoticeList");
 	}
 
 	/**

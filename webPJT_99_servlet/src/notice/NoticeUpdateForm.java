@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.Notice_dao;
+import dto.Notice_dto;
+
 /**
- * Servlet implementation class NoticeWriteForm
+ * Servlet implementation class NoticeUpdateForm
  */
-@WebServlet("/NoticeWriteForm")
-public class NoticeWriteForm extends HttpServlet {
+@WebServlet("/NoticeUpdateForm")
+public class NoticeUpdateForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteForm() {
+    public NoticeUpdateForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +31,13 @@ public class NoticeWriteForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Notice_dao dao = new Notice_dao();
+		String no = request.getParameter("t_no");
+		Notice_dto dto = dao.getNoticeView(no);
+		request.setAttribute("t_dto", dto);
 		RequestDispatcher rd = 
-				request.getRequestDispatcher("/notice/notice_write.jsp");
-		rd.forward(request, response);
+				request.getRequestDispatcher("/notice/notice_update.jsp");
+		rd.forward(request, response);		
 	}
 
 	/**

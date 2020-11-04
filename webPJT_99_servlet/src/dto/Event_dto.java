@@ -1,7 +1,8 @@
 package dto;
 
 public class Event_dto {
-	String no, title, content, s_date, e_date, reg_name, reg_date;
+
+	String no,title,content,s_date,e_date,reg_name,reg_date;
 	int hit;
 	public Event_dto(String no, String title, String content, String s_date, String e_date, String reg_name,
 			String reg_date, int hit) {
@@ -39,6 +40,8 @@ public class Event_dto {
 	public int getHit() {
 		return hit;
 	}
+	
+	
 	
 	
 }

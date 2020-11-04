@@ -141,9 +141,9 @@ public class News_dao {
 	public int saveNews(News_dto dto) {
 		int result =0;
 		String query ="insert into h05_News \r\n" + 
-				"(no,title,content,reg_name,reg_date) \r\n" + 
+				"(no,title,content,reg_name,reg_date,hit) \r\n" + 
 				"values \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"')";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"','"+dto.getHit()+"')";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
@@ -171,14 +171,14 @@ public class News_dao {
 				maxNo = rs.getString(1);
 			}
 			if(maxNo == null) {
-				maxNo ="N001";
+				maxNo ="Z001";
 			} else {
 				String n = maxNo.substring(1); 
 				int i = Integer.parseInt(n); 
 				i = i + 1;
 				DecimalFormat df = new DecimalFormat("000");
 				String newNo = df.format((double)i);
-				maxNo = "N"+newNo; // 
+				maxNo = "Z"+newNo; // 
 			}
 		}catch(SQLException se) {
 			System.out.println("getNewsNo() query 오류: "+query);

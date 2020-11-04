@@ -1,4 +1,4 @@
-package notice;
+package news;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.Notice_dao;
-import dto.Notice_dto;
+import dao.News_dao;
+import dto.News_dto;
 
 /**
- * Servlet implementation class NoticeList
+ * Servlet implementation class NewsList
  */
-@WebServlet("/NoticeList")
-public class NoticeList extends HttpServlet {
+@WebServlet("/NewsList")
+public class NewsList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeList() {
+    public NewsList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,9 +32,10 @@ public class NoticeList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//	response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
 		
-		Notice_dao dao = new Notice_dao();
+		News_dao dao = new News_dao();
 		String select = request.getParameter("t_select");
 		String search = request.getParameter("t_search");
 		if(select == null) {
@@ -42,7 +43,7 @@ public class NoticeList extends HttpServlet {
 			search ="";
 		}
 		
-		ArrayList<Notice_dto> dtos = dao.getNoticeList(select,search);
+		ArrayList<News_dto> dtos = dao.getNewsList(select, search);
 		
 		//*************page 시작**************/
 		int	list_setup_count = 5;			// 한페이지에 출력될 List 수 
@@ -90,17 +91,15 @@ public class NoticeList extends HttpServlet {
 		
 		
 	//*************page 끝**************/			
-		
-		
+				
 		request.setAttribute("t_dtos", dtos);
 		request.setAttribute("t_select", select);
 		request.setAttribute("t_search", search);
 		
-		
-		
 		RequestDispatcher rd = 
-					request.getRequestDispatcher("/notice/notice_list.jsp");
-		rd.forward(request, response);
+				request.getRequestDispatcher("/news/news_list.jsp");
+	rd.forward(request, response);
+		
 	}
 
 	/**

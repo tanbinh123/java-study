@@ -1,7 +1,7 @@
 package dto;
 
 public class Notice_dto {
-	String no, title, content, attach, reg_name, reg_date, rownum;
+	String no,title,content,attach,reg_name,reg_date, rownum;
 	int hit;
 	
 	public Notice_dto(String no, String title, String reg_date, String rownum) {

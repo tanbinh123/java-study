@@ -9,17 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.CommonUtil;
+import dao.Notice_dao;
+import dto.Notice_dto;
+
 /**
- * Servlet implementation class NoticeWriteForm
+ * Servlet implementation class DBNoticeUpdate
  */
-@WebServlet("/NoticeWriteForm")
-public class NoticeWriteForm extends HttpServlet {
+@WebServlet("/DBNoticeUpdate")
+public class DBNoticeUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteForm() {
+    public DBNoticeUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +32,31 @@ public class NoticeWriteForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = 
-				request.getRequestDispatcher("/notice/notice_write.jsp");
+		request.setCharacterEncoding("utf-8");
+		Notice_dao dao = new Notice_dao();
+		String no 		= request.getParameter("t_no");
+		String title 	= request.getParameter("t_title");
+		String content 	= request.getParameter("t_content");
+		String reg_name = "관리자";
+		String reg_date = CommonUtil.getToday();
+		
+	
+		Notice_dto dto = 
+				new Notice_dto(no,title,content,"",reg_name,reg_date,0);
+		int result = dao.updateNotice(dto);
+		
+		String msg ="";
+		if(result ==0) msg =" 수정 실패 ~ ";	
+		else msg =" 수정 되었습니다. ";
+		
+		request.setAttribute("t_msg", msg);
+		request.setAttribute("t_url", "/NoticeList");
+
+		RequestDispatcher rd =
+				request.getRequestDispatcher("/common_alert_page.jsp");
 		rd.forward(request, response);
+
+//		response.sendRedirect("/NoticeList");
 	}
 
 	/**

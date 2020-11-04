@@ -9,17 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.Notice_dao;
+
 /**
- * Servlet implementation class NoticeWriteForm
+ * Servlet implementation class DBNoticeDelete
  */
-@WebServlet("/NoticeWriteForm")
-public class NoticeWriteForm extends HttpServlet {
+@WebServlet("/DBNoticeDelete")
+public class DBNoticeDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteForm() {
+    public DBNoticeDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +30,21 @@ public class NoticeWriteForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = 
-				request.getRequestDispatcher("/notice/notice_write.jsp");
-		rd.forward(request, response);
+		Notice_dao dao = new Notice_dao();
+		String no = request.getParameter("t_no");
+		int result = dao.deleteNotice(no);
+		String msg ="";
+		
+		if(result ==0) msg =" 삭제 실패 ~ ";	
+		else msg =" 삭제 되었습니다. ";
+		
+		request.setAttribute("t_msg", msg);
+		request.setAttribute("t_url", "/NoticeList");
+
+		RequestDispatcher rd =
+				request.getRequestDispatcher("/common_alert_page.jsp");
+		rd.forward(request, response);	
+//		response.sendRedirect("/NoticeList");
 	}
 
 	/**

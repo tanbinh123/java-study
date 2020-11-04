@@ -1,3 +1,2 @@
-# java,JSP-study
-java,JSP-study   
+# java-study
 JAVA 공부 중 입니다.
