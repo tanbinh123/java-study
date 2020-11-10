@@ -19,7 +19,7 @@
 			login.t_pw.focus();
 		} else {
 			login.method = "post";
-			login.action = "/DBLogin";
+			login.action = "/DBMemberLogin";
 			login.submit();
 		}
 	}
@@ -141,7 +141,7 @@
 
 					<tr class="inputInfo">
 						<td><input type="text" name="t_id" id="id" class="title"
-							placeholder="아이디를 입력해주세요"></td>
+							placeholder="아이디를 입력해주세요" autofocus="autofocus"></td>
 					</tr>
 
 					<tr class="inputInfo">
@@ -152,7 +152,7 @@
 
 					<tr>
 						<td colspan="2"><button type="button" onclick="goLogin()" class="cosbtn"><span>로그인</span></button>
-						<button type="button" class="cosbtn"  onclick = "location.href = '/member/member_register.jsp' "><span>회원가입</span></button>
+						<button type="button" class="cosbtn"  onclick = "location.href = '/MemberJoin' "><span>회원가입</span></button>
 							  <!-- <input type="button" onclick="history.back();" value="뒤로" class="btn">-->
 						</td>
 					</tr>

@@ -1,27 +1,28 @@
 package member;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Member_dao;
 
 /**
- * Servlet implementation class MemberIdCheck
+ * Servlet implementation class DBMemberLogin
  */
-@WebServlet("/MemberIdCheck")
-public class MemberIdCheck extends HttpServlet {
+@WebServlet("/DBMemberLogin")
+public class DBMemberLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberIdCheck() {
+    public DBMemberLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,19 +33,31 @@ public class MemberIdCheck extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Member_dao dao = new Member_dao();
 		String id = request.getParameter("t_id");
-		int result = dao.idCheckCount(id);
+		String pw = request.getParameter("t_pw");
 		
-		response.setContentType("text/html; charset=utf-8;");
-		PrintWriter out = response.getWriter();
-		
-		
-		String msg="";
-		if (result==0) {
-			msg = "사용 가능";
+		String name = dao.getLoginName(id, pw);
+		String msg = "";
+		HttpSession session = request.getSession(true);
+		String url = "";
+		if(name == null) {
+			msg = "ID나 비밀번호가 맞지않습니다.";
+			url = "/Login";
 		}else {
-			msg = "사용 불가";
+			msg = name +"님 환영합니다.";
+			session.setAttribute("session_name",name);
+			session.setAttribute("session_id",id);
+			if(id.equals("manager")) {
+				session.setAttribute("session_level","top");
+			}
+			session.setMaxInactiveInterval(60*60*10);
+			
+			url = "/index.jsp";
 		}
-		out.print(msg);
+		request.setAttribute("t_msg", msg);
+		request.setAttribute("t_url", url);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/common_alert_page.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

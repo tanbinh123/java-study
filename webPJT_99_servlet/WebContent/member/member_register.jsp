@@ -114,48 +114,24 @@ margin-left:10px;
 }
 </style>
 <script>
-	function goRegister() {
-		if (register.t_id.value == "") {
-			alert(" ID 입력! ");
-			register.t_id.focus();
-			return;
-		} else if (register.t_name.value == "") {
-			alert("성명 입력! ");
-			register.t_name.focus();
-			return;
-		} else if (register.t_pw.value == "") {
-			alert("비밀번호 입력! ");
-			register.t_pw.focus();
-			return;
-		} else if (register.t_pw_confirm.value == "") {
-			alert("비밀번호확인 입력! ");
-			register.t_pw_confirm.focus();
-			return;
-		} else if (register.t_address.value == "") {
-			alert("주소 입력! ");
-			register.t_address.focus();
-			return;
-		} else if (register.t_tel_1.value == "") {
-			alert("첫번째 연락처 입력! ");
-			register.t_tel_1.focus();
-			return;
-		} else if (register.t_tel_2.value == "") {
-			alert("두번째 연락처 입력! ");
-			register.t_tel_2.focus();
-			return;
-		} else if (register.t_tel_3.value == "") {
-			alert("세번째 연락처 입력! ");
-			register.t_tel_3.focus();
-			return;
-		} else if (register.t_pw.value != register.t_pw_confirm.value) {
-			alert("비밀번호를 확인 해주세요!");
-			register.t_pw_confirm.focus();
-			return;
-		} else {
-			register.method = "post";
-			register.action = "/DBregister";
-			register.submit();
-		}
+function goJoin(){
+	if(!checkEmpty(register.t_id," ID 입력 하시오! ")) return;
+	if(!checkEmpty(register.id_check_gubun," ID 중복 검사 하시오! ")) return;
+	if(register.id_check_gubun.value != register.t_id.value){
+		alert("변경된 ID 중복 검사 하시오~");
+		return;
+	}
+	
+	if(!checkEmpty(register.t_name," 성명 입력! ")) return;
+
+	if(register.t_pw.value != register.t_pw_confirm.value){
+		alert("비밀번호 확인 오류~~");
+		register.t_pw_confirm.focus(); 
+		return;
+	}	
+	register.method="post";
+	register.action="/DBMemberJoin";
+	register.submit();
 	}
 </script>
 
@@ -179,12 +155,12 @@ $(document).ready(function(){
 				alert("통신실패~");
 			},
 			success:function(data){
-				alert("넘어온 값:===="+data+"====");
+				//alert("넘어온 값:===="+data+"====");
 				$(".id_check_span").html(data);
 				if($.trim(data) == "사용 가능"){
 					$(".id_check_span").css("color","blue");
 					register.id_check_gubun.value = id;
-					register.t_name.focus();
+					register.id_check_span.focus();
 				}else{
 					$(".id_check_span").css("color","red");
 					register.id_check_gubun.value = "";
@@ -230,8 +206,8 @@ $(document).ready(function(){
 						<td><input type="text" name="t_id" id="id" class="title"
 							placeholder="아이디를 입력해주세요">
 							<input type="button" value="중복검사" class = "btn2" id="idCheck">
-							<span id = "id_check_span"></span>
-							<input type = "text" id="id_check_gubun">
+							<span class = "id_check_span"></span>
+							<input type = "hidden" id="id_check_gubun">
 							</td>
 							
 					</tr>
@@ -288,7 +264,7 @@ $(document).ready(function(){
 
 					<tr>
 						<td colspan="2" align='center' class="tdBtn"><br>
-						<button type="button" onclick="goRegister()" 
+						<button type="button" onclick="goJoin()" 
 						class="cosbtn"><span>Sign Up<span></button>
 					<!--<input type="button" onclick="history.back();" value="뒤로" class="cosbtn">-->
 						</td>

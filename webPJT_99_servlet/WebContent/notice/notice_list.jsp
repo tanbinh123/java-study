@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dto.*,java.util.*,common.*" %>   
 <%
+
 	ArrayList<Notice_dto> dtos = 
 					(ArrayList<Notice_dto>)request.getAttribute("t_dtos");
 	String select = (String)request.getAttribute("t_select");
@@ -153,8 +154,11 @@
 -->
 <%
 					out.println(CommonUtil.pageListPost(current_page, total_page,5));	
+
+if(sessionLevel.equals("top")){
 	%>
 					<a href="/NoticeWriteForm" class="btn-write">글쓰기</a>
+					<%} %>
 				</div>				
 			</div>
 		
