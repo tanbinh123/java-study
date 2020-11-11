@@ -144,9 +144,9 @@ public class Notice_dao {
 	public int saveNotice(Notice_dto dto) {
 		int result =0;
 		String query ="insert into h05_notice \r\n" + 
-				"(no,title,content,attach,reg_name,reg_date) \r\n" + 
+				"(no,title,content,attach,reg_name,reg_date,hit) \r\n" + 
 				"values \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"')";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getReg_name()+"','"+dto.getReg_date()+"','"+dto.getHit()+"')";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);

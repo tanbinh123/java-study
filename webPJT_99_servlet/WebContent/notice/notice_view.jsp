@@ -61,7 +61,16 @@
 							
 							<tr>
 								<th>파일 첨부</th>
-								<td  colspan="3" style="text-align:left"></td>
+								<td  colspan="3" style="text-align:left">
+								<%
+								if(dto.getAttach() != null){%>
+								<!--  <a href="/common/filedown.jsp?t_file=<%= dto.getAttach()%>&t_gubun=notice">-->
+								<a href="/FileDown?t_file=<%= dto.getAttach()%>&t_gubun=notice"><%= dto.getAttach()%></a>
+								</a>
+								<%}
+								%>
+								
+								</td>
 							</tr>
 							<tr>
 								<th>등록자</th>

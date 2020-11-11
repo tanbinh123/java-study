@@ -3,7 +3,7 @@ import java.text.*;
 import java.util.*;
 import java.io.*;  //첨부관련
 public class CommonUtil{
-	public static String file_dir_notice = "";
+	public static String file_dir_notice = "C:/Users/JSLHRD/git/java-study/webPJT_99_servlet/WebContent/file_room/notice";
 	public static String file_dir_news = "";
 	
 	//첨부파일 용량검사
