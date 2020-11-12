@@ -5,12 +5,12 @@
 	
 	function goSave() {
 		
-		if(!checkEmpty(write.t_title,"제목 입력!"))return;
-		if(!checkEmpty(write.t_content,"내용 입력!")) return;
-		if(write.t_title.value.length > 50){
-			write.t_title.value = "";
+		if(!checkEmpty(write.t_question,"질문 입력!"))return;
+		if(!checkEmpty(write.t_answer,"답변 입력!")) return;
+		if(write.t_question.value.length > 50){
+			write.t_question.value = "";
 			alert("제목은 50자 이내로 입력해주세요!");
-			write.t_title.focus();
+			write.t_question.focus();
 			return;
 		}else{
 			write.method="post";
@@ -56,7 +56,16 @@
 							</tr>
 							<tr>
 								<th><label for="sory">중요도</label></th>
-								<td><input type="text" name="t_sort" id="title" class="title" placeholder="제목을 입력해주세요"></td>
+								<td style="text-align:left">
+								<select name="t_sort">
+								    <option selected>1</option>
+								    <option>2</option>
+								    <option>3</option>
+								    <option>4</option>
+								    <option>5</option>
+								</select>
+								1단계 ~ 5단계
+								</td>
 							</tr>
 							<tr>
 								<td colspan="2">

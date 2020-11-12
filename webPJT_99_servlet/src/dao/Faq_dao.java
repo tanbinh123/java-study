@@ -112,7 +112,7 @@ public class Faq_dao {
 	public ArrayList<Faq_dto> getFaqList(String select,String search){
 		ArrayList<Faq_dto> arr = new ArrayList<Faq_dto>();
 		String query =" select no,question,answer,reg_id,to_char(reg_date,'yyyy-MM-dd'),sort, hit\r\n" + 
-					  " from h05_Faq\r\n" + 
+					  " from h05_Faq\r\n" +
 				      " where "+select+" like '%"+search+"%' "+
 					  " order by no desc";
 		try {

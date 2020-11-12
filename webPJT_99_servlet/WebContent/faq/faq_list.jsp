@@ -85,7 +85,9 @@
 					<caption>공지사항 - 번호, 제목, 첨부, 작성일, 조회수</caption>
 					<colgroup>
 						<col width="5%">
+						<col width="5%">
 						<col width="*">
+						<col width="10%">
 						<col width="15%">
 						<col width="10%">
 					</colgroup>
@@ -93,7 +95,9 @@
 					<thead>
 						<tr>
 							<th scope="col">번호</th>
+							<th scope="col">중요도</th>
 							<th scope="col">제목</th>
+							<th scope="col">작성자</th>
 							<th scope="col">작성일</th>
 							<th scope="col">조회수</th>
 						</tr>
@@ -104,7 +108,9 @@
 						if(v_count == for_count){%>
 						<tr>
 							<td><a href="/FaqView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>
+							<td><%=arr.get(i).getSort()%></td>
 							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getQuestion() %></a></td>
+							<td><%=arr.get(i).getReg_id() %></td>
 							<td><%=arr.get(i).getReg_date() %></td>
 							<td><%=arr.get(i).getHit() %></td>
 						</tr>
