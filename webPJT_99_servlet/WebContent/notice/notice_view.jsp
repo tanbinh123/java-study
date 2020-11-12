@@ -1,3 +1,4 @@
+<%@page import="common.CommonUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ page import="dto.*"%>
 <%
@@ -21,6 +22,7 @@
 </script>	
 	<form name="noti">
 		<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
+		<input type="hidden" name="t_attach" value="<%=CommonUtil.checkNull(dto.getAttach())%>">
 	</form>	
 		<!-- sub page start -->
 		<div class="notice">
@@ -66,7 +68,6 @@
 								if(dto.getAttach() != null){%>
 								<!--  <a href="/common/filedown.jsp?t_file=<%= dto.getAttach()%>&t_gubun=notice">-->
 								<a href="/FileDown?t_file=<%= dto.getAttach()%>&t_gubun=notice"><%= dto.getAttach()%></a>
-								</a>
 								<%}
 								%>
 								
