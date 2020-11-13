@@ -113,7 +113,9 @@
 				
 						<tr>
 							<td><a href="/NoticeView?t_no=<%=dtos.get(k).getNo()%>"><%=dtos.get(k).getNo()%></a></td>
-							<td class="txt"><a href="javascript:goView('<%=dtos.get(k).getNo()%>')"><%=dtos.get(k).getTitle()%></a></td>
+							<td class="txt"><a href="javascript:goView('<%=dtos.get(k).getNo()%>')"><%=dtos.get(k).getTitle()%></a>
+
+					</td>
 							<td>
 								<%if(dtos.get(k).getAttach()!=null){ %>
 									<img src="/images/clip.png">
@@ -155,8 +157,8 @@
 <%
 					out.println(CommonUtil.pageListPost(current_page, total_page,5));	
 
-if(sessionLevel.equals("top")){
-	%>
+		if(sessionLevel.equals("top")){
+			%>
 					<a href="/NoticeWriteForm" class="btn-write">글쓰기</a>
 					<%} %>
 				</div>				

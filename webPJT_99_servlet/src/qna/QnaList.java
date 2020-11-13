@@ -1,4 +1,4 @@
-package faq;
+package qna;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.Faq_dao;
-import dto.Faq_dto;
+import dao.Qna_dao;
+import dto.Qna_dto;
 
 /**
- * Servlet implementation class FaqList
+ * Servlet implementation class QnaList
  */
-@WebServlet("/FaqList")
-public class FaqList extends HttpServlet {
+@WebServlet("/QnaList")
+public class QnaList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FaqList() {
+    public QnaList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,7 @@ public class FaqList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		Faq_dao dao = new Faq_dao();
+		Qna_dao dao = new Qna_dao();
 		String select = request.getParameter("t_select");
 		String search = request.getParameter("t_search");
 		if(select == null) {
@@ -42,7 +42,7 @@ public class FaqList extends HttpServlet {
 			search ="";
 		}
 		
-		ArrayList<Faq_dto> dtos = dao.getFaqList(select,search);
+		ArrayList<Qna_dto> dtos = dao.getQnaList(select,search);
 		
 		//*************page 시작**************/
 		int	list_setup_count = 10;			// 한페이지에 출력될 List 수 
@@ -99,7 +99,7 @@ public class FaqList extends HttpServlet {
 		
 		
 		RequestDispatcher rd = 
-					request.getRequestDispatcher("/faq/faq_list.jsp");
+					request.getRequestDispatcher("/qna/qna_list.jsp");
 		rd.forward(request, response);
 	}
 

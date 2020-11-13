@@ -3,9 +3,9 @@
 <%@ page import="dao.*,dto.*,java.util.*,common.*"%>  
 <% 
 	request.setCharacterEncoding("utf-8");
-	Faq_dao dao = new Faq_dao();
+	Qna_dao dao = new Qna_dao();
 	
-	ArrayList<Faq_dto> arr = (ArrayList<Faq_dto>)request.getAttribute("t_dtos");
+	ArrayList<Qna_dto> arr = (ArrayList<Qna_dto>)request.getAttribute("t_dtos");
 	String select = (String)request.getAttribute("t_select");
 	String search = (String)request.getAttribute("t_search");
 	
@@ -31,19 +31,19 @@
 <script type="text/javascript">
 	function formSearch(){
 		notiForm.method="post";
-		notiForm.action="/FaqList";
+		notiForm.action="/QnaList";
 		notiForm.submit();
 	}
 	function goView(no){
 		view.t_no.value= no;
 		view.method="post";
-		view.action="/FaqView";
+		view.action="/QnaView";
 		view.submit();
 	}
 	function goPage(pageNumber){
 		notiForm.r_page.value = pageNumber;
 		notiForm.method="post";
-		notiForm.action="/FaqList";
+		notiForm.action="/QnaList";
 		notiForm.submit();
 	}
 </script>
@@ -56,8 +56,8 @@
 			<div class="sub-notice">
 				<h2><a href="/NoticeList"> NOTICE</a></h2>	
 				<h2 ><a href="NewsList"> NEWS</a></h2>	
-				<h2><a href="QnaList"> QnA</a></h2>
-				<h2 class="color"><a href="FaqList"><i class="fas fa-check"></i> FAQ</a></h2>	
+				<h2 class="color"><a href="QnaList"><i class="fas fa-check"></i> QnA</a></h2>
+				<h2 ><a href="QnaList"> FAQ</a></h2>	
 			</div>
 
 		<div class="search_wrap">
@@ -105,13 +105,13 @@
 					for(int i = 0 ; i < arr.size(); i++ ){ 
 						if(v_count == for_count){%>
 						<tr>
-							<td><a href="/FaqView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>
-							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getQuestion() %></a>
+							<td><a href="/QnaView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>
+							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle() %></a>
 							<%if(sessionLevel.equals("top")){%>
-							<a href="/FaqUpdateForm?t_no=<%=arr.get(i).getNo()%>">수정</a> <a href = "/DBFaq?t_no=<%=arr.get(i).getNo()%>&t_pageGubun=삭제">삭제</a>
+							<a href="/QnaUpdateForm?t_no=<%=arr.get(i).getNo()%>">수정</a> <a href = "/DBQna?t_no=<%=arr.get(i).getNo()%>&t_pageGubun=삭제">삭제</a>
 							<%} %>
 							</td>
-							<td><%=arr.get(i).getReg_id() %></td>
+							<td><%=arr.get(i).getReg_name() %></td>
 							<td><%=arr.get(i).getReg_date() %></td>
 							<td><%=arr.get(i).getHit() %></td>
 						</tr>
@@ -150,7 +150,7 @@
 					out.println(CommonUtil.pageListPostCSS(current_page, total_page,5));	
 	%>
 				<%if(sessionLevel.equals("top")){%>
-					<a href="/FaqWriteForm" class="btn-write">글쓰기</a>
+					<a href="/QnaWriteForm" class="btn-write">글쓰기</a>
 				<%} %>
 		 		</div>				
 			</div>

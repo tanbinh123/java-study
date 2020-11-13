@@ -57,12 +57,13 @@
 							<tr>
 								<th><label for="sory">중요도</label></th>
 								<td style="text-align:left">
+								
 								<select name="t_sort">
-								    <option selected>1</option>
-								    <option>2</option>
-								    <option>3</option>
-								    <option>4</option>
-								    <option>5</option>
+								    <option <%if(dto.getSort().equals("1")){out.print("selected");}%>>1</option>
+								    <option <%if(dto.getSort().equals("2")){out.print("selected");}%>>2</option>
+								    <option <%if(dto.getSort().equals("3")){out.print("selected");}%>>3</option>
+								    <option <%if(dto.getSort().equals("4")){out.print("selected");}%>>4</option>
+								    <option <%if(dto.getSort().equals("5")){out.print("selected");}%>>5</option>
 								</select>
 								1단계 ~ 5단계
 								</td>
