@@ -55,9 +55,9 @@
 		<div class="notice">
 			<div class="sub-notice">
 				<h2><a href="/NoticeList"> NOTICE</a></h2>	
-				<h2 ><a href="NewsList"> NEWS</a></h2>	
-				<h2 class="color"><a href="QnaList"><i class="fas fa-check"></i> QnA</a></h2>
-				<h2 ><a href="QnaList"> FAQ</a></h2>	
+				<h2 ><a href="/NewsList"> NEWS</a></h2>	
+				<h2 class="color"><a href="/QnaList"><i class="fas fa-check"></i> QnA</a></h2>
+				<h2 ><a href="/FaqList"> FAQ</a></h2>	
 			</div>
 
 		<div class="search_wrap">
@@ -69,8 +69,8 @@
 			<input name="t_searchCount" type="hidden" value="<%=searchCount%>">
 			<div class="search_group">
 				<select name="t_select" class="select">
-					<option value="question" <%if(select.equals("question")) out.print("selected");%>>질문</option>
-					<option value="answer" <%if(select.equals("answer")) out.print("selected");%>>답변</option>
+					<option value="title" <%if(select.equals("question")) out.print("selected");%>>질문</option>
+					<option value="content" <%if(select.equals("answer")) out.print("selected");%>>답변</option>
 				</select>
 				<input type="text" name="t_search" class="search_word" value="<%=search%>">
 				<button class="btn_search" onclick="formSearch()"><i class="fa fa-search"></i><span class="sr-only">검색버튼</span></button>
@@ -103,13 +103,22 @@
 					<tbody>
 <%				if(arr.size() > 0){
 					for(int i = 0 ; i < arr.size(); i++ ){ 
-						if(v_count == for_count){%>
+						if(v_count == for_count){
+							%>
+								
 						<tr>
 							<td><a href="/QnaView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>
-							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle() %></a>
-							<%if(sessionLevel.equals("top")){%>
+							
+								<td class="txt">
+								<%if(arr.get(i).getSeg() > 0){
+								for(int k = 0; k < arr.get(i).getSeg(); k++){
+									out.print("&nbsp;&nbsp;");
+								}
+								} %>
+								<a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle() %></a>
+							<!-- <%if(sessionLevel.equals("top")){%>
 							<a href="/QnaUpdateForm?t_no=<%=arr.get(i).getNo()%>">수정</a> <a href = "/DBQna?t_no=<%=arr.get(i).getNo()%>&t_pageGubun=삭제">삭제</a>
-							<%} %>
+							<%} %> -->
 							</td>
 							<td><%=arr.get(i).getReg_name() %></td>
 							<td><%=arr.get(i).getReg_date() %></td>

@@ -84,7 +84,7 @@
 				<table class="table">
 					<caption>공지사항 - 번호, 제목, 첨부, 작성일, 조회수</caption>
 					<colgroup>
-						<col width="5%">
+						<!-- <col width="5%"> -->
 						<col width="*">
 						<col width="10%">
 						<col width="15%">
@@ -93,7 +93,7 @@
 					
 					<thead>
 						<tr>
-							<th scope="col">번호</th>
+							<!-- <th scope="col">번호</th> -->
 							<th scope="col">제목</th>
 							<th scope="col">작성자</th>
 							<th scope="col">작성일</th>
@@ -105,7 +105,7 @@
 					for(int i = 0 ; i < arr.size(); i++ ){ 
 						if(v_count == for_count){%>
 						<tr>
-							<td><a href="/FaqView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>
+							<!--  <td><a href="/FaqView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>-->
 							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getQuestion() %></a>
 							<%if(sessionLevel.equals("top")){%>
 							<a href="/FaqUpdateForm?t_no=<%=arr.get(i).getNo()%>">수정</a> <a href = "/DBFaq?t_no=<%=arr.get(i).getNo()%>&t_pageGubun=삭제">삭제</a>

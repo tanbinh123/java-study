@@ -38,7 +38,7 @@ public class QnaList extends HttpServlet {
 		String select = request.getParameter("t_select");
 		String search = request.getParameter("t_search");
 		if(select == null) {
-			select = "question";
+			select = "title";
 			search ="";
 		}
 		

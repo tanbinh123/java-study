@@ -41,7 +41,7 @@ public class DBQna extends HttpServlet {
 		
 		
 		String title = request.getParameter("t_title");
-		String content = request.getParameter("t_answer");
+		String content = request.getParameter("t_content");
 		String reg_name = "관리자";
 		String reg_date = CommonUtil.getToday();
 		int result = 0;
@@ -49,13 +49,28 @@ public class DBQna extends HttpServlet {
 		if(pageGubun.equals("등록")) {
 			String no = dao.getQnaNo();
 			String groupno = dao.getGroupNo(); 
-			Qna_dto dto = new Qna_dto(no, title, groupno, reg_date, reg_name, content, 0, 0, 0);
+			int seg = 0;
+			int depth = 0;
+			int hit = 0;
+			Qna_dto dto = new Qna_dto(no, title, groupno, reg_date, reg_name, content, depth, seg, hit);
 			result = dao.saveQna(dto);
 			
 		}else if(pageGubun.equals("삭제")) {
 			String no = request.getParameter("t_no");
 			result = dao.deleteQna(no);
 			
+		}else if(pageGubun.equals("답글 등록")) {
+			String no = dao.getQnaNo();
+			String groupno = request.getParameter("t_groupno");
+			int seg = Integer.parseInt(request.getParameter("t_seg"));
+			int depth = Integer.parseInt(request.getParameter("t_depth"));
+			if(seg == 0) {
+				dao.getDepth();
+			}
+			int hit = 0;
+			seg += 1;
+			Qna_dto dto = new Qna_dto(no, title, groupno, reg_date, reg_name, content, depth, seg, hit);
+			result = dao.saveQna(dto);
 		}/*else if(pageGubun.equals("수정")) {
 			String no 		= request.getParameter("t_no");
 			Qna_dto dto = 

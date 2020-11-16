@@ -1,7 +1,11 @@
 <%@page import="common.CommonUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common_head.jsp" %>  	
+<%@ page import = "dto.*" %>
+<%@ include file="/common_head.jsp" %>  
+
+<% Qna_dto dto = (Qna_dto)request.getAttribute("t_dto"); 
+%>
 <script>
 	
 	function goSave() {
@@ -33,7 +37,11 @@
 			<div class="notice-write">
 			
 			<form name="write">
-			<input type="hidden" name = "t_pageGubun" value = "등록">
+			<input type="hidden" name = "t_pageGubun" value = "답글 등록">
+			<input type="hidden" name = "t_no" value = "<%=dto.getNo() %>">
+			<input type="hidden" name = "t_groupno" value = "<%=dto.getGroupno() %>">
+			<input type="hidden" name = "t_seg" value = "<%=dto.getSeg() %>">
+			<input type="hidden" name = "t_depth" value = "<%=dto.getDepth() %>">
 					<h2 class="readonly">제목, 내용을 작성합니다</h2>
 				
 					<fieldset>
