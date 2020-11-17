@@ -64,19 +64,18 @@ public class DBQna extends HttpServlet {
 			String groupno = request.getParameter("t_groupno");
 			int seg = Integer.parseInt(request.getParameter("t_seg"));
 			int depth = Integer.parseInt(request.getParameter("t_depth"));
-			if(seg == 0) {
-				dao.getDepth();
-			}
+			depth +=1;
+			dao.getUpdateDepth(depth);
 			int hit = 0;
 			seg += 1;
+			
 			Qna_dto dto = new Qna_dto(no, title, groupno, reg_date, reg_name, content, depth, seg, hit);
 			result = dao.saveQna(dto);
-		}/*else if(pageGubun.equals("수정")) {
+		}else if(pageGubun.equals("수정")) {
 			String no 		= request.getParameter("t_no");
-			Qna_dto dto = 
-					new Qna_dto(no,question,answer,reg_id,reg_date,sort,0);
+			Qna_dto dto = new Qna_dto(no, title, content);
 			result = dao.updateQna(dto);
-		}*/
+		}
 		
 			
 			

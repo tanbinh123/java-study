@@ -112,8 +112,9 @@
 								<td class="txt">
 								<%if(arr.get(i).getSeg() > 0){
 								for(int k = 0; k < arr.get(i).getSeg(); k++){
-									out.print("&nbsp;&nbsp;");
+									out.print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 								}
+								out.print("ㄴ");
 								} %>
 								<a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getTitle() %></a>
 							<!-- <%if(sessionLevel.equals("top")){%>

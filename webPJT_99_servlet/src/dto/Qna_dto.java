@@ -17,6 +17,33 @@ public class Qna_dto {
 		this.seg = seg;
 		this.hit = hit;
 	}
+	
+	
+	
+	
+	public Qna_dto(String no, String title, String reg_date, String reg_name, String content) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.reg_date = reg_date;
+		this.reg_name = reg_name;
+		this.content = content;
+	}
+
+	
+
+
+
+	public Qna_dto(String no, String title, String content) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+	}
+
+
+
+
 	public String getNo() {
 		return no;
 	}

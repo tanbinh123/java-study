@@ -79,8 +79,10 @@ function goDelete(){
 							<tr>
 								<td colspan="4">
 									<input type="button" onclick="history.back()" value="목록" class="btn">
-									<%if(sessionLevel.equals("top")){%>
+									<%if(!sessionName.equals("")){%>
 									<input type="button" onclick="goReplyForm()" value="답글" class="btn" >
+									<%}
+									if(sessionLevel.equals("top")||sessionName.equals(dto.getReg_name())){%>
 									<input type="button" onclick="goUpdateForm()" value="수정" class="btn" >
 									<input type="button" onclick="goDelete()" value="삭제" class="btn" >
 									<%} %>

@@ -34,16 +34,13 @@ public class Qna_dao {
 		}		
 		return result;
 	}
-	/*
+	
 	// 수정
 	public int updateQna(Qna_dto dto) {
 		int result =0;
-		String query ="update h05_Qna \r\n" + 
-				"set question='"+dto.getQuestion()+"', \r\n" + 
-				"    answer='"+dto.getAnswer()+"', \r\n" + 
-				"    reg_id ='"+dto.getReg_id()+"', \r\n" + 
-				"    reg_date ='"+dto.getReg_date()+"', \r\n" + 
-				"    sort ='"+dto.getSort()+"' \r\n" + 
+		String query ="update h05_Qna2 \r\n" + 
+				"set title ='"+dto.getTitle()+"', \r\n" + 
+				"content ='"+dto.getContent()+"' \r\n" + 
 				"where no ='"+dto.getNo()+"'";
 		try {
 			connection = common.getConnection();
@@ -59,7 +56,7 @@ public class Qna_dao {
 		return result;
 	}
 	
-	*/
+	
 	// 조회수 증가
 	public void setHitCount(String no) {
 		String query=" update h05_Qna2 set hit = hit + 1\r\n" + 
@@ -112,7 +109,7 @@ public class Qna_dao {
 	//목록조회
 	public ArrayList<Qna_dto> getQnaList(String select,String search){
 		ArrayList<Qna_dto> arr = new ArrayList<Qna_dto>();
-		String query ="select no,title,groupno,depth,to_char(reg_date,'yyyy-MM-dd'),reg_name,hit,content,seg from h05_Qna2 where "+select+" like '%"+search+"%' order by groupno desc, depth asc, seg asc";
+		String query ="select no,title,groupno,depth,to_char(reg_date,'yyyy-MM-dd'),reg_name,hit,content,seg from h05_Qna2 where "+select+" like '%"+search+"%' order by groupno desc, depth asc";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
@@ -250,4 +247,24 @@ public class Qna_dao {
 			}		
 			return maxNo;
 		}	
+		
+		
+		
+		// 수정
+		public int getUpdateDepth(int depth) {
+			int result =0;
+			String query ="update h05_qna2 set depth = depth + 1 where depth >= "+depth;
+			try {
+				connection = common.getConnection();
+				ps  = connection.prepareStatement(query);
+				result  = ps.executeUpdate();			
+			}catch(SQLException se) {
+				System.out.println("updateQna() query 오류: "+query);
+			}catch(Exception ee) {
+				System.out.println("updateQna() 오류");
+			}finally {
+				common.close(connection, ps, rs);
+			}		
+			return result;
+		}
 }

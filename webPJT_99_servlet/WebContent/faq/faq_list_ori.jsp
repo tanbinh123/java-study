@@ -27,53 +27,6 @@
 		
 %>
 <%@ include file="/common_head.jsp" %>
-<style>
-.que{
-	border: 1px solid gray;
-	width: 100%;
-	cursor: pointer;
-	margin-bottom: 2px;
-	background-color: #eff2fb;
-}
-.ans{
-	//border: 1px solid gray;
-	width: 100%;
-	display: none;
-}
-.que span{
-	display: inline-block;
-	padding: 10px 0;
-}
-.que span:not(.s_que){
-	text-align: center;
-}
-.s_no{width: 10%;}
-.s_que{width: 50%;}
-.s_name{width: 10%;}
-.s_date{width: 10%;}
-.s_hit{width: 8%;}
-
-.textarea_H100_noBorder{
-width: 100%;
-height: 100px;
-text-align: left;
-font-size: 18px;
-padding: 5px;
-}
-</style>
-
-<script type="text/javascript">
-$(function() {
-
-    $(".que").on("click", function() {
-
-
-        $(this).next().slideToggle("fast");
-
-    });
-
-});
-</script>
 
 <script type="text/javascript">
 	function formSearch(){
@@ -125,38 +78,57 @@ $(function() {
 			</form>
 		</div>
 
-
-
 			
 			<!-- table start-->
 			<div class="table-box">
+				<table class="table">
+					<caption>공지사항 - 번호, 제목, 첨부, 작성일, 조회수</caption>
+					<colgroup>
+						<!-- <col width="5%"> -->
+						<col width="*">
+						<col width="10%">
+						<col width="15%">
+						<col width="10%">
+					</colgroup>
+					
+					<thead>
+						<tr>
+							<!-- <th scope="col">번호</th> -->
+							<th scope="col">제목</th>
+							<th scope="col">작성자</th>
+							<th scope="col">작성일</th>
+							<th scope="col">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
 <%				if(arr.size() > 0){
 					for(int i = 0 ; i < arr.size(); i++ ){ 
 						if(v_count == for_count){%>
-					<div class="que">
-					<span class="s_no"><%=arr.get(i).getNo() %></span>
-					<span class="s_que"><%=arr.get(i).getQuestion() %></span>
-					<%if(sessionLevel.equals("top")){%>
+						<tr>
+							<!--  <td><a href="/FaqView?t_no=<%=arr.get(i).getNo()%>"><%=arr.get(i).getNo()%></td>-->
+							<td class="txt"><a href="javascript:goView('<%=arr.get(i).getNo()%>')"><%=arr.get(i).getQuestion() %></a>
+							<%if(sessionLevel.equals("top")){%>
 							<a href="/FaqUpdateForm?t_no=<%=arr.get(i).getNo()%>">수정</a> <a href = "/DBFaq?t_no=<%=arr.get(i).getNo()%>&t_pageGubun=삭제">삭제</a>
 							<%} %>
-					<span class="s_name"><%=arr.get(i).getReg_id() %></span>
-					<span class="s_date"><%=arr.get(i).getReg_date()%></span>
-					<span class="s_hit"><%=arr.get(i).getHit() %></span>
-					
-					</div>
-					<div class="ans">
-						<textarea rows="" cols="" class="textarea_H100_noBorder"><%=arr.get(i).getAnswer() %></textarea>
-					</div>
+							</td>
+							<td><%=arr.get(i).getReg_id() %></td>
+							<td><%=arr.get(i).getReg_date() %></td>
+							<td><%=arr.get(i).getHit() %></td>
+						</tr>
 <%						v_count++;
 						for_count++;
 				} else{
 					v_count++;
 				}if(v_count == a_count)break;
-			}} %>
+			}
+		}else{%>
+						<tr>
+							<td colspan="5">게시글이 없습니다.</td>
+						</tr>
+						<%} %>
+					</tbody>
+				</table>
 			</div>
-			
-			
-			
 			
 			<div class="page-number">
 				<div class="page-number">
