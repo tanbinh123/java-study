@@ -8,7 +8,7 @@
 <html>
 <head>
 <script type="text/javascript">
-	alert("<%=msg%>");
+	alert("<%=msg %>");
 	location.href="<%=url%>";
 </script>
 </head>

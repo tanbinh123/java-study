@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common_head.jsp"%>
-<script>
+<script> 
 
 	function goLogin() {
 		if (!checkEmpty(login.t_id, "아이디 입력!"))
