@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="webPJT_99_servlet">
+    <wb-module deploy-name="20201202_pjt(by_whbPJT_99Copy)">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="java-output-path" value="/webPJT_99_servlet/build/classes"/>
-        <property name="context-root" value="webPJT_99_servlet"/>
+        <property name="java-output-path" value="/20201202_pjt(by_whbPJT_99Copy)/build/classes"/>
+        <property name="context-root" value="20201202_pjt(by_whbPJT_99Copy)"/>
     </wb-module>
 </project-modules>

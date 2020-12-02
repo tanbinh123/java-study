@@ -49,6 +49,7 @@ public class DBMemberLogin extends HttpServlet {
 			session.setAttribute("session_id",id);
 			if(id.equals("manager")) {
 				session.setAttribute("session_level","top");
+				session.setAttribute("session_rank", "top");
 			}
 			session.setMaxInactiveInterval(60*60*1);			
 		}

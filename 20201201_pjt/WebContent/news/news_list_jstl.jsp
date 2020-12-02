@@ -110,14 +110,33 @@
 //		for(int k = 0 ; k < dtos.size() ; k++ )	{
 //			if(v_count == for_count){ 
 %>	
+			<c:set var = "forYN" value = "true"></c:set>
+				<c:if test="${t_dtos.size() > 0}">
 					<c:forEach items="${t_dtos}" var="dtos">
-						<tr>
-							<td><a href="/NewsView?t_no=${dtos.getNo()}">${dtos.getNo()}</a></td>
-							<td class="txt"><a href="javascript:goView('${dtos.getNo()}')">${dtos.getTitle()}</a></td>
-							<td>${dtos.getReg_date()}</td>
-							<td>${dtos.getHit()}</td>
-						</tr>
-					</c:forEach>	
+						<c:if test="${forYN == 'true'}">
+							<c:choose>
+								<c:when test="${v_count == for_count}">
+									
+									<tr>
+										<td><a href="/NewsView?t_no=${dtos.getNo()}">${dtos.getNo()}</a></td>
+										<td class="txt"><a href="javascript:goView('${dtos.getNo()}')">${dtos.getTitle()}</a></td>
+										<td>${dtos.getReg_date()}</td>
+										<td>${dtos.getHit()}</td>
+									</tr>
+									
+									<c:set var = "v_count" value = "${v_count+1}"></c:set>
+									<c:set var = "for_count" value = "${for_count+1}"></c:set>
+								</c:when>
+								<c:otherwise>
+									<c:set var = "v_count" value = "${v_count+1}"></c:set>
+								</c:otherwise>
+							</c:choose>
+							<c:if test="${v_count == a_count}">
+								<c:set var = "forYN" value = "false"></c:set>
+							</c:if>
+						</c:if>
+					</c:forEach>
+				</c:if>
 <%
 //				v_count = v_count + 1;
 //				for_count = for_count + 1;
@@ -149,11 +168,20 @@
 					<a href="#" class="icon"><i class="fas fa-arrow-circle-right fa-lg"></i></a>
 -->
 <%                                   
-	
+	int current_page = (int)request.getAttribute("current_page");
+	int total_page 	= (int)request.getAttribute("total_page");
+	out.println(CommonUtil.pageListPost(current_page, total_page, 2));
 %>
 <!--				<a href="/NewsWriteForm" class="btn-write">글쓰기</a>-->
+
+<% //if(session_level.equals("top")){ %>
+
+				<c:if test="${session_rank == 'top'}">
 					<a href="javascript:goWriteForm()" class="btn-write">글쓰기</a>
-				</div>				
+				</c:if>
+				
+<% //} %>
+				</div> 				
 			</div>
 		
 		</div>

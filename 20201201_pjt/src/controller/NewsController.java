@@ -56,11 +56,13 @@ public class NewsController extends HttpServlet {
 		} else if(gubun.equals("view")) {
 			InterNews news = new NewsView();
 			news.execute(request, response);
-			viewPage ="/news/news_view.jsp";
+			//viewPage ="/news/news_view.jsp";
+			viewPage ="/news/news_view_jstl.jsp";
 		} else if(gubun.equals("updateForm")) {
 			InterNews news = new NewsUpdateForm();
 			news.execute(request, response);
-			viewPage ="/news/news_update.jsp";			
+			//viewPage ="/news/news_update.jsp";	
+			viewPage ="/news/news_update_jstl.jsp";	
 		} else if(gubun.equals("update")) {
 			InterNews news = new NewsUpdate();
 			news.execute(request, response);
