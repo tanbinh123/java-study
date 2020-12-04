@@ -21,7 +21,7 @@ public class News_dao {
 	public ArrayList<News_dto> getNewsList(String select, String search){
 		ArrayList<News_dto> arr = new ArrayList<>();
 		String query = " select no, title, reg_name, to_char(reg_date, 'yyyy-MM-dd'), hit \r\n" + 
-					   " from h00_news\r\n" +
+					   " from h05_news\r\n" +
 					   " where "+select+" like '%"+search+"%'"+
 					   " order by no desc";
 		try {
@@ -49,7 +49,7 @@ public class News_dao {
 	
 	//news_view파일 hit카운트 하기
 	public void getNewshit(String no) {
-		String query = "UPDATE h00_news\r\n" + 
+		String query = "UPDATE h05_news\r\n" + 
 					   "SET hit = hit +1\r\n" + 
 					   "where no = '"+no+"'";
 		try {
@@ -71,7 +71,7 @@ public class News_dao {
 	public News_dto newsView(String no) {
 		News_dto dto = null;
 		String query = " select no, title, content, reg_name, to_char(reg_date, 'yyyy-MM-dd'), hit \r\n" + 
-					   " from h00_news\r\n" + 
+					   " from h05_news\r\n" + 
 					   " where no = '"+no+"'";
 		try {
 			connection 	= common.getConnection();
@@ -100,7 +100,7 @@ public class News_dao {
 	//db_save파일 No를 만들기
 	public String getNewsNo() {
 		String maxNo="";
-		String query=" select max(no) from h00_news ";
+		String query=" select max(no) from h05_news ";
 		try {
 			connection = common.getConnection();
 			ps  = connection.prepareStatement(query);
@@ -109,14 +109,14 @@ public class News_dao {
 				maxNo = rs.getString(1);
 			}
 			if(maxNo == null) {
-				maxNo ="W001";
+				maxNo ="Z001";
 			}else {
 				String n = maxNo.substring(1); 
 				int i = Integer.parseInt(n); 
 				i = i + 1; 
 				DecimalFormat df = new DecimalFormat("000");
 				String newNo = df.format((double)i);
-				maxNo = "W"+newNo; 
+				maxNo = "Z"+newNo; 
 			}
 		}catch(SQLException se) {
 			System.out.println("getNewsNo() query 오류: "+query);
@@ -131,7 +131,7 @@ public class News_dao {
 	//db_save파일 sql파일에 행 삽입
 	public int getNewsSave(News_dto dto) {
 		int result = 0;
-		String query = " insert into h00_news(no, title, content, reg_name, reg_date)\r\n" + 
+		String query = " insert into h05_news(no, title, content, reg_name, reg_date)\r\n" + 
 					   " values('"+dto.getNo()+"','"+dto.getTitle()+"', '"+dto.getContent()+"', '"+dto.getReg_name()+"', '"+dto.getReg_date()+"')";
 		try {
 			connection = common.getConnection();
@@ -151,7 +151,7 @@ public class News_dao {
 	//db_save파일 sql파일에 행 수정
 	public int getNewsUpdate(News_dto dto) {
 		int result = 0;
-		String query = " update h00_news\r\n" + 
+		String query = " update h05_news\r\n" + 
 					   " set title = '"+dto.getTitle()+"',\r\n" + 
 					   "     content = '"+dto.getContent()+"',\r\n" + 
 					   "     reg_name = '"+dto.getReg_name()+"',\r\n" + 
@@ -175,7 +175,7 @@ public class News_dao {
 	//db_save파일 sql파일에 행 삭제
 	public int getNewsDelete(String no) {
 		int result = 0;
-		String query = " delete h00_news\r\n" + 
+		String query = " delete h05_news\r\n" + 
 					   " where no = '"+no+"'";
 		try {
 			connection = common.getConnection();
@@ -193,7 +193,7 @@ public class News_dao {
 	
 	//조회수 증가
 	public void setHitCount(String no) {
-		String query = " update h00_qna\r\n" + 
+		String query = " update h05_qna\r\n" + 
 					   " set hit = hit + 1\r\n" + 
 					   " where no = '"+no+"'";
 		try {

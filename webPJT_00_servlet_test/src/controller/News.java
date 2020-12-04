@@ -7,7 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import CommandNews.NewsDelete;
 import CommandNews.NewsList;
+import CommandNews.NewsSave;
+import CommandNews.NewsUpdate;
 import CommandNews.NewsView;
 import common.CommonExecute;
 
@@ -49,7 +52,21 @@ public class News extends HttpServlet {
 		} else if (gubun.equals("write")) {
           url = "/news/news_write.jsp";
         } else if (gubun.equals("save")) {
-          
+          CommonExecute news = new NewsSave();
+          news.execute(request, response);
+          url = "/common_alert_page.jsp";
+        } else if (gubun.equals("updateForm")) {
+          CommonExecute news = new NewsView();
+          news.execute(request, response);
+          url = "/news/news_update.jsp";
+        } else if (gubun.equals("update")) {
+          CommonExecute news = new NewsUpdate();
+          news.execute(request, response);
+          url = "/common_alert_page.jsp";
+        } else if (gubun.equals("delete")) {
+          CommonExecute news = new NewsDelete();
+          news.execute(request, response);
+          url = "/common_alert_page.jsp";
         }
 		
 		RequestDispatcher rd = request.getRequestDispatcher(url);

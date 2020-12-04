@@ -24,7 +24,7 @@
 <div id="b_right">
 	<p class="n_title">NEWS</p>
 	<form name= "news">
-	<input type = "hidden" name = "gubun" value = "save">
+	<input type = "hidden" name = "t_gubun" value = "save">
 	<table class="boardForm">
 		<colgroup>
 			<col width="15%">
@@ -35,18 +35,20 @@
 		<tbody>
 			<tr>
 				<th>Title</th>
-				<td colspan="3"><input type="text" class="input600"></td>
+				<td colspan="3"><input type="text" class="input600" name = "t_title"></td>
 			</tr>
 			<tr>
 				<th>Content</th>
-				<td colspan="3"><textarea class="textArea_H250"></textarea></td>
+				<td colspan="3"><textarea class="textArea_H250" name = "t_content"></textarea></td>
 			</tr>
 			<tr>
 				<th>Writer</th>
-				<td><%=session_name%></td>
+				<td><%=session_name%>
+				<input type = "hidden" name = "t_reg_name" value = "<%=session_name%>">
+				</td>
 				<th>RegDate</th>
 				<td><input type="date" class="input130"
-					value="<%=CommonUtil.getToday()%>"></td>
+					value="<%=CommonUtil.getToday()%>" name = "t_reg_date"></td>
 			</tr>
 
 		</tbody>

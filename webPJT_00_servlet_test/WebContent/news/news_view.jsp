@@ -5,6 +5,20 @@
 <%
   News_dto dto = (News_dto) request.getAttribute("t_dto");
 %>
+<script type="text/javascript">
+function goUpdate() {
+	news.t_gubun.value = "updateForm";
+	news.method="post";
+	news.action="/News";
+	news.submit();
+}
+function goDelete() {
+	news.t_gubun.value = "delete";
+	news.method="post";
+	news.action="/News";
+	news.submit();
+}
+</script>
 <%@ include file="/common/common_subpage_head.jsp"%>
 
 <div id="b_left">
@@ -21,6 +35,9 @@
 
 <div id="b_right">
 	<p class="n_title">NEWS</p>
+	<form name = "news">
+	<input type = "hidden" name = "t_no" value = "<%=dto.getNo() %>">
+	<input type = "hidden" name = "t_gubun">
 	<table class="boardForm">
 		<colgroup>
 			<col width="15%">
@@ -48,6 +65,7 @@
 
 		</tbody>
 	</table>
+	</form>
 	<div class="buttonGroup">
 		<a href="javascript:goDelete()" class="butt">Delete</a> <a
 			href="javascript:goUpdate()" class="butt">Update</a> <a
