@@ -7,23 +7,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import CommandNews.NewsSave;
-import CommandNotice.NoticeList;
+import com.oreilly.servlet.MultipartRequest;
 import CommandNotice.NoticeSave;
-import CommandNotice.NoticeView;
 import common.CommonExecute;
 
 /**
- * Servlet implementation class Notice
+ * Servlet implementation class NoticeAttach
  */
-@WebServlet("/Notice")
-public class Notice extends HttpServlet {
+@WebServlet("/NoticeAttach")
+public class NoticeAttach extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Notice() {
+    public NoticeAttach() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,25 +30,24 @@ public class Notice extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		
-		String gubun = request.getParameter("t_gubun");
-        if (gubun == null) gubun = "list";
-        String url = "/news/news_list.jsp"; 
-        
-        if (gubun.equals("list")) {
-          CommonExecute notice = new NoticeList();
-          notice.execute(request, response);
-          url = "/notice/notice_list.jsp";
-        } else if (gubun.equals("view")) {
-          CommonExecute notice = new NoticeView();
-          notice.execute(request, response);
-          url = "/notice/notice_view.jsp";
-        }  else if (gubun.equals("write")) {
-          url = "/notice/notice_write.jsp";
-        }
-        RequestDispatcher rd = request.getRequestDispatcher(url);
-        rd.forward(request, response);
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	  
+	  request.setCharacterEncoding("utf-8");
+	  String url = "/news/news_list.jsp";
+	  MultipartRequest mpr;
+	  mpr = new MultipartRequest(request,"utf-8");
+      String gubun = mpr.getParameter("t_gubun");
+      
+      
+      if (gubun.equals("save")) {
+        CommonExecute notice = new NoticeSave();
+        notice.execute(request, response);
+        url = "/common_alert_page.jsp";
+      }
+      
+      RequestDispatcher rd = request.getRequestDispatcher(url);
+      rd.forward(request, response);
 	}
 
 	/**

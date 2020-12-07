@@ -3,9 +3,7 @@
 <%@ include file="/common/session_manager_check.jsp" %> 
 <%@ include file="/common/common_subpage_head.jsp"%>  
 <%@ page import="common.*"%>
-<%
-	Common common = new Common();
-%>    
+  
 
 <script type="text/javascript">
 	function goSave(){
@@ -76,7 +74,7 @@
 		noti.method="post";
 //		noti.action="db_notice_save.jsp";
 //		noti.action="db_notice.jsp";
-		noti.action="db_notice_save_file.jsp";
+		noti.action="/NoticeAttach";
 		noti.submit();
 	}
 </script>	
@@ -96,7 +94,8 @@
 				NOTICE
 			</p>
 			<form name="noti" enctype="multipart/form-data">
-			<input type="hidden" name="t_work_gubun" value="insert">
+				<input type="hidden" name="t_work_gubun" value="insert">
+				<input type="hidden" name="t_gubun" value="save">
 			<table class="boardForm">
 				<colgroup>
 					<col width="15%">
@@ -123,7 +122,7 @@
 							<input type="hidden" name="t_reg_name" value="<%=session_name%>" class="input100">
 						</td>
 						<th>RegDate</th>
-						<td><input type="date" name="t_reg_date" value="<%=common.getToday()%>" class="input130"></td>
+						<td><input type="date" name="t_reg_date" value="<%=CommonUtil.getToday()%>" class="input130"></td>
 					</tr>	
 				</tbody>
 			</table>

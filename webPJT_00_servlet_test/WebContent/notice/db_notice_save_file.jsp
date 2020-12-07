@@ -26,14 +26,14 @@
 		dbAttachName = newFile.getName();
 	}
 	
-/*	
-	String no 		= dao.getNoticeNo();
-	String title 	= request.getParameter("t_title"); 
-	String content 	= request.getParameter("t_content"); 
-	String attach 	= request.getParameter("t_attach"); 
-	String reg_name = request.getParameter("t_reg_name"); 
-	String reg_date = request.getParameter("t_reg_date"); 
-*/
+
+//	String no 		= dao.getNoticeNo();
+//	String title 	= request.getParameter("t_title"); 
+//	String content 	= request.getParameter("t_content"); 
+//	String attach 	= request.getParameter("t_attach"); 
+//	String reg_name = request.getParameter("t_reg_name"); 
+//	String reg_date = request.getParameter("t_reg_date"); 
+
 	Notice_dto dto = new Notice_dto(no,title,content,dbAttachName,reg_name,reg_date,0);
 	int result = dao.saveNotice(dto);
 	String msg="";

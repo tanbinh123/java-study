@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*,common.*" %>    
 <%
+Notice_dto dto = (Notice_dto) request.getAttribute("t_dto");
+/*
 	Notice_dao dao = new Notice_dao();
 	String no = request.getParameter("t_no");
 	dao.setHitCount(no);
 	Notice_dto dto = dao.getNoticeView(no);
-
+*/
 %>
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script>
@@ -25,18 +27,18 @@
 	}
 </script> 	
 		<form name="noti">
-			<input type="hidden" name="t_no" value="<%=no%>">
+			<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
 			<input type="text" name="t_attach" value="<%=CommonUtil.checkNull(dto.getAttach())%>">
 			<input type="hidden" name="t_work_gubun" value="delete">
 		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna">Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -85,7 +87,7 @@
 				<a href="javascript:goDelete()" class="butt">Delete</a>
 				<a href="javascript:goUpdateForm()" class="butt">Update</a>
 			<%  } %>
-				<a href="notice_list.jsp" class="butt">List</a>
+				<a href="javascript:history.back()" class="butt">List</a>
 			</div>	
 		</div>	
 

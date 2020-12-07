@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*,java.util.*,common.*"%>    
 <%
+ArrayList<Notice_dto> arr = 
+(ArrayList<Notice_dto>)request.getAttribute("t_arr");
+
+String select = (String)request.getAttribute("t_select");
+String search = (String)request.getAttribute("t_search");
+int total_count = (int)request.getAttribute("total_count");
+int v_count = (int)request.getAttribute("v_count");
+int for_count = (int)request.getAttribute("for_count");
+int a_count = (int)request.getAttribute("a_count");
+int current_page = (int)request.getAttribute("current_page");
+int total_page = (int)request.getAttribute("total_page");
+
+
+/*
 	request.setCharacterEncoding("utf-8");
 	Notice_dao dao = new Notice_dao();
 	
@@ -14,7 +28,7 @@
 	
 	ArrayList<Notice_dto> arr = dao.getNoticeList(select,search);
 	
-	//*************page 시작**************/
+	//*************page 시작**************
 	int	list_setup_count = 3;			// 한페이지에 출력될 List 수 
 
 	String r_page = request.getParameter("r_page");
@@ -28,12 +42,12 @@
 	int			a_count;
 	String		url				= null;	
 
-	// 조회된 건수 구하기  total_count : 설정
+	 조회된 건수 구하기  total_count : 설정
 	if(arr == null) total_count =0;
 	else total_count = arr.size(); 
 
 
-	// 페이지번호가 없으면 1페이지로 간주
+	 페이지번호가 없으면 1페이지로 간주
 	if(r_page.equals("")) current_page = 1;
 	else current_page = Integer.parseInt(r_page);
 		
@@ -60,20 +74,26 @@
 <script type="text/javascript">
 	function goSearch(){
 		noti.method="post";
-		noti.action="notice_list.jsp";
+		noti.action="/Notice";
 		noti.submit();
 	}
 	function goView(num){
 		notiView.t_no.value = num;
 		notiView.method ="post";
-		notiView.action ="notice_view.jsp";
+		notiView.action ="/Notice";
 		notiView.submit();
 	}
 	function goPage(pageNumber){
 		pageForm.r_page.value = pageNumber;
 		pageForm.method="post";
-		pageForm.action="notice_list.jsp";
+		pageForm.action="/Notice";
 		pageForm.submit();
+	}
+	function goWrite() {
+		notiView.t_gubun.value = "write";
+		notiView.method ="post";
+		notiView.action ="/Notice";
+		notiView.submit();
 	}
 </script>
 		<form name="pageForm">
@@ -83,15 +103,16 @@
 		</form>
 		<form name="notiView">
 			<input type="hidden" name="t_no">
+			<input type="hidden" name="t_gubun" value="view">
 		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna">Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -139,7 +160,7 @@
 					<tr>
 						<td><a href="javascript:goView('<%=arr.get(k).getNo()%>')"><%=arr.get(k).getNo()%></a></td>
 						<td class="t_center">
-<a href="notice_view.jsp?t_no=<%=arr.get(k).getNo()%>">
+<a href="javascript:goView('<%=arr.get(k).getNo()%>')">
 <%
 /*
 	int titleLength = arr.get(k).getTitle().length();
@@ -196,7 +217,7 @@
 				out.println(CommonUtil.pageListPost(current_page, total_page));			
  			
 				if(session_level.equals("top")){ %>				
-				<a href="notice_write.jsp" class="write">글쓰기</a>
+				<a href="javascript:goWrite()" class="write">글쓰기</a>
 <%				} %>				
 				
 				
