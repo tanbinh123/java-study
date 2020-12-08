@@ -3,9 +3,7 @@
 <%@ page import="dao.*,dto.*,common.*" %>
 <%@ include file="/common/session_manager_check.jsp" %>    
 <%
-	Notice_dao dao = new Notice_dao();
-	String no = request.getParameter("t_no"); 
-	Notice_dto dto = dao.getNoticeView(no);
+	Notice_dto dto = (Notice_dto)request.getAttribute("t_dto");
 %>    
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script type="text/javascript">
@@ -16,18 +14,18 @@
 		
 		noti.method="post";
 //		noti.action="db_notice.jsp";
-		noti.action="db_notice_update_file.jsp";
+		noti.action="/NoticeUpdate";
 		noti.submit();
 	}
 </script>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna">Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -44,8 +42,7 @@
 					<col width="40%">
 				</colgroup>
 				<form name="noti" enctype="multipart/form-data">
-					<input type="hidden" name="t_work_gubun" value="update">
-					<input type="hidden" name="t_no" value="<%=no%>">
+					<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
 				<tbody>
 					<tr>
 						<th>Title</th>
@@ -81,7 +78,7 @@
 			<div class="buttonGroup">
 				
 				<a href="javascript:goUpdate()" class="butt">Update</a>
-				<a href="notice_list.jsp" class="butt">List</a>
+				<a href="/Notice" class="butt">List</a>
 			</div>	
 		</div>	
 

@@ -2,34 +2,34 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*,common.*" %>    
 <%
-Notice_dto dto = (Notice_dto) request.getAttribute("t_dto");
-/*
 	Notice_dao dao = new Notice_dao();
 	String no = request.getParameter("t_no");
 	dao.setHitCount(no);
 	Notice_dto dto = dao.getNoticeView(no);
-*/
+
 %>
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script>
 	function goUpdateForm(){
+		noti.t_gubun.value="updateForm";
 		noti.method="post";
-		noti.action="notice_update.jsp";
+		noti.action="/Notice";
 		noti.submit();
 	}
 	function goDelete(){
 		if(confirm(" 증말 삭제 ? ")){
+			noti.t_gubun.value="delete";
 			noti.method="post";
 //			noti.action="db_notice.jsp";
-			noti.action="db_notice_delete_file.jsp";
+			noti.action="/Notice";
 			noti.submit();		
 		}
 	}
 </script> 	
 		<form name="noti">
-			<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
+			<input type="hidden" name="t_no" value="<%=no%>">
 			<input type="text" name="t_attach" value="<%=CommonUtil.checkNull(dto.getAttach())%>">
-			<input type="hidden" name="t_work_gubun" value="delete">
+			<input type="hidden" name="t_gubun">
 		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
@@ -87,7 +87,7 @@ Notice_dto dto = (Notice_dto) request.getAttribute("t_dto");
 				<a href="javascript:goDelete()" class="butt">Delete</a>
 				<a href="javascript:goUpdateForm()" class="butt">Update</a>
 			<%  } %>
-				<a href="javascript:history.back()" class="butt">List</a>
+				<a href="/Notice" class="butt">List</a>
 			</div>	
 		</div>	
 

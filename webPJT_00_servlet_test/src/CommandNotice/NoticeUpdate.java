@@ -17,16 +17,16 @@ import dao.Notice_dao;
 import dto.Notice_dto;
 
 /**
- * Servlet implementation class NoticeSave
+ * Servlet implementation class NoticeUpdate
  */
-@WebServlet("/NoticeSave")
-public class NoticeSave extends HttpServlet {
+@WebServlet("/NoticeUpdate")
+public class NoticeUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeSave() {
+    public NoticeUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,46 +35,54 @@ public class NoticeSave extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("utf-8");
 		Notice_dao dao = new Notice_dao();
 		
-//		String file_dir ="C:/Users/JSLHRD/Desktop/jsl43_ȫ�浿/eclipse_source/webPJT_00_homepage4/WebContent/file_room/notice/";
+		//String file_dir ="C:/Users/JSLHRD/Desktop/jsl43_홍길동/eclipse_source/webPJT_00_homepage4/WebContent/file_room/notice/";
 		String file_dir = Common.file_dir_notice;
 		int sizeLimit = 1024 * 1024 * 10;
 		MultipartRequest mpr = new MultipartRequest(request,file_dir,sizeLimit,"utf-8");
 		
-		String no 		= dao.getNoticeNo();
+		String no 		= mpr.getParameter("t_no"); 
 		String title 	= mpr.getParameter("t_title"); 
 		String content 	= mpr.getParameter("t_content"); 
 		String reg_name = mpr.getParameter("t_reg_name"); 
-		String reg_date = mpr.getParameter("t_reg_date"); 
+		String reg_date = mpr.getParameter("t_reg_date"); 	
+
+		String del_attach = mpr.getParameter("t_del_attach");
+		String dbAttachName =""; 
+		boolean delYN = true;
+		if(del_attach != null){
+			File delFile = new File(file_dir,del_attach);
+			delFile.delete();
+			delYN = false;
+		} else {
+			dbAttachName = mpr.getParameter("t_ori_attach");
+		}
 
 		String attach 	= mpr.getFilesystemName("t_attach"); // aaa.hwp
-		String dbAttachName ="";
 		if(attach != null){
+			String df = mpr.getParameter("t_ori_attach");
+			if(!df.equals("") && delYN==true){
+				File delFile = new File(file_dir,df);
+				delFile.delete();	
+			}
 			File oldFile = new File(file_dir,attach);
 			File newFile = new File(file_dir, no+"-"+attach); //N025-aaa.hwp
 			oldFile.renameTo(newFile);
 			dbAttachName = newFile.getName();
-		}
+		}	
 		
-	/*	
-		String no 		= dao.getNoticeNo();
-		String title 	= request.getParameter("t_title"); 
-		String content 	= request.getParameter("t_content"); 
-		String attach 	= request.getParameter("t_attach"); 
-		String reg_name = request.getParameter("t_reg_name"); 
-		String reg_date = request.getParameter("t_reg_date"); 
-	*/
-		Notice_dto dto = new Notice_dto(no,title,content,dbAttachName,reg_name,reg_date,0);
-		int result = dao.saveNotice(dto);
 		String msg="";
-		if(result == 1) msg ="등록완료";
-		else msg="등록실패~ ";
+		Notice_dto dto = new Notice_dto(no,title,content,dbAttachName,reg_name,reg_date,0);				
+		int result = dao.updateNotice(dto);
+		if(result == 1) msg =" 수정 되었습니다. ";
+		else msg=" 수정 실패~ ";			
 		
 		request.setAttribute("t_msg", msg);
 		request.setAttribute("t_url", "/Notice");
+		request.setAttribute("t_gubun", "view");
+		request.setAttribute("t_no", no);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/common_alert_page.jsp");
 		rd.forward(request, response);	

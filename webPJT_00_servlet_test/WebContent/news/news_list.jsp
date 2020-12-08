@@ -5,19 +5,15 @@
 <%
 	ArrayList<News_dto> arr = 
 				(ArrayList<News_dto>)request.getAttribute("t_arr");
-	
-	String select = (String)request.getAttribute("t_select");
-	String search = (String)request.getAttribute("t_search");
+	String select 	= (String)request.getAttribute("t_select");
+	String search 	= (String)request.getAttribute("t_search");
 	int total_count = (int)request.getAttribute("total_count");
-	int v_count = (int)request.getAttribute("v_count");
-	int for_count = (int)request.getAttribute("for_count");
-	int a_count = (int)request.getAttribute("a_count");
-	int current_page = (int)request.getAttribute("current_page");
-	int total_page = (int)request.getAttribute("total_page");
-	
+	int v_count 	= (int)request.getAttribute("v_count");
+	int for_count 	= (int)request.getAttribute("for_count");
+	int a_count 	= (int)request.getAttribute("a_count");
+	int current_page= (int)request.getAttribute("current_page");
+	int total_page 	= (int)request.getAttribute("total_page");
 /*
-    
-    
 	request.setCharacterEncoding("utf-8");
 	News_dao dao = new News_dao();
 	
@@ -72,6 +68,12 @@
 	a:hover { color : #f00; }
 </style>
 <script>
+	function goWrite(){
+		news.t_gubun.value="write";
+		news.method = "post";
+		news.action = "/News";
+		news.submit();		
+	}
 	function goView(nn){
 		//alert("1234");
 		news.t_no.value = nn;
@@ -92,12 +94,6 @@
 		pageForm.action="/News";
 		pageForm.submit();
 	}
-	function goWrite() {
-		news.t_gubun.value = "write";
-		news.method = "post";
-		news.action = "/News";
-		news.submit();
-	}
 </script>
 	<form name="pageForm">
 		<input type="hidden" name="r_page">
@@ -116,7 +112,6 @@
 				<li><a href="/Qna">Q & A</a></li>
 				<li><a href="/Freeboard">Free Board</a></li>
 				<li><a href="/Etc">Etc</a></li>
-				
 			</ul>
 		</div>
 			<div id="b_right">
@@ -154,10 +149,10 @@
 					</tr>
 				</thead>
 				<tbody>
-			<%	if ( total_count > 0 ){
-					for(int k = 0 ; k < total_count ; k++ )	{
-						if(v_count == for_count){ 
-			%>	
+<%	if ( total_count > 0 ){
+		for(int k = 0 ; k < total_count ; k++ )	{
+			if(v_count == for_count){ 
+%>	
 					<tr>
 						<td><a href="javascript:goView('<%=arr.get(k).getNo()%>')"><%=arr.get(k).getNo() %></a></td>
 						<td class="t_center"><a href="javascript:goView('<%=arr.get(k).getNo()%>')"><%=arr.get(k).getTitle() %></a></td>
@@ -191,11 +186,10 @@
 				<a href=""><i class="fa fa-angle-double-right"></i></a>
  -->				
 <%				
-				
-				out.println(CommonUtil.pageListPost(current_page, total_page, 2));	
+				out.println(CommonUtil.pageListPost(current_page, total_page, 2));		
 				if(session_level.equals("top")) { %>
 					<a href="javascript:goWrite()" class="write">글쓰기</a>
-					<%} %>
+				<%} %>
 			</div>
 		</div>	
 	

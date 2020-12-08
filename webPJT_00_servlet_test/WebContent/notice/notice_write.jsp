@@ -3,7 +3,9 @@
 <%@ include file="/common/session_manager_check.jsp" %> 
 <%@ include file="/common/common_subpage_head.jsp"%>  
 <%@ page import="common.*"%>
-  
+<%
+	Common common = new Common();
+%>    
 
 <script type="text/javascript">
 	function goSave(){
@@ -74,18 +76,18 @@
 		noti.method="post";
 //		noti.action="db_notice_save.jsp";
 //		noti.action="db_notice.jsp";
-		noti.action="/NoticeAttach";
+		noti.action="/NoticeSave";
 		noti.submit();
 	}
 </script>	
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp">Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
+				<li><a href="/News"> News</a></li>
+				<li><a href="/Qna">Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -94,8 +96,6 @@
 				NOTICE
 			</p>
 			<form name="noti" enctype="multipart/form-data">
-				<input type="hidden" name="t_work_gubun" value="insert">
-				<input type="hidden" name="t_gubun" value="save">
 			<table class="boardForm">
 				<colgroup>
 					<col width="15%">
