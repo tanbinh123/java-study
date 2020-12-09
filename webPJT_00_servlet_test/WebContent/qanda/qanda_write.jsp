@@ -12,18 +12,18 @@
 		if(!checkEmpty(qna.t_title," 제목 입력! ")) return;
 		if(!checkEmpty(qna.t_content," 내용 입력! ")) return;
 		qna.method="post";
-		qna.action="db_question_save.jsp";
+		qna.action="/Qna";
 		qna.submit();
 	}
 </script>	
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp">NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice">NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna"><span class="fnt"><i class="fas fa-apple-alt"></i></span>Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -32,6 +32,7 @@
 				QUESTION & ANSWER
 			</p>
 			<form name="qna">
+			<input type="hidden" name="t_gubun" value="save">
 			<table class="boardForm">
 				<colgroup>
 					<col width="15%">
@@ -54,14 +55,14 @@
 							<input type="hidden" name="t_reg_id" value="<%=session_id%>" class="input100">
 						</td>
 						<th>RegDate</th>
-						<td><%=common.getToday()%></td>
+						<td><%=CommonUtil.getToday()%></td>
 					</tr>	
 				</tbody>
 			</table>
 			</form>
 			<div class="buttonGroup">
 				<a href="javascript:goSave()" class="butt">Save</a>
-				<a href="qanda_list.jsp" class="butt">List</a>
+				<a href="/Qna" class="butt">List</a>
 			</div>	
 		</div>	
 

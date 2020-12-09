@@ -9,7 +9,7 @@
 	String title 	= request.getParameter("t_title"); 
 	String content 	= request.getParameter("t_content"); 
 	String reg_id   = request.getParameter("t_reg_id"); 
-	String reg_date = Common.getToday(); 
+	String reg_date = CommonUtil.getToday(); 
 	
 	Qanda_dto dto = new Qanda_dto(no,title,content,reg_id,reg_date);
 	int result = dao.updateQuestion(dto);

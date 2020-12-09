@@ -1,56 +1,60 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="dao.*,dto.*" %>    
 <%
-	Qanda_dao dao = new Qanda_dao();
-	String no = request.getParameter("t_no");
-	dao.setHitCount(no);
-	Qanda_dto dto = dao.getQandaView(no);
+	Qanda_dto dto = (Qanda_dto)request.getAttribute("t_dto");
 %>
 <%@ include file="/common/common_subpage_head.jsp"%>
 <script>
 	function goQueDelete(){
 		if(confirm(" 질문 삭제 하겠습니까? ")){
+			qna.t_gubun.value="qnaDelete";
 			qna.method="post";
-			qna.action="db_question_delete.jsp";
+			qna.action="/Qna";
 			qna.submit();			
 		}
 	}
 	function goQueUpdateForm(){
+		qna.t_gubun.value="qnaUpdateForm";
 		qna.method="post";
-		qna.action="qanda_update.jsp";
+		qna.action="/Qna";
 		qna.submit();			
 	}	
 	function goAnswer(){
+		qna.t_gubun.value="answer";
 		qna.method="post";
-		qna.action="answer_write.jsp";
+		qna.action="/Qna";
 		qna.submit();			
 	}			
 	function goAnsDelete(){
 		if(confirm(" 답변 삭제 하겠습니까? ")){
+			qna.t_gubun.value="answerDelete";
 			qna.method="post";
-			qna.action="db_answer_delete.jsp";
+			qna.action="/Qna";
 			qna.submit();			
 		}
 	}
 	function goAnsUpdateForm(){
+		qna.t_gubun.value="answerUpdateForm";
 		qna.method="post";
-		qna.action="answer_update.jsp";
+		qna.action="/Qna";
 		qna.submit();			
 	}	
 	
 </script> 	
 		<form name="qna">
-			<input type="hidden" name="t_no" value="<%=no%>">
+			<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
+			<input type="hidden" name="t_gubun">
 		</form>
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp">NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">News</a></li>
-				<li><a href="/qanda/qanda_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> Q & A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">Free Board</a></li>
-				<li><a href="">Etc</a></li>
+				<li><a href="/Notice">NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna"><span class="fnt"><i class="fas fa-apple-alt"></i></span>Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -128,7 +132,7 @@
 %>
 
 
-				<a href="qanda_list.jsp" class="butt">List</a>
+				<a href="/Qna" class="butt">List</a>
 			</div>	
 		</div>	
 

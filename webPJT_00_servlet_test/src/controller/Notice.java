@@ -35,19 +35,19 @@ public class Notice extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String gubun = request.getParameter("t_gubun");
-		if(gubun == null) gubun ="list";
+		if (gubun == null) gubun ="list";
 		String url ="";
-		if(gubun.equals("list")){
+		if (gubun.equals("list")){
 			CommonExecute noti = new NoticeList();
 			noti.execute(request, response);
 			url = "/notice/notice_list.jsp";
-		}else if(gubun.equals("view")){
+		} else if(gubun.equals("view")){
 			CommonExecute noti = new NoticeView();
 			noti.execute(request, response);
 			url = "/notice/notice_view.jsp";
-		}else if(gubun.equals("write")){
+		} else if(gubun.equals("write")){
 			url = "/notice/notice_write.jsp";
-		}else if(gubun.equals("updateForm")){
+		} else if(gubun.equals("updateForm")){
 			CommonExecute noti = new NoticeView();
 			noti.execute(request, response);
 			url = "/notice/notice_update.jsp";

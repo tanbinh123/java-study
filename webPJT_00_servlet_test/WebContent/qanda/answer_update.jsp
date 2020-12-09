@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	function goUpdateAnswer(){
 		qna.method="post";
-		qna.action="db_answer_save.jsp";
+		qna.action="/Qna";
 		qna.submit();
 	}
 
@@ -19,11 +19,11 @@
 		<div id="b_left">
 			<P>NOTICE & NEWS</P>
 			<ul>
-				<li><a href="/notice/notice_list.jsp">NOTICE</a></li>
-				<li><a href="/news/news_list.jsp">NEWS</a></li>
-				<li><a href="/qanda/qanda_list.jsp"><span class="fnt"><i class="fas fa-apple-alt"></i></span> Q AND A</a></li>
-				<li><a href="/freeboard/freeboard_list.jsp">FREE BOARD</a></li>
-				<li><a href="">ETC</a></li>
+				<li><a href="/Notice">NOTICE</a></li>
+				<li><a href="/News">News</a></li>
+				<li><a href="/Qna"><span class="fnt"><i class="fas fa-apple-alt"></i></span>Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
 		
@@ -34,7 +34,7 @@
 			<form name="qna">
 				<input type="hidden" name="t_no" value="<%=no%>">
 				<input type="hidden" name="t_reg_id" value="<%=session_id%>">
-				<input type="hidden" name="t_work_gubun" value="수정">
+				<input type="hidden" name="t_gubun" value="answerSave">
 				<table class="boardForm">
 					<colgroup>
 						<col width="15%">
@@ -71,7 +71,7 @@
 							<th>AnsName</th>
 							<td><%=session_name%></td>
 							<th>AnsRegDate</th>
-							<td><%=Common.getToday()%></td>
+							<td><%=CommonUtil.getToday()%></td>
 						</tr>	
 	
 					</tbody>

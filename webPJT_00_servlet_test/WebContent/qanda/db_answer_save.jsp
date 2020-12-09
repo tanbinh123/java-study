@@ -8,7 +8,7 @@
 	String no 		= request.getParameter("t_no");
 	String answer	= request.getParameter("t_answer");
 	String reg_id   = request.getParameter("t_reg_id"); 
-	String reg_date = Common.getToday(); 
+	String reg_date = CommonUtil.getToday(); 
 	
 	String work 	= request.getParameter("t_work_gubun");
 	
