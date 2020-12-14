@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dto.*" %>    
 <%
-	News_dto dto = (News_dto)request.getAttribute("t_dto");
+	Freeboard_dto dto = (Freeboard_dto)request.getAttribute("t_dto");
 %>  
 <script type="text/javascript">
 	function goUpdate(){
 		news.method="post";
-		news.action="/News";
+		news.action="/Freeboard";
 		news.submit();
 	}
 </script>   
@@ -16,16 +16,15 @@
 			<P>NOTICE & NEWS</P>
 			<ul>
 				<li><a href="/Notice">NOTICE</a></li>
-				<li><a href="/News"><span class="fnt"><i class="fas fa-apple-alt"></i></span> News</a></li>
+				<li><a href="/News"> News</a></li>
 				<li><a href="/Qna">Q & A</a></li>
-				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Freeboard">Free Board<span class="fnt"><i class="fas fa-apple-alt"></i></span></a></li>
 				<li><a href="/Etc">Etc</a></li>
 			</ul>
 		</div>
-		
-		<div id="b_right">
-			<p class="n_title">
-				NEWS
+			<div id="b_right">
+				<p class="n_title">
+					FREEBOARD
 			</p>
 			<form name="news">
 	 		<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
@@ -40,7 +39,7 @@
 				<tbody>
 					<tr>
 						<th>Title</th>
-					<td colspan="3"><input type="text" class="input600" value="<%=dto.getTitle()%>" name="t_title"></td>
+						<td colspan="3"><input type="text" class="input600" value="<%=dto.getTitle()%>" name="t_title"></td>
 					</tr>	
 					<tr>
 						<th>Content</th>
@@ -50,6 +49,7 @@
 						<th>Writer</th>
 						<td><%=dto.getReg_name()%>
 							<input type="hidden" value="<%=dto.getReg_name()%>" class="input100" name="t_reg_name">
+							<input type="hidden" value="<%=dto.getReg_id()%>" class="input100" name="t_reg_id">
 						</td>
 						<th>RegDate</th>
 						<td><input type="date" value="<%=dto.getReg_date()%>" class="input130" name="t_reg_date"></td>
@@ -61,7 +61,7 @@
 			<div class="buttonGroup">
 				
 				<a href="javascript:goUpdate()" class="butt">Update</a>
-				<a href="/News" class="butt">List</a>
+				<a href="/Freeboard" class="butt">List</a>
 			</div>	
 		</div>	
 

@@ -20,11 +20,11 @@
 	if(hobby_t == null) hobby_t ="n";
 	if(hobby_r == null) hobby_r ="n";
 	if(hobby_s == null) hobby_s ="n";
-	String reg_date = Common.getToday();
+	String reg_date = CommonUtil.getToday();
 	
 	int checkId = dao.idCheckCount(id);
 	String msg="";
-	String url="/index.jsp";
+	String url="/Index";
 	if(checkId == 1){
 		msg = " ID 중복 되었습니다. 다른  ID 사용하세요~";
 		url ="member_join.jsp";

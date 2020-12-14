@@ -3,8 +3,8 @@
 <%@ page import="dao.*,dto.*,java.util.*" %>    
 <%
 	String session_name = (String)session.getAttribute("session_name");
-	Notice_dao dao = new Notice_dao();
-	ArrayList<Notice_dto> arr = dao.getIndexNotice();
+ArrayList<Notice_dto> arr = 
+(ArrayList<Notice_dto>)request.getAttribute("t_arr");
 //	out.print("name : "+session_name);
 %>    
 <html>

@@ -32,7 +32,7 @@
 <%				} else { %>
 				<li><a href="/member/member_logout.jsp">LogOut</a></li>
 <%				} %>
-				<li><a href="/index.jsp"><i class="fa fa-home"></i>Home</a></li>
+				<li><a href="/Index"><i class="fa fa-home"></i>Home</a></li>
 <%				if(!session_name.equals("")) { %>
 				<li><a href=""><%=session_name%>님..</a></li>				
 <%				}  %>

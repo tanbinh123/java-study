@@ -31,7 +31,7 @@
 <%	if(name==null){ %>	
 		location.href="member_login.jsp";
 <%  } else { %>
-		location.href="/index.jsp";
+		location.href="/Index";
 <%  }  %>	
 </script>
 </head>
