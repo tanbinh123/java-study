@@ -1,0 +1,97 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>     
+<%@ page import="dao.*,dto.*,common.*" %>
+<%@ include file="/common/session_manager_check.jsp" %>    
+<%
+//	Notice_dto dto = (Notice_dto)request.getAttribute("t_dto");
+%>    
+<%@ include file="/common/common_subpage_head.jsp"%>
+<script type="text/javascript">
+	function goUpdate(){
+		if(!checkEmpty(noti.t_title," 제목 입력! ")) return;
+		if(!checkEmpty(noti.t_content," 내용 입력! ")) return;
+		if(!checkEmpty(noti.t_reg_date," 수정일 입력! ")) return;
+		
+		noti.method="post";
+//		noti.action="db_notice.jsp";
+//		noti.action="db_notice_update_file.jsp";
+		noti.action="/NoticeUpdate";
+		noti.submit();
+	}
+</script>
+		<div id="b_left">
+			<P>NOTICE & NEWS</P>
+			<ul>
+				<li><a href="/Notice"><span class="fnt"><i class="fas fa-apple-alt"></i></span> NOTICE</a></li>
+				<li><a href="/News"> News</a></li>
+				<li><a href="/Qna">Q & A</a></li>
+				<li><a href="/Freeboard">Free Board</a></li>
+				<li><a href="/Etc">Etc</a></li>
+			</ul>
+		</div>
+		
+		<div id="b_right">
+			<p class="n_title">
+				NOTICE
+			</p>
+			
+			<table class="boardForm">
+				<colgroup>
+					<col width="15%">
+					<col width="35%">
+					<col width="10%">
+					<col width="40%">
+				</colgroup>
+				<form name="noti" enctype="multipart/form-data">
+					<input type="hidden" name="t_no" value="${t_dto.getNo()}">
+				<tbody>
+					<tr>
+						<th>Title</th>
+						<td colspan="3"><input type="text" name="t_title" class="input600" value="${t_dto.getTitle()}"></td>
+					</tr>	
+					<tr>
+						<th>Content</th>
+						<td colspan="3"><textarea  name="t_content" class="textArea_H250">${t_dto.getContent()}</textarea></td>
+					</tr>	
+					<tr>
+						<th>Attach</th>
+						<td colspan="3">
+ 						<c:if test="${t_dto.getAttach() ne null}">
+							 ${t_dto.getAttach()} 
+							 삭제<input type="checkbox" name="t_del_attach" value="${t_dto.getAttach()}"><br>
+						</c:if>	
+							<input type="file"  name="t_attach" class="input600">
+							<input type="text" name="t_ori_attach" 
+									value="${t_dto.getAttach()}">
+						</td>
+					</tr>	
+					<tr>
+						<th>Writer</th>
+						<td><%=session_name%>
+							<input type="hidden" name="t_reg_name" value="${session_name}" class="input100">
+						</td>						
+						<th>RegDate</th>
+						<td><input type="date" name="t_reg_date" value="${t_dto.getReg_date()}" class="input130"></td>
+					</tr>	
+
+				</tbody>
+			</form>	
+			</table>
+			<div class="buttonGroup">
+				
+				<a href="javascript:goUpdate()" class="butt">Update</a>
+				<a href="/Notice" class="butt">List</a>
+			</div>	
+		</div>	
+
+<%@ include file="/common/common_subpage_bottom.jsp" %>	>	
+	</div>	
+</body>
+</html>
+
+
+
+
+
+
